@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 // Register a new admin (not Super Admin)
 exports.register = async (req, res) => {
   try {
-    const { email, mobile, password, fullName, adminType } = req.body;
+    const { email, mobile, password, fullName, adminType, dob, gender, address } = req.body;
     if (!['ADMIN', 'TEACHER', 'STUDENT'].includes(adminType)) {
       return res.status(400).json({ message: 'Invalid admin type. Only ADMIN, TEACHER, or STUDENT allowed.' });
     }
@@ -22,6 +22,9 @@ exports.register = async (req, res) => {
       password: hashedPassword,
       fullName,
       adminType,
+      dob,
+      gender,
+      address,
       isApproved: false
     });
     await admin.save();
@@ -57,13 +60,29 @@ exports.login = async (req, res) => {
 exports.approveAdmin = async (req, res) => {
   try {
     const { adminId } = req.params;
+    const { rollNo } = req.body;
     const requester = await Admin.findById(req.user.id);
-    if (!requester || requester.adminType !== 'Super Admin') {
-      return res.status(403).json({ message: 'Only Super Admin can approve admins.' });
+    if (!requester || (requester.adminType !== 'Super Admin' && requester.adminType !== 'TEACHER')) {
+      return res.status(403).json({ message: 'Only Super Admin or Teacher can approve.' });
     }
     const admin = await Admin.findById(adminId);
     if (!admin) {
       return res.status(404).json({ message: 'Admin not found.' });
+    }
+    // Only Super Admin can approve admins/teachers, Teacher can only approve students
+    if (requester.adminType === 'TEACHER') {
+      if (admin.adminType !== 'STUDENT') {
+        return res.status(403).json({ message: 'Teachers can only approve students.' });
+      }
+      if (!rollNo) {
+        return res.status(400).json({ message: 'Roll number is required.' });
+      }
+      // Check uniqueness
+      const existingRoll = await Admin.findOne({ rollNo });
+      if (existingRoll) {
+        return res.status(400).json({ message: 'Roll number already exists.' });
+      }
+      admin.rollNo = rollNo;
     }
     admin.isApproved = true;
     await admin.save();
@@ -77,10 +96,15 @@ exports.approveAdmin = async (req, res) => {
 exports.listPendingAdmins = async (req, res) => {
   try {
     const requester = await Admin.findById(req.user.id);
-    if (!requester || requester.adminType !== 'Super Admin') {
-      return res.status(403).json({ message: 'Only Super Admin can view pending admins.' });
+    if (!requester || (requester.adminType !== 'Super Admin' && requester.adminType !== 'TEACHER')) {
+      return res.status(403).json({ message: 'Only Super Admin or Teacher can view pending students.' });
     }
-    const pending = await Admin.find({ isApproved: false, adminType: { $ne: 'Super Admin' } });
+    let pending;
+    if (requester.adminType === 'Super Admin') {
+      pending = await Admin.find({ isApproved: false, adminType: { $ne: 'Super Admin' } });
+    } else if (requester.adminType === 'TEACHER') {
+      pending = await Admin.find({ isApproved: false, adminType: 'STUDENT' });
+    }
     res.json(pending);
   } catch (err) {
     res.status(500).json({ message: 'Failed to fetch pending admins.', error: err.message });
@@ -92,12 +116,16 @@ exports.rejectAdmin = async (req, res) => {
   try {
     const { adminId } = req.params;
     const requester = await Admin.findById(req.user.id);
-    if (!requester || requester.adminType !== 'Super Admin') {
-      return res.status(403).json({ message: 'Only Super Admin can reject admins.' });
+    if (!requester || (requester.adminType !== 'Super Admin' && requester.adminType !== 'TEACHER')) {
+      return res.status(403).json({ message: 'Only Super Admin or Teacher can reject.' });
     }
     const admin = await Admin.findById(adminId);
     if (!admin) {
       return res.status(404).json({ message: 'Admin not found.' });
+    }
+    // Only Super Admin can reject admins/teachers, Teacher can only reject students
+    if (requester.adminType === 'TEACHER' && admin.adminType !== 'STUDENT') {
+      return res.status(403).json({ message: 'Teachers can only reject students.' });
     }
     await admin.deleteOne();
     res.json({ message: 'Admin request rejected and deleted.' });
@@ -116,5 +144,19 @@ exports.getMe = async (req, res) => {
     res.json(admin);
   } catch (err) {
     res.status(500).json({ message: 'Failed to fetch profile.', error: err.message });
+  }
+};
+
+// Get all approved students (for teacher dashboard)
+exports.getAllStudents = async (req, res) => {
+  try {
+    const requester = await Admin.findById(req.user.id);
+    if (!requester || (requester.adminType !== 'Super Admin' && requester.adminType !== 'TEACHER')) {
+      return res.status(403).json({ message: 'Only Super Admin or Teacher can view all students.' });
+    }
+    const students = await Admin.find({ adminType: 'STUDENT', isApproved: true });
+    res.json(students);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch students.', error: err.message });
   }
 }; 

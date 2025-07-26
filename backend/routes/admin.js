@@ -33,4 +33,7 @@ router.get('/pending', auth, adminController.listPendingAdmins);
 // Reject admin (Super Admin only)
 router.delete('/reject/:adminId', auth, adminController.rejectAdmin);
 
+// Get all approved students (for teacher dashboard)
+router.get('/all', auth, adminController.getAllStudents);
+
 module.exports = router; 

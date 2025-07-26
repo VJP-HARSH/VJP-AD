@@ -29,6 +29,7 @@
           <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
           <li class="nav-item"><a class="nav-link" href="#">My Classes</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Assignments</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" id="allStudentsBtn">All Students</a></li>
         </ul>
       </nav>
       <main class="col-md-10 ms-sm-auto px-md-4">
@@ -41,6 +42,32 @@
             <h4 class="alert-heading">Teacher Dashboard</h4>
             <p>Welcome to the Teacher panel of VIRTI JAIN PATHSHALA. Use the sidebar to manage your classes and assignments.</p>
           </div>
+        
+          <div id="allStudentsSection" style="display:none;">
+            <div class="card mb-4">
+              <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">All Approved Students</h5>
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <input type="text" class="form-control" id="studentFilter" placeholder="Search by name, email, mobile, gender, or address...">
+                </div>
+                <div id="allStudentsTable">
+                  <div class="text-center text-muted">Loading...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mt-4">
+            <div class="card-header bg-success text-white">
+              <h5 class="mb-0">Pending Student Registrations</h5>
+            </div>
+            <div class="card-body">
+              <div id="pendingStudentsTable">
+                <div class="text-center text-muted">Loading...</div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
     </div>
@@ -48,16 +75,179 @@
   <script>
     // Optionally fetch and display teacher name from token
     const token = localStorage.getItem('token');
-    if (token) {
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        document.getElementById('teacherName').textContent = payload.fullName || 'Teacher';
-      } catch (e) {}
+    async function fetchTeacherName() {
+      if (!token) return;
+      const res = await fetch('/api/admin/me', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      const data = await res.json();
+      if (res.ok) {
+        document.getElementById('teacherName').textContent = data.fullName || 'Teacher';
+      }
+    }
+    fetchTeacherName();
+
+    // Fetch and display pending student registrations
+    async function fetchPendingStudents() {
+      if (!token) return;
+      const tableDiv = document.getElementById('pendingStudentsTable');
+      const res = await fetch('/api/admin/pending', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      const data = await res.json();
+      if (res.ok && Array.isArray(data)) {
+        const students = data.filter(s => s.adminType === 'STUDENT');
+        if (students.length === 0) {
+          tableDiv.innerHTML = '<div class="alert alert-success">No pending student registrations.</div>';
+          return;
+        }
+        let html = '<table class="table table-bordered table-hover"><thead><tr><th>Roll No</th><th>Photo</th><th>Name</th><th>Email</th><th>Mobile</th><th>DOB</th><th>Gender</th><th>Address</th><th>Actions</th></tr></thead><tbody>';
+        for (const student of students) {
+          html += `<tr>
+            <td>${student.rollNo || '-'}</td>
+            <td><img src="/uploads/${student.photo}" width="48" height="48" class="rounded-circle"/></td>
+            <td>${student.fullName}</td>
+            <td>${student.email}</td>
+            <td>${student.mobile}</td>
+            <td>${student.dob ? new Date(student.dob).toLocaleDateString() : '-'}</td>
+            <td>${student.gender || '-'}</td>
+            <td>${student.address || '-'}</td>
+            <td>
+              <button class="btn btn-success btn-sm me-2" onclick="approveStudent('${student._id}')">Approve</button>
+              <button class="btn btn-danger btn-sm" onclick="rejectStudent('${student._id}')">Reject</button>
+            </td>
+          </tr>`;
+        }
+        html += '</tbody></table>';
+        tableDiv.innerHTML = html;
+      } else {
+        tableDiv.innerHTML = `<div class='alert alert-danger'>${data.message || 'Failed to load students.'}</div>`;
+      }
+    }
+    fetchPendingStudents();
+
+    // Approve student
+    window.approveStudent = async function(id) {
+      if (!token) return;
+      const rollNo = prompt('Assign Roll Number to this student:');
+      if (!rollNo) {
+        alert('Roll number is required!');
+        return;
+      }
+      const res = await fetch(`/api/admin/approve/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ rollNo })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert('Student approved and roll number assigned!');
+        fetchPendingStudents();
+      } else {
+        alert(data.message || 'Approval failed.');
+      }
+    }
+
+    // Reject student
+    window.rejectStudent = async function(id) {
+      if (!token) return;
+      if (!confirm('Reject and delete this student registration?')) return;
+      await fetch(`/api/admin/reject/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      fetchPendingStudents();
     }
     document.getElementById('logoutBtn').addEventListener('click', function(e) {
       e.preventDefault();
       localStorage.removeItem('token');
       window.location.href = '/auth/login.html';
+    });
+
+    // All Students button logic (sidebar)
+    document.getElementById('allStudentsBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      const section = document.getElementById('allStudentsSection');
+      if (section.style.display === 'none') {
+        section.style.display = '';
+        fetchAllStudents();
+      } else {
+        section.style.display = 'none';
+      }
+    });
+
+    let allStudentsData = [];
+    async function fetchAllStudents() {
+      if (!token) return;
+      const tableDiv = document.getElementById('allStudentsTable');
+      tableDiv.innerHTML = '<div class="text-center text-muted">Loading...</div>';
+      const res = await fetch('/api/admin/all', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      const data = await res.json();
+      if (res.ok && Array.isArray(data)) {
+        allStudentsData = data;
+        if (data.length === 0) {
+          tableDiv.innerHTML = '<div class="alert alert-info">No approved students found.</div>';
+          return;
+        }
+        renderStudentTable(data);
+      } else {
+        tableDiv.innerHTML = `<div class='alert alert-danger'>${data.message || 'Failed to load students.'}</div>`;
+      }
+    }
+
+    // Render the student table with Bootstrap styling
+    function renderStudentTable(students) {
+      const tableDiv = document.getElementById('allStudentsTable');
+      if (!students.length) {
+        tableDiv.innerHTML = '<div class="alert alert-info">No students found.</div>';
+        return;
+      }
+      let html = `<div class="table-responsive"><table class="table table-striped table-hover align-middle">
+        <thead class="table-primary">
+          <tr>
+            <th scope="col">Roll No</th>
+            <th scope="col">Photo</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">DOB</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Address</th>
+          </tr>
+        </thead>
+        <tbody>`;
+      for (const student of students) {
+        html += `<tr>
+          <td>${student.rollNo || '-'}</td>
+          <td><img src="/uploads/${student.photo}" width="48" height="48" class="rounded-circle border border-2" style="object-fit:cover;"/></td>
+          <td class="fw-semibold">${student.fullName}</td>
+          <td>${student.email}</td>
+          <td>${student.mobile}</td>
+          <td>${student.dob ? new Date(student.dob).toLocaleDateString() : '-'}</td>
+          <td>${student.gender || '-'}</td>
+          <td>${student.address || '-'}</td>
+        </tr>`;
+      }
+      html += '</tbody></table></div>';
+      tableDiv.innerHTML = html;
+    }
+
+    // Filter logic
+    document.getElementById('studentFilter').addEventListener('input', function(e) {
+      const value = e.target.value.toLowerCase();
+      const filtered = allStudentsData.filter(s =>
+        (s.fullName && s.fullName.toLowerCase().includes(value)) ||
+        (s.email && s.email.toLowerCase().includes(value)) ||
+        (s.mobile && s.mobile.toLowerCase().includes(value)) ||
+        (s.gender && s.gender.toLowerCase().includes(value)) ||
+        (s.address && s.address.toLowerCase().includes(value))
+      );
+      renderStudentTable(filtered);
     });
   </script>
 </body>
