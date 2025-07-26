@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIRTI JAIN PATHSHALA | Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #f8fafc; }
+    .hero {
+      padding: 4rem 0 3rem 0;
+      background: linear-gradient(90deg, #7f53ac 0%, #f953c6 100%);
+      color: #fff;
+      border-radius: 0 0 2rem 2rem;
+      box-shadow: 0 4px 24px #7f53ac22;
+      text-align: center;
+    }
+    .hero h1 { font-weight: bold; letter-spacing: 1px; }
+    .hero p { font-size: 1.25rem; }
+    .main-actions { margin-top: 2.5rem; }
+    .main-actions .btn { min-width: 180px; margin-bottom: 1rem; font-weight: 500; border-radius: 10px; font-size: 1.15rem; }
+    .main-actions .btn-login {
+      background: #6c47a6;
+      color: #fff;
+      border: none;
+    }
+    .main-actions .btn-login:hover, .main-actions .btn-login:focus {
+      background: #543484;
+      color: #fff;
+    }
+    .main-actions .btn-register {
+      background: #fff;
+      color: #6c47a6;
+      border: 2px solid #6c47a6;
+    }
+    .main-actions .btn-register:hover, .main-actions .btn-register:focus {
+      background: #6c47a6;
+      color: #fff;
+      border: 2px solid #6c47a6;
+    }
+    .main-actions .btn-student {
+      background: #ff4fcf;
+      color: #fff;
+      border: none;
+    }
+    .main-actions .btn-student:hover, .main-actions .btn-student:focus {
+      background: #d900a9;
+      color: #fff;
+    }
+    .card-cta { max-width: 420px; margin: 2rem auto 0 auto; box-shadow: 0 0 24px #e3e6f0; border-radius: 1rem; }
+    .navbar { background: linear-gradient(90deg, #7f53ac 0%, #f953c6 100%) !important; }
+    .navbar .navbar-brand { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/index.html">VIRTI JAIN PATHSHALA</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto" id="navLinks">
+          <!-- Links will be injected by JS -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section class="hero">
+    <div class="container">
+      <h1 class="mb-3">Welcome to VIRTI JAIN PATHSHALA</h1>
+      <p class="mb-4">A modern platform for administrators, teachers, and students. Please login or register to access your dashboard.</p>
+      <div class="main-actions" id="mainActions">
+        <!-- Buttons will be injected by JS -->
+      </div>
+    </div>
+  </section>
+  <div class="card card-cta bg-white text-center p-4 mt-4">
+    <h5 class="mb-3">Need help?</h5>
+    <p class="mb-2">Contact your institute admin for support or account approval.</p>
+  </div>
+  <script>
+    function renderNavAndActions() {
+      const token = localStorage.getItem('token');
+      const navLinks = document.getElementById('navLinks');
+      const mainActions = document.getElementById('mainActions');
+      if (token) {
+        let adminType = null;
+        let fullName = '';
+        try {
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          adminType = payload.adminType;
+          fullName = payload.fullName || '';
+        } catch (e) {}
+        let dashboardLink = '';
+        if (adminType === 'Super Admin') {
+          dashboardLink = '<a href="/profile/superadmin.html" class="btn btn-warning btn-lg me-2">Super Admin Panel</a>';
+        } else if (adminType === 'ADMIN') {
+          dashboardLink = '<a href="/panel/admin.html" class="btn btn-login btn-lg me-2">Admin Panel</a>';
+        } else if (adminType === 'TEACHER') {
+          dashboardLink = '<a href="/panel/teacher.html" class="btn btn-success btn-lg me-2">Teacher Panel</a>';
+        } else if (adminType === 'STUDENT') {
+          dashboardLink = '<a href="/panel/student.html" class="btn btn-student btn-lg me-2">Student Panel</a>';
+        }
+        navLinks.innerHTML = `
+          <li class="nav-item"><span class="nav-link disabled">${fullName ? fullName : adminType}</span></li>
+          <li class="nav-item"><a class="nav-link" href="/profile/view.html">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" id="logoutBtn">Logout</a></li>
+        `;
+        mainActions.innerHTML = `
+          ${dashboardLink}
+          <a href="/profile/view.html" class="btn btn-outline-secondary btn-lg me-2">View Profile</a>
+          <button class="btn btn-outline-danger btn-lg" id="logoutBtn2">Logout</button>
+        `;
+      } else {
+        navLinks.innerHTML = `
+          <li class="nav-item"><a class="nav-link" href="/auth/login.html">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="/auth/register.html">Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="/auth/register-student.html">Student Registration</a></li>
+        `;
+        mainActions.innerHTML = `
+          <a href="/auth/login.html" class="btn btn-login btn-lg me-2">Login</a>
+          <a href="/auth/register.html" class="btn btn-register btn-lg me-2">Register (Admin/Teacher)</a>
+          <a href="/auth/register-student.html" class="btn btn-student btn-lg">Student Registration</a>
+        `;
+      }
+      // Logout functionality
+      document.querySelectorAll('#logoutBtn, #logoutBtn2').forEach(btn => {
+        btn && btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          localStorage.removeItem('token');
+          window.location.reload();
+        });
+      });
+    }
+    renderNavAndActions();
+  </script>
+</body>
+</html>
