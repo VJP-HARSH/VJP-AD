@@ -40,6 +40,8 @@ connectDB().then(async () => {
     console.log(`API Pending Requests  [GET]    http://localhost:${PORT}/api/admin/pending`);
     console.log(`API Approve           [PUT]    http://localhost:${PORT}/api/admin/approve/:adminId`);
     console.log(`API Reject            [DELETE] http://localhost:${PORT}/api/admin/reject/:adminId`);
+    console.log(`API Dashboard Stats   [GET]    http://localhost:${PORT}/api/admin/stats`);
+    console.log(`API All Teachers      [GET]    http://localhost:${PORT}/api/admin/teachers`);
     console.log('================================================');
     console.log(`Server running on port ${PORT}`);
   });

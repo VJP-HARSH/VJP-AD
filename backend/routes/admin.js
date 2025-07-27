@@ -36,4 +36,13 @@ router.delete('/reject/:adminId', auth, adminController.rejectAdmin);
 // Get all approved students (for teacher dashboard)
 router.get('/all', auth, adminController.getAllStudents);
 
+// Get dashboard statistics
+router.get('/stats', auth, adminController.getDashboardStats);
+
+// Get all approved teachers (Super Admin only)
+router.get('/teachers', auth, adminController.getAllTeachers);
+
+// Test authentication endpoint
+router.get('/test-auth', auth, adminController.testAuth);
+
 module.exports = router; 
