@@ -45,4 +45,7 @@ router.get('/teachers', auth, adminController.getAllTeachers);
 // Test authentication endpoint
 router.get('/test-auth', auth, adminController.testAuth);
 
+// Get all users (Super Admin only)
+router.get('/users', auth, adminController.getAllUsers);
+
 module.exports = router; 

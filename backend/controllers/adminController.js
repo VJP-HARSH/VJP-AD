@@ -299,4 +299,23 @@ exports.testAuth = async (req, res) => {
     console.error('Error in testAuth:', err);
     res.status(500).json({ message: 'Test failed.', error: err.message });
   }
+};
+
+// Get all users (Super Admin only)
+exports.getAllUsers = async (req, res) => {
+  try {
+    const requester = await Admin.findById(req.user.id);
+    if (!requester || requester.adminType !== 'Super Admin') {
+      return res.status(403).json({ message: 'Only Super Admin can view all users.' });
+    }
+    
+    const users = await Admin.find({ 
+      adminType: { $ne: 'Super Admin' },
+      isApproved: true 
+    }).select('-password');
+    
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch users.', error: err.message });
+  }
 }; 

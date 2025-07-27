@@ -3,120 +3,1312 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VIRTI JAIN PATHSHALA | Super Admin</title>
+  <title>VIRTI JAIN PATHSHALA | Super Admin Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    body { background: #f8fafc; }
-    .profile-card { max-width: 480px; margin: 2rem auto; box-shadow: 0 0 24px #e3e6f0; border-radius: 1rem; }
-    .profile-photo { width: 120px; height: 120px; object-fit: cover; border-radius: 50%; border: 4px solid #fff; margin-top: -60px; box-shadow: 0 2px 8px #0001; }
-    .profile-header { background: #ffc107; border-radius: 1rem 1rem 0 0; padding: 2rem 1rem 1rem 1rem; color: #212529; text-align: center; }
-    .profile-body { padding: 2rem 1.5rem 1.5rem 1.5rem; }
-    .requests-section { max-width: 900px; margin: 2rem auto; }
+    :root {
+      --primary-color: #ffc107;
+      --primary-dark: #e0a800;
+      --secondary-color: #198754;
+      --accent-color: #0d6efd;
+      --light-bg: #f8fafc;
+      --card-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      --hover-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--light-bg);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      color: #333;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 280px;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-header {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-header h3 {
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-header p {
+      margin: 0.5rem 0 0 0;
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+
+    .nav-menu {
+      padding: 1.5rem 0;
+    }
+
+    .nav-item {
+      margin: 0.25rem 1rem;
+    }
+
+    .nav-link {
+      color: #333;
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background: rgba(0, 0, 0, 0.1);
+      color: #000;
+      transform: translateX(5px);
+    }
+
+    .nav-link.active {
+      background: rgba(0, 0, 0, 0.15);
+      color: #000;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-link i {
+      margin-right: 12px;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 280px;
+      min-height: 100vh;
+      transition: all 0.3s ease;
+    }
+
+    /* Top Navigation */
+    .top-nav {
+      background: #fff;
+      padding: 1rem 2rem;
+      box-shadow: var(--card-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .top-nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .welcome-text {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .superadmin-name {
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+
+    .logout-btn {
+      background: linear-gradient(45deg, #dc3545, #c82333);
+      border: none;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+    }
+
+    .logout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(220, 53, 69, 0.4);
+      background: linear-gradient(45deg, #c82333, #bd2130);
+    }
+
+    /* Dashboard Content */
+    .dashboard-content {
+      padding: 2rem;
+    }
+
+    /* Dashboard Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--hover-shadow);
+    }
+
+    .stat-card.blue { border-left-color: var(--accent-color); }
+    .stat-card.green { border-left-color: var(--secondary-color); }
+    .stat-card.orange { border-left-color: #fd7e14; }
+
+    .stat-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      opacity: 0.8;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: #666;
+      font-weight: 500;
+    }
+
+    /* Content Sections */
+    .content-section {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      color: #333;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-header h4 {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .section-body {
+      padding: 2rem;
+    }
+
+    /* Table Styles */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 10px;
+    }
+
+    .custom-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .custom-table th {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      color: #495057;
+      font-weight: 600;
+      padding: 1rem;
+      border-bottom: 2px solid #dee2e6;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+    }
+
+    .custom-table td {
+      padding: 1rem;
+      border-bottom: 1px solid #f1f3f4;
+      vertical-align: middle;
+    }
+
+    .custom-table tbody tr:hover {
+      background: #f8f9fa;
+      transform: scale(1.01);
+      transition: all 0.2s ease;
+    }
+
+    .user-photo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Alert Styles */
+    .custom-alert {
+      border-radius: 15px;
+      border: none;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+
+    .custom-alert.success {
+      background: linear-gradient(135deg, #d4edda, #c3e6cb);
+      color: #155724;
+    }
+
+    .custom-alert.info {
+      background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+      color: #0c5460;
+    }
+
+    .custom-alert.danger {
+      background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+      color: #721c24;
+    }
+
+    /* Loading Animation */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      
+      .sidebar.active {
+        transform: translateX(0);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .dashboard-content {
+        padding: 1rem;
+      }
+
+      .top-nav {
+        padding: 1rem;
+      }
+
+      .section-header {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+
+      .section-body {
+        padding: 1rem;
+      }
+    }
+
+    /* Toggle Button for Mobile */
+    .sidebar-toggle {
+      display: none;
+      background: var(--primary-color);
+      border: none;
+      color: #333;
+      padding: 0.5rem;
+      border-radius: 5px;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1001;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-toggle:hover {
+      background: var(--primary-dark);
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .sidebar-toggle {
+        display: block;
+      }
+    }
+
+    /* Overlay for mobile */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar-overlay.active {
+        display: block;
+      }
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: #666;
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+
+    .empty-state h5 {
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+
+    /* Profile Card */
+    .profile-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .profile-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      padding: 2rem;
+      text-align: center;
+      color: #333;
+    }
+
+    .profile-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1rem;
+    }
+
+    .profile-body {
+      padding: 2rem;
+    }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-warning">
-    <div class="container">
-      <a class="navbar-brand text-dark" href="/index.html">VIRTI JAIN PATHSHALA</a>
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link text-dark" href="/profile/edit.html">Edit Profile</a></li>
-        <li class="nav-item"><a class="nav-link text-dark" href="#" id="logoutBtn">Logout</a></li>
-      </ul>
+  <!-- Mobile Toggle Button -->
+  <button class="sidebar-toggle" id="sidebarToggle">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h3><i class="fas fa-crown me-2"></i>SUPER ADMIN</h3>
+      <p>Master Dashboard</p>
+    </div>
+    
+    <div class="nav-menu">
+      <div class="nav-item">
+        <a class="nav-link active" href="#" data-section="dashboard">
+          <i class="fas fa-tachometer-alt"></i>
+          Dashboard
+        </a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#" data-section="students">
+          <i class="fas fa-user-graduate"></i>
+          All Students
+        </a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#" data-section="teachers">
+          <i class="fas fa-chalkboard-teacher"></i>
+          All Teachers
+        </a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#" data-section="admins">
+          <i class="fas fa-users-cog"></i>
+          All Admins
+        </a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#" data-section="pending">
+          <i class="fas fa-clock"></i>
+          Pending Requests
+        </a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#" data-section="profile">
+          <i class="fas fa-user"></i>
+          My Profile
+        </a>
+      </div>
     </div>
   </nav>
-  <div class="profile-card bg-white">
-    <div class="profile-header">
-      <img id="profilePhoto" src="/uploads/default.png" class="profile-photo" alt="Profile Photo">
-      <h3 id="profileName" class="mt-3 mb-0">Super Admin</h3>
-      <span class="badge bg-dark">Super Admin</span>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Top Navigation -->
+    <div class="top-nav">
+      <div class="top-nav-content">
+        <div class="welcome-text">
+          Welcome back, <span class="superadmin-name" id="superadminName">Super Admin</span>! 👑
+        </div>
+        <button class="logout-btn" id="logoutBtn">
+          <i class="fas fa-sign-out-alt me-2"></i>Logout
+        </button>
+      </div>
     </div>
-    <div class="profile-body text-center">
-      <p class="mb-2"><strong>Email:</strong> <span id="profileEmail"></span></p>
-      <p class="mb-2"><strong>Mobile:</strong> <span id="profileMobile"></span></p>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-content">
+      <!-- Dashboard Section -->
+      <div id="dashboardSection" class="content-section">
+        <div class="section-header">
+          <h4><i class="fas fa-tachometer-alt me-2"></i>Super Admin Dashboard</h4>
+          <button class="btn btn-light btn-sm" onclick="superAdminDashboard.loadDashboardStats()" title="Refresh Data">
+            <i class="fas fa-sync-alt"></i> Refresh
+          </button>
+        </div>
+        <div class="section-body">
+          <!-- Statistics Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon text-primary">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+              <div class="stat-number" id="totalStudents">0</div>
+              <div class="stat-label">Total Students</div>
+            </div>
+            
+            <div class="stat-card blue">
+              <div class="stat-icon text-primary">
+                <i class="fas fa-chalkboard-teacher"></i>
+              </div>
+              <div class="stat-number" id="totalTeachers">0</div>
+              <div class="stat-label">Total Teachers</div>
+            </div>
+            
+            <div class="stat-card green">
+              <div class="stat-icon text-success">
+                <i class="fas fa-users-cog"></i>
+              </div>
+              <div class="stat-number" id="totalAdmins">0</div>
+              <div class="stat-label">Total Admins</div>
+            </div>
+            
+            <div class="stat-card orange">
+              <div class="stat-icon text-warning">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="stat-number" id="pendingRequests">0</div>
+              <div class="stat-label">Pending Requests</div>
+            </div>
+          </div>
+
+          <!-- Welcome Message -->
+          <div class="custom-alert info">
+            <h5><i class="fas fa-info-circle me-2"></i>Welcome to VIRTI JAIN PATHSHALA Super Admin Panel</h5>
+            <p class="mb-0">You have complete control over the entire system. Manage all users, approve requests, and monitor the institution's data.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Students Section -->
+      <div id="studentsSection" class="content-section" style="display: none;">
+        <div class="section-header">
+          <h4><i class="fas fa-user-graduate me-2"></i>All Students</h4>
+          <div>
+            <input type="text" class="form-control" id="studentFilter" placeholder="Search students..." style="width: 300px;">
+          </div>
+        </div>
+        <div class="section-body">
+          <div id="studentsTable">
+            <div class="empty-state">
+              <i class="fas fa-spinner loading-spinner"></i>
+              <h5>Loading students...</h5>
+              <p>Please wait while we fetch the student data.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teachers Section -->
+      <div id="teachersSection" class="content-section" style="display: none;">
+        <div class="section-header">
+          <h4><i class="fas fa-chalkboard-teacher me-2"></i>All Teachers</h4>
+          <div>
+            <input type="text" class="form-control" id="teacherFilter" placeholder="Search teachers..." style="width: 300px;">
+          </div>
+        </div>
+        <div class="section-body">
+          <div id="teachersTable">
+            <div class="empty-state">
+              <i class="fas fa-spinner loading-spinner"></i>
+              <h5>Loading teachers...</h5>
+              <p>Please wait while we fetch the teacher data.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admins Section -->
+      <div id="adminsSection" class="content-section" style="display: none;">
+        <div class="section-header">
+          <h4><i class="fas fa-users-cog me-2"></i>All Admins</h4>
+          <div>
+            <input type="text" class="form-control" id="adminFilter" placeholder="Search admins..." style="width: 300px;">
+          </div>
+        </div>
+        <div class="section-body">
+          <div id="adminsTable">
+            <div class="empty-state">
+              <i class="fas fa-spinner loading-spinner"></i>
+              <h5>Loading admins...</h5>
+              <p>Please wait while we fetch the admin data.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Requests Section -->
+      <div id="pendingSection" class="content-section" style="display: none;">
+        <div class="section-header">
+          <h4><i class="fas fa-clock me-2"></i>Pending Requests</h4>
+        </div>
+        <div class="section-body">
+          <div id="pendingTable">
+            <div class="empty-state">
+              <i class="fas fa-spinner loading-spinner"></i>
+              <h5>Loading pending requests...</h5>
+              <p>Please wait while we fetch the pending data.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Section -->
+      <div id="profileSection" class="content-section" style="display: none;">
+        <div class="section-header">
+          <h4><i class="fas fa-user me-2"></i>My Profile</h4>
+        </div>
+        <div class="section-body">
+          <div id="profileContent">
+            <div class="text-center">
+              <i class="fas fa-spinner loading-spinner"></i>
+              <p class="mt-2">Loading profile...</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="requests-section bg-white p-4 rounded shadow-sm">
-    <h4 class="mb-4">Pending Admin Requests</h4>
-    <div id="requestsTable">
-      <div class="text-center text-muted">Loading...</div>
-    </div>
-  </div>
+
   <script>
-    // Logout functionality
-    document.getElementById('logoutBtn').addEventListener('click', function(e) {
-      e.preventDefault();
-      localStorage.removeItem('token');
-      window.location.href = '/auth/login.html';
-    });
-    async function fetchProfile() {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        window.location.href = '/auth/login.html';
-        return;
+    class SuperAdminDashboard {
+      constructor() {
+        this.token = localStorage.getItem('token');
+        this.currentSection = 'dashboard';
+        this.studentsData = [];
+        this.teachersData = [];
+        this.adminsData = [];
+        this.pendingData = [];
+        this.init();
       }
-      const res = await fetch('/api/admin/me', {
-        headers: { 'Authorization': 'Bearer ' + token }
-      });
-      const data = await res.json();
-      if (res.ok) {
-        document.getElementById('profilePhoto').src = '/uploads/' + data.photo;
-        document.getElementById('profileName').textContent = data.fullName;
-        document.getElementById('profileEmail').textContent = data.email;
-        document.getElementById('profileMobile').textContent = data.mobile;
+
+      init() {
+        this.setupEventListeners();
+        this.loadSuperAdminInfo();
+        this.loadDashboardStats();
       }
-    }
-    async function fetchRequests() {
-      const token = localStorage.getItem('token');
-      const tableDiv = document.getElementById('requestsTable');
-      const res = await fetch('/api/admin/pending', {
-        headers: { 'Authorization': 'Bearer ' + token }
-      });
-      const data = await res.json();
-      if (res.ok && Array.isArray(data)) {
-        if (data.length === 0) {
-          tableDiv.innerHTML = '<div class="alert alert-success">No pending requests.</div>';
+
+      setupEventListeners() {
+        // Navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const section = e.currentTarget.dataset.section;
+            this.switchSection(section);
+          });
+        });
+
+        // Logout button
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+          e.preventDefault();
+          this.logout();
+        });
+
+        // Mobile sidebar toggle
+        document.getElementById('sidebarToggle').addEventListener('click', () => {
+          document.getElementById('sidebar').classList.toggle('active');
+          document.getElementById('sidebarToggle').classList.toggle('active');
+          document.getElementById('sidebarOverlay').classList.toggle('active');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+          if (window.innerWidth <= 768) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.getElementById('sidebarToggle');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (!sidebar.contains(e.target) && !toggle.contains(e.target) && (!overlay || !overlay.contains(e.target))) {
+              sidebar.classList.remove('active');
+              toggle.classList.remove('active');
+              overlay.classList.remove('active');
+            }
+          }
+        });
+
+        // Search filters
+        document.getElementById('studentFilter')?.addEventListener('input', (e) => {
+          const value = e.target.value.toLowerCase();
+          const filtered = this.studentsData.filter(s =>
+            (s.fullName && s.fullName.toLowerCase().includes(value)) ||
+            (s.email && s.email.toLowerCase().includes(value)) ||
+            (s.mobile && s.mobile.toLowerCase().includes(value))
+          );
+          this.renderStudentsTable(filtered);
+        });
+
+        document.getElementById('teacherFilter')?.addEventListener('input', (e) => {
+          const value = e.target.value.toLowerCase();
+          const filtered = this.teachersData.filter(t =>
+            (t.fullName && t.fullName.toLowerCase().includes(value)) ||
+            (t.email && t.email.toLowerCase().includes(value)) ||
+            (t.mobile && t.mobile.toLowerCase().includes(value))
+          );
+          this.renderTeachersTable(filtered);
+        });
+
+        document.getElementById('adminFilter')?.addEventListener('input', (e) => {
+          const value = e.target.value.toLowerCase();
+          const filtered = this.adminsData.filter(a =>
+            (a.fullName && a.fullName.toLowerCase().includes(value)) ||
+            (a.email && a.email.toLowerCase().includes(value)) ||
+            (a.mobile && a.mobile.toLowerCase().includes(value))
+          );
+          this.renderAdminsTable(filtered);
+        });
+      }
+
+      switchSection(section) {
+        // Update navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+          link.classList.remove('active');
+        });
+        document.querySelector(`[data-section="${section}"]`).classList.add('active');
+
+        // Hide all sections
+        document.querySelectorAll('.content-section').forEach(sectionEl => {
+          sectionEl.style.display = 'none';
+        });
+
+        // Show selected section
+        document.getElementById(`${section}Section`).style.display = 'block';
+
+        // Load section-specific data
+        switch(section) {
+          case 'students':
+            this.loadStudents();
+            break;
+          case 'teachers':
+            this.loadTeachers();
+            break;
+          case 'admins':
+            this.loadAdmins();
+            break;
+          case 'pending':
+            this.loadPendingRequests();
+            break;
+          case 'profile':
+            this.loadProfile();
+            break;
+          case 'dashboard':
+            this.loadDashboardStats();
+            break;
+        }
+
+        this.currentSection = section;
+      }
+
+      async loadSuperAdminInfo() {
+        if (this.token) {
+          try {
+            const payload = JSON.parse(atob(this.token.split('.')[1]));
+            console.log('Token payload:', payload);
+            
+            // Try to fetch actual user data from server
+            const response = await fetch('/api/admin/me', {
+              headers: { 'Authorization': 'Bearer ' + this.token }
+            });
+            
+            if (response.ok) {
+              const userData = await response.json();
+              document.getElementById('superadminName').textContent = userData.fullName || 'Super Admin';
+              console.log('User data from server:', userData);
+            } else {
+              // Fallback to token data
+              document.getElementById('superadminName').textContent = payload.fullName || 'Super Admin';
+            }
+          } catch (e) {
+            console.error('Error loading super admin info:', e);
+            document.getElementById('superadminName').textContent = 'Super Admin';
+          }
+        } else {
+          console.error('No token found in localStorage');
+          document.getElementById('superadminName').textContent = 'Super Admin';
+        }
+      }
+
+      async loadDashboardStats() {
+        if (!this.token) return;
+
+        try {
+          const response = await fetch('/api/admin/stats', {
+            headers: { 'Authorization': 'Bearer ' + this.token }
+          });
+          
+          if (response.ok) {
+            const stats = await response.json();
+            
+            document.getElementById('totalStudents').textContent = stats.totalStudents;
+            document.getElementById('totalTeachers').textContent = stats.totalTeachers;
+            document.getElementById('totalAdmins').textContent = stats.totalAdmins;
+            document.getElementById('pendingRequests').textContent = stats.pendingRequests;
+          } else {
+            console.error('Failed to load dashboard stats');
+          }
+        } catch (error) {
+          console.error('Error loading dashboard stats:', error);
+        }
+      }
+
+      async loadStudents() {
+        if (!this.token) return;
+        
+        const tableDiv = document.getElementById('studentsTable');
+        tableDiv.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-spinner loading-spinner"></i>
+            <h5>Loading students...</h5>
+            <p>Please wait while we fetch the student data.</p>
+          </div>
+        `;
+
+        try {
+          const response = await fetch('/api/admin/users', {
+            headers: { 'Authorization': 'Bearer ' + this.token }
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok && Array.isArray(data)) {
+            const students = data.filter(user => user.adminType === 'STUDENT');
+            this.studentsData = students;
+            this.renderStudentsTable(students);
+          } else {
+            throw new Error(data.message || 'Failed to load students');
+          }
+        } catch (error) {
+          console.error('Error loading students:', error);
+          tableDiv.innerHTML = `
+            <div class="custom-alert danger">
+              <h5><i class="fas fa-exclamation-triangle me-2"></i>Error Loading Students</h5>
+              <p>${error.message}</p>
+            </div>
+          `;
+        }
+      }
+
+      renderStudentsTable(students) {
+        const tableDiv = document.getElementById('studentsTable');
+        
+        if (!students.length) {
+          tableDiv.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-user-graduate"></i>
+              <h5>No Students Found</h5>
+              <p>There are no approved students in the system yet.</p>
+            </div>
+          `;
           return;
         }
-        let html = '<table class="table table-bordered table-hover"><thead><tr><th>Photo</th><th>Name</th><th>Email</th><th>Mobile</th><th>Role</th><th>Actions</th></tr></thead><tbody>';
-        for (const admin of data) {
-          html += `<tr>
-            <td><img src="/uploads/${admin.photo}" width="48" height="48" class="rounded-circle"/></td>
-            <td>${admin.fullName}</td>
-            <td>${admin.email}</td>
-            <td>${admin.mobile}</td>
-            <td>${admin.adminType}</td>
-            <td>
-              <button class="btn btn-success btn-sm me-2" onclick="approveAdmin('${admin._id}')">Approve</button>
-              <button class="btn btn-danger btn-sm" onclick="rejectAdmin('${admin._id}')">Reject</button>
-            </td>
-          </tr>`;
-        }
-        html += '</tbody></table>';
+
+        let html = `
+          <div class="table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Roll No</th>
+                  <th>Photo</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>DOB</th>
+                  <th>Gender</th>
+                  <th>Address</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+
+        students.forEach(student => {
+          const photoUrl = student.photo ? `/uploads/${student.photo}` : '/uploads/default.png';
+          const dob = student.dob ? new Date(student.dob).toLocaleDateString() : '-';
+          
+          html += `
+            <tr>
+              <td>${student.rollNo || '-'}</td>
+              <td><img src="${photoUrl}" alt="${student.fullName}" class="user-photo" onerror="this.src='/uploads/default.png'"></td>
+              <td class="fw-semibold">${student.fullName}</td>
+              <td>${student.email}</td>
+              <td>${student.mobile}</td>
+              <td>${dob}</td>
+              <td>${student.gender || '-'}</td>
+              <td>${student.address || '-'}</td>
+            </tr>
+          `;
+        });
+
+        html += '</tbody></table></div>';
         tableDiv.innerHTML = html;
-      } else {
-        tableDiv.innerHTML = `<div class='alert alert-danger'>${data.message || 'Failed to load requests.'}</div>`;
+      }
+
+      async loadTeachers() {
+        if (!this.token) return;
+        
+        const tableDiv = document.getElementById('teachersTable');
+        tableDiv.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-spinner loading-spinner"></i>
+            <h5>Loading teachers...</h5>
+            <p>Please wait while we fetch the teacher data.</p>
+          </div>
+        `;
+
+        try {
+          const response = await fetch('/api/admin/users', {
+            headers: { 'Authorization': 'Bearer ' + this.token }
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok && Array.isArray(data)) {
+            const teachers = data.filter(user => user.adminType === 'TEACHER');
+            this.teachersData = teachers;
+            this.renderTeachersTable(teachers);
+          } else {
+            throw new Error(data.message || 'Failed to load teachers');
+          }
+        } catch (error) {
+          console.error('Error loading teachers:', error);
+          tableDiv.innerHTML = `
+            <div class="custom-alert danger">
+              <h5><i class="fas fa-exclamation-triangle me-2"></i>Error Loading Teachers</h5>
+              <p>${error.message}</p>
+            </div>
+          `;
+        }
+      }
+
+      renderTeachersTable(teachers) {
+        const tableDiv = document.getElementById('teachersTable');
+        
+        if (!teachers.length) {
+          tableDiv.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-chalkboard-teacher"></i>
+              <h5>No Teachers Found</h5>
+              <p>There are no approved teachers in the system yet.</p>
+            </div>
+          `;
+          return;
+        }
+
+        let html = `
+          <div class="table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>DOB</th>
+                  <th>Gender</th>
+                  <th>Address</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+
+        teachers.forEach(teacher => {
+          const photoUrl = teacher.photo ? `/uploads/${teacher.photo}` : '/uploads/default.png';
+          const dob = teacher.dob ? new Date(teacher.dob).toLocaleDateString() : '-';
+          
+          html += `
+            <tr>
+              <td><img src="${photoUrl}" alt="${teacher.fullName}" class="user-photo" onerror="this.src='/uploads/default.png'"></td>
+              <td class="fw-semibold">${teacher.fullName}</td>
+              <td>${teacher.email}</td>
+              <td>${teacher.mobile}</td>
+              <td>${dob}</td>
+              <td>${teacher.gender || '-'}</td>
+              <td>${teacher.address || '-'}</td>
+            </tr>
+          `;
+        });
+
+        html += '</tbody></table></div>';
+        tableDiv.innerHTML = html;
+      }
+
+      async loadAdmins() {
+        if (!this.token) return;
+        
+        const tableDiv = document.getElementById('adminsTable');
+        tableDiv.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-spinner loading-spinner"></i>
+            <h5>Loading admins...</h5>
+            <p>Please wait while we fetch the admin data.</p>
+          </div>
+        `;
+
+        try {
+          // Get all users and filter for ADMIN type
+          const response = await fetch('/api/admin/users', {
+            headers: { 'Authorization': 'Bearer ' + this.token }
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok && Array.isArray(data)) {
+            const admins = data.filter(user => user.adminType === 'ADMIN');
+            this.adminsData = admins;
+            this.renderAdminsTable(admins);
+          } else {
+            throw new Error(data.message || 'Failed to load admins');
+          }
+        } catch (error) {
+          console.error('Error loading admins:', error);
+          tableDiv.innerHTML = `
+            <div class="custom-alert danger">
+              <h5><i class="fas fa-exclamation-triangle me-2"></i>Error Loading Admins</h5>
+              <p>${error.message}</p>
+            </div>
+          `;
+        }
+      }
+
+      renderAdminsTable(admins) {
+        const tableDiv = document.getElementById('adminsTable');
+        
+        if (!admins.length) {
+          tableDiv.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-users-cog"></i>
+              <h5>No Admins Found</h5>
+              <p>There are no approved admins in the system yet.</p>
+            </div>
+          `;
+          return;
+        }
+
+        let html = `
+          <div class="table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>DOB</th>
+                  <th>Gender</th>
+                  <th>Address</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+
+        admins.forEach(admin => {
+          const photoUrl = admin.photo ? `/uploads/${admin.photo}` : '/uploads/default.png';
+          const dob = admin.dob ? new Date(admin.dob).toLocaleDateString() : '-';
+          
+          html += `
+            <tr>
+              <td><img src="${photoUrl}" alt="${admin.fullName}" class="user-photo" onerror="this.src='/uploads/default.png'"></td>
+              <td class="fw-semibold">${admin.fullName}</td>
+              <td>${admin.email}</td>
+              <td>${admin.mobile}</td>
+              <td>${dob}</td>
+              <td>${admin.gender || '-'}</td>
+              <td>${admin.address || '-'}</td>
+            </tr>
+          `;
+        });
+
+        html += '</tbody></table></div>';
+        tableDiv.innerHTML = html;
+      }
+
+      async loadPendingRequests() {
+        if (!this.token) return;
+        
+        const tableDiv = document.getElementById('pendingTable');
+        tableDiv.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-spinner loading-spinner"></i>
+            <h5>Loading pending requests...</h5>
+            <p>Please wait while we fetch the pending data.</p>
+          </div>
+        `;
+
+        try {
+          const response = await fetch('/api/admin/pending', {
+            headers: { 'Authorization': 'Bearer ' + this.token }
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok && Array.isArray(data)) {
+            this.pendingData = data;
+            this.renderPendingTable(data);
+          } else {
+            throw new Error(data.message || 'Failed to load pending requests');
+          }
+        } catch (error) {
+          console.error('Error loading pending requests:', error);
+          tableDiv.innerHTML = `
+            <div class="custom-alert danger">
+              <h5><i class="fas fa-exclamation-triangle me-2"></i>Error Loading Pending Requests</h5>
+              <p>${error.message}</p>
+            </div>
+          `;
+        }
+      }
+
+      renderPendingTable(pending) {
+        const tableDiv = document.getElementById('pendingTable');
+        
+        if (!pending.length) {
+          tableDiv.innerHTML = `
+            <div class="custom-alert success">
+              <h5><i class="fas fa-check-circle me-2"></i>No Pending Requests</h5>
+              <p>All requests have been processed.</p>
+            </div>
+          `;
+          return;
+        }
+
+        let html = `
+          <div class="table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>Role</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+
+        pending.forEach(user => {
+          const photoUrl = user.photo ? `/uploads/${user.photo}` : '/uploads/default.png';
+          
+          html += `
+            <tr>
+              <td><img src="${photoUrl}" alt="${user.fullName}" class="user-photo" onerror="this.src='/uploads/default.png'"></td>
+              <td class="fw-semibold">${user.fullName}</td>
+              <td>${user.email}</td>
+              <td>${user.mobile}</td>
+              <td><span class="badge bg-primary">${user.adminType}</span></td>
+              <td>
+                <button class="btn btn-success btn-sm me-2" onclick="superAdminDashboard.approveUser('${user._id}')">
+                  <i class="fas fa-check"></i> Approve
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="superAdminDashboard.rejectUser('${user._id}')">
+                  <i class="fas fa-times"></i> Reject
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+
+        html += '</tbody></table></div>';
+        tableDiv.innerHTML = html;
+      }
+
+      async loadProfile() {
+        if (!this.token) return;
+        
+        const profileDiv = document.getElementById('profileContent');
+        profileDiv.innerHTML = `
+          <div class="text-center">
+            <i class="fas fa-spinner loading-spinner"></i>
+            <p class="mt-2">Loading profile...</p>
+          </div>
+        `;
+
+        try {
+          const response = await fetch('/api/admin/me', {
+            headers: { 'Authorization': 'Bearer ' + this.token }
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok) {
+            profileDiv.innerHTML = `
+              <div class="profile-card">
+                <div class="profile-header">
+                  <img src="/uploads/${data.photo || 'default.png'}" class="profile-photo" alt="Profile Photo" onerror="this.src='/uploads/default.png'">
+                  <h3 class="mb-2">${data.fullName}</h3>
+                  <span class="badge bg-dark fs-6">Super Admin</span>
+                </div>
+                <div class="profile-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <p class="mb-3"><strong><i class="fas fa-envelope me-2"></i>Email:</strong> ${data.email}</p>
+                      <p class="mb-3"><strong><i class="fas fa-phone me-2"></i>Mobile:</strong> ${data.mobile}</p>
+                      <p class="mb-3"><strong><i class="fas fa-calendar me-2"></i>Date of Birth:</strong> ${data.dob ? new Date(data.dob).toLocaleDateString() : '-'}</p>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="mb-3"><strong><i class="fas fa-venus-mars me-2"></i>Gender:</strong> ${data.gender || '-'}</p>
+                      <p class="mb-3"><strong><i class="fas fa-map-marker-alt me-2"></i>Address:</strong> ${data.address || '-'}</p>
+                      <p class="mb-3"><strong><i class="fas fa-clock me-2"></i>Joined:</strong> ${data.createdAt ? new Date(data.createdAt).toLocaleDateString() : '-'}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          } else {
+            profileDiv.innerHTML = `<div class="custom-alert danger">${data.message || 'Failed to load profile.'}</div>`;
+          }
+        } catch (error) {
+          console.error('Error loading profile:', error);
+          profileDiv.innerHTML = `<div class="custom-alert danger">Failed to load profile.</div>`;
+        }
+      }
+
+      async approveUser(id) {
+        if (!this.token) return;
+        
+        if (!confirm('Approve this user?')) return;
+
+        try {
+          const response = await fetch(`/api/admin/approve/${id}`, {
+            method: 'PUT',
+            headers: { 'Authorization': 'Bearer ' + this.token }
+          });
+          
+          if (response.ok) {
+            alert('User approved successfully!');
+            this.loadPendingRequests();
+            this.loadDashboardStats();
+          } else {
+            const data = await response.json();
+            alert(data.message || 'Approval failed.');
+          }
+        } catch (error) {
+          console.error('Error approving user:', error);
+          alert('Failed to approve user.');
+        }
+      }
+
+      async rejectUser(id) {
+        if (!this.token) return;
+        
+        if (!confirm('Reject and delete this user request?')) return;
+
+        try {
+          const response = await fetch(`/api/admin/reject/${id}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': 'Bearer ' + this.token }
+          });
+          
+          if (response.ok) {
+            alert('User request rejected and deleted!');
+            this.loadPendingRequests();
+            this.loadDashboardStats();
+          } else {
+            const data = await response.json();
+            alert(data.message || 'Rejection failed.');
+          }
+        } catch (error) {
+          console.error('Error rejecting user:', error);
+          alert('Failed to reject user.');
+        }
+      }
+
+      logout() {
+        localStorage.removeItem('token');
+        window.location.href = '/auth/login.html';
       }
     }
-    async function approveAdmin(id) {
-      const token = localStorage.getItem('token');
-      if (!confirm('Approve this admin?')) return;
-      const res = await fetch(`/api/admin/approve/${id}`, {
-        method: 'PUT',
-        headers: { 'Authorization': 'Bearer ' + token }
-      });
-      await fetchRequests();
-    }
-    async function rejectAdmin(id) {
-      const token = localStorage.getItem('token');
-      if (!confirm('Reject and delete this admin request?')) return;
-      const res = await fetch(`/api/admin/reject/${id}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': 'Bearer ' + token }
-      });
-      await fetchRequests();
-    }
-    fetchProfile();
-    fetchRequests();
+
+    // Initialize dashboard when page loads
+    let superAdminDashboard;
+    document.addEventListener('DOMContentLoaded', () => {
+      superAdminDashboard = new SuperAdminDashboard();
+      // Initialize overlay
+      document.getElementById('sidebarOverlay').classList.remove('active');
+    });
   </script>
 </body>
 </html> 

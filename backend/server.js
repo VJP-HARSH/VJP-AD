@@ -42,6 +42,7 @@ connectDB().then(async () => {
     console.log(`API Reject            [DELETE] http://localhost:${PORT}/api/admin/reject/:adminId`);
     console.log(`API Dashboard Stats   [GET]    http://localhost:${PORT}/api/admin/stats`);
     console.log(`API All Teachers      [GET]    http://localhost:${PORT}/api/admin/teachers`);
+    console.log(`API All Users         [GET]    http://localhost:${PORT}/api/admin/users`);
     console.log('================================================');
     console.log(`Server running on port ${PORT}`);
   });
