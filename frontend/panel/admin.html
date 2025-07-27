@@ -409,6 +409,134 @@
       margin-bottom: 0.5rem;
       color: #333;
     }
+
+    /* Submenu Styles */
+    .has-submenu .submenu {
+      background: #198754;
+      padding-left: 2rem;
+      border-radius: 0 0 10px 10px;
+    }
+    .has-submenu .submenu .nav-link {
+      color: #ffc107;
+      font-size: 0.95rem;
+    }
+    .has-submenu .submenu .nav-link:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* Custom style for settings tabs */
+    #settingsTabs .nav-link {
+      background: #e9ecef;
+      color: #198754;
+      border: none;
+      margin: 0 10px;
+      border-radius: 8px 8px 0 0;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s;
+      min-width: 120px;
+    }
+    #settingsTabs .nav-link.active {
+      background: #198754;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(25,135,84,0.08);
+    }
+    #settingsTabs .nav-link:hover:not(.active) {
+      background: #d1e7dd;
+      color: #146c43;
+    }
+
+    /* Settings Panel Card & Header */
+    .settings-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 0 0 2rem 0;
+      margin-top: 2rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .settings-header-bar {
+      background: linear-gradient(90deg, #198754 0%, #0d6efd 100%);
+      color: #fff;
+      border-radius: 16px 16px 0 0;
+      padding: 1.5rem 2rem 1rem 2rem;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 2px 8px rgba(25,135,84,0.08);
+    }
+    /* Dark mode styles */
+    body.dark-mode {
+      background: #181c1f !important;
+      color: #e9ecef !important;
+    }
+    body.dark-mode .settings-card {
+      background: #23272b;
+      color: #e9ecef;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    }
+    body.dark-mode .settings-header-bar {
+      background: linear-gradient(90deg, #146c43 0%, #0d6efd 100%);
+      color: #fff;
+    }
+    body.dark-mode input, body.dark-mode select, body.dark-mode textarea {
+      background: #23272b !important;
+      color: #e9ecef !important;
+      border-color: #444 !important;
+    }
+    body.dark-mode .nav-tabs .nav-link {
+      background: #23272b !important;
+      color: #fff !important;
+    }
+    body.dark-mode .nav-tabs .nav-link.active {
+      background: #0d6efd !important;
+      color: #fff !important;
+    }
+    body.dark-mode .btn {
+      border-color: #444 !important;
+    }
+    body.dark-mode .custom-alert, body.dark-mode .alert {
+      background: #23272b !important;
+      color: #fff !important;
+      border-color: #444 !important;
+    }
+    /* Sidebar collapse */
+    .sidebar.collapsed {
+      width: 70px !important;
+      min-width: 70px !important;
+      transition: width 0.3s;
+    }
+    .sidebar.collapsed .sidebar-header, .sidebar.collapsed .nav-menu, .sidebar.collapsed .nav-link span, .sidebar.collapsed .sidebar-header p {
+      display: none !important;
+    }
+    .sidebar.collapsed .nav-link i {
+      margin-right: 0 !important;
+    }
+    .main-content.sidebar-collapsed {
+      margin-left: 70px !important;
+      transition: margin-left 0.3s;
+    }
+    /* Settings submenu styles */
+    .has-submenu .submenu {
+      background: #198754;
+      padding-left: 2rem;
+      border-radius: 0 0 10px 10px;
+    }
+    .has-submenu .submenu .nav-link {
+      color: #ffc107;
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .has-submenu .submenu .nav-link.active {
+      background: #fff;
+      color: #198754;
+      font-weight: 600;
+    }
+    .has-submenu .submenu .nav-link:hover:not(.active) {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -431,32 +559,65 @@
       <div class="nav-item">
         <a class="nav-link active" href="#" data-section="dashboard">
           <i class="fas fa-tachometer-alt"></i>
-          Dashboard
+          <span data-i18n="dashboard">Dashboard</span>
         </a>
       </div>
       <div class="nav-item">
         <a class="nav-link" href="#" data-section="users">
           <i class="fas fa-users"></i>
-          Manage Users
+          <span data-i18n="manage_users">Manage Users</span>
         </a>
       </div>
       <div class="nav-item">
         <a class="nav-link" href="#" data-section="students">
           <i class="fas fa-user-graduate"></i>
-          All Students
+          <span data-i18n="all_students">All Students</span>
         </a>
       </div>
       <div class="nav-item">
         <a class="nav-link" href="#" data-section="teachers">
           <i class="fas fa-chalkboard-teacher"></i>
-          All Teachers
+          <span data-i18n="all_teachers">All Teachers</span>
         </a>
       </div>
-      <div class="nav-item">
-        <a class="nav-link" href="#" data-section="settings">
-          <i class="fas fa-cog"></i>
-          Settings
+      <div class="nav-item has-submenu">
+        <a class="nav-link" href="#" id="manageLoginMenu">
+          <i class="fas fa-user-cog"></i>
+          <span data-i18n="manage_login">Manage Login</span>
+          <i class="fas fa-chevron-down ms-2"></i>
         </a>
+        <div class="submenu" id="manageLoginSubmenu" style="display: none;">
+          <a class="nav-link" href="#" data-section="manageLoginAll">
+            <span data-i18n="all">All</span>
+          </a>
+          <a class="nav-link" href="#" data-section="manageLoginTeachers">
+            <span data-i18n="all_teachers">Teachers</span>
+          </a>
+          <a class="nav-link" href="#" data-section="manageLoginStudents">
+            <span data-i18n="all_students">Students</span>
+          </a>
+        </div>
+      </div>
+      <div class="nav-item has-submenu">
+        <a class="nav-link" href="#" id="settingsMenu">
+          <i class="fas fa-cog"></i>
+          <span data-i18n="settings">Settings</span>
+          <i class="fas fa-chevron-down ms-2"></i>
+        </a>
+        <div class="submenu" id="settingsSubmenu" style="display: none;">
+          <a class="nav-link" href="#" data-settings-tab="profile">
+            <span data-i18n="profile">Profile</span>
+          </a>
+          <a class="nav-link" href="#" data-settings-tab="security">
+            <span data-i18n="security">Security</span>
+          </a>
+          <a class="nav-link" href="#" data-settings-tab="appearance">
+            <span data-i18n="appearance">Appearance</span>
+          </a>
+          <a class="nav-link" href="#" data-settings-tab="other">
+            <span data-i18n="other">Other</span>
+          </a>
+        </div>
       </div>
     </div>
   </nav>
@@ -467,10 +628,11 @@
     <div class="top-nav">
       <div class="top-nav-content">
         <div class="welcome-text">
-          Welcome back, <span class="admin-name" id="adminName">Admin</span>! 👋
+          <span data-i18n="welcome_message">Welcome back, <span class="admin-name" id="adminName">Admin</span>! 👋</span>
         </div>
         <button class="logout-btn" id="logoutBtn">
-          <i class="fas fa-sign-out-alt me-2"></i>Logout
+          <i class="fas fa-sign-out-alt me-2"></i>
+          <span data-i18n="logout">Logout</span>
         </button>
       </div>
     </div>
@@ -480,13 +642,17 @@
       <!-- Dashboard Section -->
       <div id="dashboardSection" class="content-section">
         <div class="section-header">
-          <h4><i class="fas fa-tachometer-alt me-2"></i>Dashboard Overview</h4>
+          <h4><i class="fas fa-tachometer-alt me-2"></i>
+            <span data-i18n="dashboard_overview">Dashboard Overview</span>
+          </h4>
           <div>
             <button class="btn btn-light btn-sm me-2" onclick="dashboard.loadDashboardStats()" title="Refresh Data">
-              <i class="fas fa-sync-alt"></i> Refresh
+              <i class="fas fa-sync-alt"></i>
+              <span data-i18n="refresh">Refresh</span>
             </button>
             <button class="btn btn-outline-info btn-sm" onclick="dashboard.testAuth()" title="Test Authentication">
-              <i class="fas fa-key"></i> Test Auth
+              <i class="fas fa-key"></i>
+              <span data-i18n="test_auth">Test Auth</span>
             </button>
           </div>
         </div>
@@ -498,7 +664,9 @@
                 <i class="fas fa-user-graduate"></i>
               </div>
               <div class="stat-number" id="totalStudents">0</div>
-              <div class="stat-label">Total Students</div>
+              <div class="stat-label">
+                <span data-i18n="total_students">Total Students</span>
+              </div>
             </div>
             
             <div class="stat-card blue">
@@ -506,7 +674,9 @@
                 <i class="fas fa-chalkboard-teacher"></i>
               </div>
               <div class="stat-number" id="totalTeachers">0</div>
-              <div class="stat-label">Total Teachers</div>
+              <div class="stat-label">
+                <span data-i18n="total_teachers">Total Teachers</span>
+              </div>
             </div>
             
             <div class="stat-card orange">
@@ -514,7 +684,9 @@
                 <i class="fas fa-clock"></i>
               </div>
               <div class="stat-number" id="pendingRequests">0</div>
-              <div class="stat-label">Pending Requests</div>
+              <div class="stat-label">
+                <span data-i18n="pending_requests">Pending Requests</span>
+              </div>
             </div>
             
             <div class="stat-card purple">
@@ -522,14 +694,20 @@
                 <i class="fas fa-check-circle"></i>
               </div>
               <div class="stat-number" id="approvedUsers">0</div>
-              <div class="stat-label">Approved Users</div>
+              <div class="stat-label">
+                <span data-i18n="approved_users">Approved Users</span>
+              </div>
             </div>
           </div>
 
           <!-- Welcome Message -->
           <div class="custom-alert success">
-            <h5><i class="fas fa-info-circle me-2"></i>Welcome to VIRTI JAIN PATHSHALA Admin Panel</h5>
-            <p class="mb-0">Manage your institution efficiently with our comprehensive dashboard. Use the sidebar to navigate between different sections.</p>
+            <h5><i class="fas fa-info-circle me-2"></i>
+              <span data-i18n="welcome_info">Welcome to VIRTI JAIN PATHSHALA Admin Panel</span>
+            </h5>
+            <p class="mb-0">
+              <span data-i18n="welcome_description">Manage your institution efficiently with our comprehensive dashboard. Use the sidebar to navigate between different sections.</span>
+            </p>
           </div>
         </div>
       </div>
@@ -537,7 +715,9 @@
       <!-- Students Section -->
       <div id="studentsSection" class="content-section" style="display: none;">
         <div class="section-header">
-          <h4><i class="fas fa-user-graduate me-2"></i>All Approved Students</h4>
+          <h4><i class="fas fa-user-graduate me-2"></i>
+            <span data-i18n="all_approved_students">All Approved Students</span>
+          </h4>
           <div>
             <span class="badge bg-light text-dark" id="studentCount">0 students</span>
           </div>
@@ -546,8 +726,12 @@
           <div id="studentsTable">
             <div class="empty-state">
               <i class="fas fa-spinner loading-spinner"></i>
-              <h5>Loading students...</h5>
-              <p>Please wait while we fetch the student data.</p>
+              <h5>
+                <span data-i18n="loading_students">Loading students...</span>
+              </h5>
+              <p>
+                <span data-i18n="loading_students_description">Please wait while we fetch the student data.</span>
+              </p>
             </div>
           </div>
         </div>
@@ -556,7 +740,9 @@
       <!-- Teachers Section -->
       <div id="teachersSection" class="content-section" style="display: none;">
         <div class="section-header">
-          <h4><i class="fas fa-chalkboard-teacher me-2"></i>All Teachers</h4>
+          <h4><i class="fas fa-chalkboard-teacher me-2"></i>
+            <span data-i18n="all_teachers">All Teachers</span>
+          </h4>
           <div>
             <span class="badge bg-light text-dark" id="teacherCount">0 teachers</span>
           </div>
@@ -565,8 +751,12 @@
           <div id="teachersTable">
             <div class="empty-state">
               <i class="fas fa-spinner loading-spinner"></i>
-              <h5>Loading teachers...</h5>
-              <p>Please wait while we fetch the teacher data.</p>
+              <h5>
+                <span data-i18n="loading_teachers">Loading teachers...</span>
+              </h5>
+              <p>
+                <span data-i18n="loading_teachers_description">Please wait while we fetch the teacher data.</span>
+              </p>
             </div>
           </div>
         </div>
@@ -575,34 +765,449 @@
       <!-- Users Section -->
       <div id="usersSection" class="content-section" style="display: none;">
         <div class="section-header">
-          <h4><i class="fas fa-users me-2"></i>Manage Users</h4>
+          <h4><i class="fas fa-users me-2"></i>
+            <span data-i18n="manage_users">Manage Users</span>
+          </h4>
+          <div>
+            <button class="btn btn-success btn-sm me-2" id="addUserBtn"><i class="fas fa-user-plus"></i> Add User</button>
+            <button class="btn btn-outline-primary btn-sm me-2" id="exportUsersBtn"><i class="fas fa-file-export"></i> Export</button>
+            <button class="btn btn-outline-danger btn-sm" id="bulkDeleteBtn" disabled><i class="fas fa-trash"></i> Delete Selected</button>
+          </div>
         </div>
         <div class="section-body">
+          <ul class="nav nav-tabs mb-3" id="userTypeTabs">
+            <li class="nav-item">
+              <a class="nav-link active" href="#" data-type="TEACHER">Teachers</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-type="STUDENT">Students</a>
+            </li>
+          </ul>
+          <div id="usersTableContainer">
+            <div class="empty-state">
+              <i class="fas fa-spinner loading-spinner"></i>
+              <h5>Loading users...</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Add/Edit User Modal -->
+      <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="userModalLabel">Add/Edit User</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="userForm">
+              <div class="modal-body">
+                <input type="hidden" id="userIdInput">
+                <div class="mb-3">
+                  <label class="form-label">Full Name</label>
+                  <input type="text" class="form-control" id="userFullNameInput" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" id="userEmailInput" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Mobile</label>
+                  <input type="text" class="form-control" id="userMobileInput">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Role</label>
+                  <select class="form-select" id="userRoleInput" required>
+                    <option value="ADMIN">Admin</option>
+                    <option value="TEACHER">Teacher</option>
+                    <option value="STUDENT">Student</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" id="userStatusInput">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
+                <div class="mb-3" id="userPasswordGroup">
+                  <label class="form-label">Password</label>
+                  <input type="password" class="form-control" id="userPasswordInput" autocomplete="new-password">
+                  <div class="form-text" id="userPasswordHelp">Leave blank to keep current password (edit mode).</div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success" id="saveUserBtn">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manage Login Section -->
+      <div id="manageLoginSection" class="content-section" style="display: none;">
+        <div class="section-header">
+          <h4><i class="fas fa-user-cog me-2"></i>
+            <span data-i18n="manage_login">Manage Login</span>
+          </h4>
+        </div>
+        <div class="section-body">
+          <div id="manageLoginMsg"></div>
+          <div id="manageLoginTable">
           <div class="empty-state">
-            <i class="fas fa-users"></i>
-            <h5>User Management</h5>
-            <p>User management features will be available soon.</p>
+              <i class="fas fa-spinner loading-spinner"></i>
+              <h5>
+                <span data-i18n="loading_users">Loading users...</span>
+              </h5>
+              <p>
+                <span data-i18n="loading_users_description">Please wait while we fetch the user data.</span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Settings Section -->
-      <div id="settingsSection" class="content-section" style="display: none;">
-        <div class="section-header">
-          <h4><i class="fas fa-cog me-2"></i>Settings</h4>
+      <div id="settingsSection" class="content-section settings-card" style="display: none;">
+        <div class="settings-header-bar">
+          <h4><i class="fas fa-cog me-2"></i>
+            <span data-i18n="settings_panel">Settings Panel</span>
+          </h4>
         </div>
         <div class="section-body">
-          <div class="empty-state">
-            <i class="fas fa-cog"></i>
-            <h5>Settings Panel</h5>
-            <p>Settings and configuration options will be available soon.</p>
+          <div id="settingsTabContent">
+            <!-- Profile Tab -->
+            <div id="profileTab" class="settings-tab-pane" style="display: none;">
+              <form class="row g-3 mb-4" id="profileForm">
+                <div class="col-md-3 text-center">
+                  <img src="/uploads/default.png" id="profilePhotoPreview" class="rounded-circle mb-2" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid #eee;">
+                  <input type="file" class="form-control form-control-sm mt-2" id="profilePhotoInput" accept="image/*" disabled>
+                </div>
+                <div class="col-md-9">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label">
+                        <span data-i18n="full_name">Full Name</span>
+                      </label>
+                      <input type="text" class="form-control" id="profileName" value="" readonly>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">
+                        <span data-i18n="email">Email</span>
+                      </label>
+                      <input type="email" class="form-control" id="profileEmail" value="" readonly>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">
+                        <span data-i18n="mobile">Mobile</span>
+                      </label>
+                      <input type="text" class="form-control" id="profileMobile" value="" readonly>
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <button type="button" class="btn btn-primary" id="editProfileBtn">
+                      <span data-i18n="edit">Edit</span>
+                    </button>
+                    <button type="button" class="btn btn-success d-none" id="saveProfileBtn">
+                      <span data-i18n="save">Save</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary d-none" id="cancelProfileBtn">
+                      <span data-i18n="cancel">Cancel</span>
+                    </button>
+                  </div>
+                  <div id="profileMsg" class="mt-2"></div>
+                </div>
+              </form>
+            </div>
+            <!-- Security Tab -->
+            <div id="securityTab" class="settings-tab-pane" style="display: none;">
+              <div class="mb-4">
+                <h5>
+                  <span data-i18n="two_factor_auth">Two-Factor Authentication (2FA)</span>
+                </h5>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="enable2FA" disabled>
+                  <label class="form-check-label" for="enable2FA">
+                    <span data-i18n="enable_2fa">Enable 2FA (Coming Soon)</span>
+                  </label>
+                </div>
+              </div>
+              <div>
+                <h5>
+                  <span data-i18n="login_history">Login History / Activity Log</span>
+                </h5>
+                <div class="alert alert-info">
+                  <span data-i18n="login_history_description">Login history and activity log will be shown here. (Future feature)</span>
+                </div>
+              </div>
+            </div>
+            <!-- Appearance Tab -->
+            <div id="appearanceTab" class="settings-tab-pane" style="display: none;">
+              <div class="mb-4">
+                <h5>
+                  <span data-i18n="theme">Theme</span>
+                </h5>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="darkModeToggle">
+                  <label class="form-check-label" for="darkModeToggle">
+                    <span data-i18n="dark_mode">Dark Mode</span>
+                  </label>
+                </div>
+              </div>
+              <div>
+                <h5>
+                  <span data-i18n="sidebar">Sidebar</span>
+                </h5>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="sidebarCollapseToggle">
+                  <label class="form-check-label" for="sidebarCollapseToggle">
+                    <span data-i18n="collapse_sidebar">Collapse Sidebar</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- Other Tab -->
+            <div id="otherTab" class="settings-tab-pane" style="display: none;">
+              <div class="mb-4">
+                <h5>
+                  <span data-i18n="language_preference">Language Preference</span>
+                </h5>
+                <select class="form-select w-auto" id="languageSelect">
+                  <option value="en">English</option>
+                  <option value="gu">ગુજરાતી</option>
+                  <option value="hi">हिन्दी</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <button class="btn btn-outline-danger me-2" id="logoutAllBtn">
+                  <span data-i18n="logout_all">Logout from All Devices</span>
+                </button>
+                <button class="btn btn-outline-secondary" id="deleteAccountBtn">
+                  <span data-i18n="delete_account">Delete/Disable Account</span>
+                </button>
+              </div>
+              <div id="deleteAccountConfirm" class="alert alert-warning d-none">
+                <strong>
+                  <span data-i18n="delete_account_confirm_question">Are you sure?</span>
+                </strong>
+                <span data-i18n="delete_account_confirm_description">This will permanently delete or disable your account.</span><br>
+                <button class="btn btn-danger btn-sm mt-2" id="confirmDeleteBtn">
+                  <span data-i18n="confirm_delete">Yes, Delete My Account</span>
+                </button>
+                <button class="btn btn-secondary btn-sm mt-2 ms-2" id="cancelDeleteBtn">
+                  <span data-i18n="cancel_delete">Cancel</span>
+                </button>
+              </div>
+              <div id="otherMsg" class="mt-2"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- 2FA Modal -->
+  <div class="modal fade" id="twoFAModal" tabindex="-1" aria-labelledby="twoFAModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="twoFAModalLabel">Enable Two-Factor Authentication (2FA)</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="twoFAQrSection" class="mb-3 text-center"></div>
+          <div class="mb-3">
+            <label for="twoFACodeInput" class="form-label">Enter 6-digit code from your Authenticator app</label>
+            <input type="text" class="form-control" id="twoFACodeInput" maxlength="6" autocomplete="one-time-code">
+          </div>
+          <div id="twoFAMsg" class="mb-2"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" id="verify2FABtn">Verify & Enable</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // --- TRANSLATIONS DICTIONARY ---
+    const translations = {
+      en: {
+        dashboard: "Dashboard",
+        manage_users: "Manage Users",
+        all_students: "All Students",
+        all_teachers: "All Teachers",
+        manage_login: "Manage Login",
+        settings: "Settings",
+        profile: "Profile",
+        security: "Security",
+        appearance: "Appearance",
+        other: "Other",
+        logout: "Logout",
+        dashboard_overview: "Dashboard Overview",
+        refresh: "Refresh",
+        test_auth: "Test Auth",
+        total_students: "Total Students",
+        total_teachers: "Total Teachers",
+        pending_requests: "Pending Requests",
+        approved_users: "Approved Users",
+        welcome_info: "Welcome to VIRTI JAIN PATHSHALA Admin Panel",
+        welcome_description: "Manage your institution efficiently with our comprehensive dashboard. Use the sidebar to navigate between different sections.",
+        all_approved_students: "All Approved Students",
+        loading_students: "Loading students...",
+        loading_students_description: "Please wait while we fetch the student data.",
+        loading_teachers: "Loading teachers...",
+        loading_teachers_description: "Please wait while we fetch the teacher data.",
+        user_management: "User Management",
+        user_management_description: "User management features will be available soon.",
+        loading_users: "Loading users...",
+        loading_users_description: "Please wait while we fetch the user data.",
+        settings_panel: "Settings Panel",
+        full_name: "Full Name",
+        email: "Email",
+        mobile: "Mobile",
+        edit: "Edit",
+        save: "Save",
+        cancel: "Cancel",
+        two_factor_auth: "Two-Factor Authentication (2FA)",
+        enable_2fa: "Enable 2FA (Coming Soon)",
+        login_history: "Login History / Activity Log",
+        login_history_description: "Login history and activity log will be shown here. (Future feature)",
+        theme: "Theme",
+        dark_mode: "Dark Mode",
+        sidebar: "Sidebar",
+        collapse_sidebar: "Collapse Sidebar",
+        language_preference: "Language Preference",
+        logout_all: "Logout from All Devices",
+        delete_account: "Delete/Disable Account",
+        delete_account_confirm_question: "Are you sure?",
+        delete_account_confirm_description: "This will permanently delete or disable your account.",
+        confirm_delete: "Yes, Delete My Account",
+        cancel_delete: "Cancel",
+        // ...add more as needed
+      },
+      gu: {
+        dashboard: "ડેશબોર્ડ",
+        manage_users: "વપરાશકર્તા વ્યવસ્થાપિત કરો",
+        all_students: "બધા વિદ્યાર્થીઓ",
+        all_teachers: "બધા શિક્ષકો",
+        manage_login: "લૉગિન વ્યવસ્થાપિત કરો",
+        settings: "સેટિંગ્સ",
+        profile: "પ્રોફાઇલ",
+        security: "સુરક્ષા",
+        appearance: "દેખાવ",
+        other: "અન્ય",
+        logout: "લૉગઆઉટ",
+        dashboard_overview: "ડેશબોર્ડ ઝાંખી",
+        refresh: "રિફ્રેશ",
+        test_auth: "ટેસ્ટ ઓથ",
+        total_students: "કુલ વિદ્યાર્થીઓ",
+        total_teachers: "કુલ શિક્ષકો",
+        pending_requests: "બાકી વિનંતીઓ",
+        approved_users: "મંજૂર વપરાશકર્તા",
+        welcome_info: "વર્તી જૈન પાઠશાળા એડમિન પેનલમાં આપનું સ્વાગત છે",
+        welcome_description: "અમારા વ્યાપક ડેશબોર્ડ સાથે તમારી સંસ્થા કાર્યક્ષમ રીતે સંચાલિત કરો. વિવિધ વિભાગોમાં નેવિગેટ કરવા માટે સાઇડબારનો ઉપયોગ કરો.",
+        all_approved_students: "બધા મંજૂર વિદ્યાર્થીઓ",
+        loading_students: "વિદ્યાર્થીઓ લોડ થઈ રહ્યા છે...",
+        loading_students_description: "કૃપા કરીને રાહ જુઓ, અમે વિદ્યાર્થી ડેટા લાવી રહ્યા છીએ.",
+        loading_teachers: "શિક્ષકો લોડ થઈ રહ્યા છે...",
+        loading_teachers_description: "કૃપા કરીને રાહ જુઓ, અમે શિક્ષક ડેટા લાવી રહ્યા છીએ.",
+        user_management: "વપરાશકર્તા વ્યવસ્થાપન",
+        user_management_description: "વપરાશકર્તા વ્યવસ્થાપન સુવિધાઓ ટૂંક સમયમાં ઉપલબ્ધ થશે.",
+        loading_users: "વપરાશકર્તાઓ લોડ થઈ રહ્યા છે...",
+        loading_users_description: "કૃપા કરીને રાહ જુઓ, અમે વપરાશકર્તા ડેટા લાવી રહ્યા છીએ.",
+        settings_panel: "સેટિંગ્સ પેનલ",
+        full_name: "પૂર્ણ નામ",
+        email: "ઇમેઇલ",
+        mobile: "મોબાઇલ",
+        edit: "સંપાદિત કરો",
+        save: "સેવ કરો",
+        cancel: "રદ કરો",
+        two_factor_auth: "ટૂ-ફેક્ટર ઓથન્ટિકેશન (2FA)",
+        enable_2fa: "2FA સક્રિય કરો (ટૂંક સમયમાં)",
+        login_history: "લૉગિન ઇતિહાસ / પ્રવૃત્તિ લોગ",
+        login_history_description: "લૉગિન ઇતિહાસ અને પ્રવૃત્તિ લોગ અહીં બતાવવામાં આવશે. (ભવિષ્યની સુવિધા)",
+        theme: "થીમ",
+        dark_mode: "ડાર્ક મોડ",
+        sidebar: "સાઇડબાર",
+        collapse_sidebar: "સાઇડબાર સંકોચો",
+        language_preference: "ભાષા પસંદગી",
+        logout_all: "બધા ઉપકરણોમાંથી લૉગઆઉટ કરો",
+        delete_account: "એકાઉન્ટ ડિલીટ/ડિસેબલ કરો",
+        delete_account_confirm_question: "શું તમે ખાતરી કરો છો?",
+        delete_account_confirm_description: "આ તમારા એકાઉન્ટને કાયમ માટે ડિલીટ અથવા ડિસેબલ કરશે.",
+        confirm_delete: "હા, મારું એકાઉન્ટ ડિલીટ કરો",
+        cancel_delete: "રદ કરો",
+        // ...add more as needed
+      },
+      hi: {
+        dashboard: "डैशबोर्ड",
+        manage_users: "यूज़र प्रबंधन",
+        all_students: "सभी छात्र",
+        all_teachers: "सभी शिक्षक",
+        manage_login: "लॉगिन प्रबंधन",
+        settings: "सेटिंग्स",
+        profile: "प्रोफ़ाइल",
+        security: "सुरक्षा",
+        appearance: "रूप",
+        other: "अन्य",
+        logout: "लॉगआउट",
+        dashboard_overview: "डैशबोर्ड अवलोकन",
+        refresh: "रिफ्रेश",
+        test_auth: "टेस्ट ऑथ",
+        total_students: "कुल छात्र",
+        total_teachers: "कुल शिक्षक",
+        pending_requests: "लंबित अनुरोध",
+        approved_users: "स्वीकृत यूज़र",
+        welcome_info: "विरती जैन पाठशाला एडमिन पैनल में आपका स्वागत है",
+        welcome_description: "हमारे व्यापक डैशबोर्ड के साथ अपने संस्थान का कुशलतापूर्वक प्रबंधन करें। विभिन्न अनुभागों के लिए साइडबार का उपयोग करें।",
+        all_approved_students: "सभी स्वीकृत छात्र",
+        loading_students: "छात्र लोड हो रहे हैं...",
+        loading_students_description: "कृपया प्रतीक्षा करें, हम छात्र डेटा ला रहे हैं।",
+        loading_teachers: "शिक्षक लोड हो रहे हैं...",
+        loading_teachers_description: "कृपया प्रतीक्षा करें, हम शिक्षक डेटा ला रहे हैं।",
+        user_management: "यूज़र प्रबंधन",
+        user_management_description: "यूज़र प्रबंधन सुविधाएँ जल्द उपलब्ध होंगी।",
+        loading_users: "यूज़र लोड हो रहे हैं...",
+        loading_users_description: "कृपया प्रतीक्षा करें, हम यूज़र डेटा ला रहे हैं।",
+        settings_panel: "सेटिंग्स पैनल",
+        full_name: "पूरा नाम",
+        email: "ईमेल",
+        mobile: "मोबाइल",
+        edit: "संपादित करें",
+        save: "सेव करें",
+        cancel: "रद्द करें",
+        two_factor_auth: "दो-चरणीय प्रमाणीकरण (2FA)",
+        enable_2fa: "2FA सक्षम करें (जल्द आ रहा है)",
+        login_history: "लॉगिन इतिहास / गतिविधि लॉग",
+        login_history_description: "लॉगिन इतिहास और गतिविधि लॉग यहाँ दिखाया जाएगा। (भविष्य की सुविधा)",
+        theme: "थीम",
+        dark_mode: "डार्क मोड",
+        sidebar: "साइडबार",
+        collapse_sidebar: "साइडबार संकुचित करें",
+        language_preference: "भाषा पसंद",
+        logout_all: "सभी डिवाइस से लॉगआउट करें",
+        delete_account: "खाता हटाएँ/अक्षम करें",
+        delete_account_confirm_question: "क्या आप सुनिश्चित हैं?",
+        delete_account_confirm_description: "यह आपके खाते को स्थायी रूप से हटा या अक्षम कर देगा।",
+        confirm_delete: "हाँ, मेरा खाता हटाएँ",
+        cancel_delete: "रद्द करें",
+        // ...add more as needed
+      }
+    };
+
+    // --- TRANSLATION FUNCTION ---
+    function applyTranslations(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+    }
+
     // Initialize the application
     class AdminDashboard {
       constructor() {
@@ -660,6 +1265,66 @@
             }
           }
         });
+
+        // Manage Login submenu toggle
+        document.getElementById('manageLoginMenu').addEventListener('click', function(e) {
+          e.preventDefault();
+          // Close other submenus if any
+          document.querySelectorAll('.submenu').forEach(sm => { if (sm !== document.getElementById('manageLoginSubmenu')) sm.style.display = 'none'; });
+          const submenu = document.getElementById('manageLoginSubmenu');
+          submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+          // Always show Manage Login section and default to 'All' data
+          dashboard.switchSection('manageLogin');
+          dashboard.setActiveManageLoginSubmenu('ALL');
+        });
+        // All submenu click
+        document.querySelector('[data-section="manageLoginAll"]').addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById('manageLoginSubmenu').style.display = 'block';
+          dashboard.switchSection('manageLogin');
+          dashboard.setActiveManageLoginSubmenu('ALL');
+        });
+        // Teachers submenu click
+        document.querySelector('[data-section="manageLoginTeachers"]').addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById('manageLoginSubmenu').style.display = 'block';
+          dashboard.switchSection('manageLogin');
+          dashboard.setActiveManageLoginSubmenu('TEACHER');
+        });
+        // Students submenu click
+        document.querySelector('[data-section="manageLoginStudents"]').addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById('manageLoginSubmenu').style.display = 'block';
+          dashboard.switchSection('manageLogin');
+          dashboard.setActiveManageLoginSubmenu('STUDENT');
+        });
+
+        // Settings submenu toggle
+        document.getElementById('settingsMenu').addEventListener('click', function(e) {
+          e.preventDefault();
+          // Close other submenus if any
+          document.querySelectorAll('.submenu').forEach(sm => { if (sm !== document.getElementById('settingsSubmenu')) sm.style.display = 'none'; });
+          const submenu = document.getElementById('settingsSubmenu');
+          submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+          // Always show Settings section and default to Profile tab
+          dashboard.switchSection('settings');
+          dashboard.setActiveSettingsTab('profile');
+        });
+        // Settings submenu item click
+        document.querySelectorAll('#settingsSubmenu [data-settings-tab]').forEach(link => {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('settingsSubmenu').style.display = 'block';
+            dashboard.switchSection('settings');
+            dashboard.setActiveSettingsTab(this.getAttribute('data-settings-tab'));
+          });
+        });
+
+        // Helper to show loading/error in Manage Login table
+        this.showManageLoginLoadingOrError = function() {
+          const tableDiv = document.getElementById('manageLoginTable');
+          tableDiv.innerHTML = `<div class='empty-state'><i class='fas fa-spinner loading-spinner'></i><h5>Loading users...</h5><p>Please wait while we fetch the user data.</p></div>`;
+        };
       }
 
       switchSection(section) {
@@ -667,7 +1332,11 @@
         document.querySelectorAll('.nav-link').forEach(link => {
           link.classList.remove('active');
         });
-        document.querySelector(`[data-section="${section}"]`).classList.add('active');
+        const sectionEl = document.querySelector(`[data-section="${section}"]`);
+        if (sectionEl) sectionEl.classList.add('active');
+        let sectionDiv = document.getElementById(`${section}Section`);
+        if (sectionDiv)
+          sectionDiv.style.display = 'block';
 
         // Hide all sections
         document.querySelectorAll('.content-section').forEach(sectionEl => {
@@ -675,7 +1344,9 @@
         });
 
         // Show selected section
-        document.getElementById(`${section}Section`).style.display = 'block';
+        sectionDiv = document.getElementById(`${section}Section`);
+        if (sectionDiv)
+          sectionDiv.style.display = 'block';
 
         // Load section-specific data
         switch(section) {
@@ -684,6 +1355,9 @@
             break;
           case 'teachers':
             this.loadTeachers();
+            break;
+          case 'manageLogin':
+            this.loadManageLogin();
             break;
           case 'dashboard':
             this.loadDashboardStats();
@@ -980,6 +1654,160 @@
         tableDiv.innerHTML = html;
       }
 
+      setActiveManageLoginSubmenu(type) {
+        // Highlight active submenu
+        const allLink = document.querySelector('[data-section="manageLoginAll"]');
+        const teacherLink = document.querySelector('[data-section="manageLoginTeachers"]');
+        const studentLink = document.querySelector('[data-section="manageLoginStudents"]');
+        allLink.classList.remove('active');
+        teacherLink.classList.remove('active');
+        studentLink.classList.remove('active');
+        if (type === 'ALL') allLink.classList.add('active');
+        else if (type === 'TEACHER') teacherLink.classList.add('active');
+        else if (type === 'STUDENT') studentLink.classList.add('active');
+        this.currentManageLoginTab = type;
+        if (this.manageLoginUsers && Array.isArray(this.manageLoginUsers)) {
+          if (type === 'ALL') {
+            this.displayManageLogin(this.manageLoginUsers.filter(u => u.adminType === 'TEACHER' || u.adminType === 'STUDENT'));
+          } else {
+            this.displayManageLogin(this.manageLoginUsers.filter(u => u.adminType === type));
+          }
+        } else {
+          this.showManageLoginLoadingOrError();
+        }
+      }
+
+      async loadManageLogin() {
+        const tableDiv = document.getElementById('manageLoginTable');
+        // Check role before loading
+        if (typeof isAdminOrSuperAdmin === 'function' && !isAdminOrSuperAdmin()) {
+          tableDiv.innerHTML = `<div class='custom-alert danger'>You do not have permission to manage logins. Only Admin or Super Admin can access this section.</div>`;
+          return;
+        }
+        tableDiv.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-spinner loading-spinner"></i>
+            <h5>Loading users...</h5>
+            <p>Please wait while we fetch the user data.</p>
+          </div>
+        `;
+        try {
+          const response = await fetch('/api/admin/users', {
+            headers: { 'Authorization': 'Bearer ' + this.token }
+          });
+          const data = await response.json();
+          if (response.status === 403) {
+            tableDiv.innerHTML = `<div class='custom-alert danger'>${data.message || 'You do not have permission to view this data.'}</div>`;
+            return;
+          }
+          if (response.ok && Array.isArray(data)) {
+            this.manageLoginUsers = data; // cache for tab switching
+            // Default: show ALL if coming from main menu, else keep current
+            if (!this.currentManageLoginTab) this.currentManageLoginTab = 'ALL';
+            this.setActiveManageLoginSubmenu(this.currentManageLoginTab);
+          } else {
+            throw new Error(data.message || 'Failed to load users');
+          }
+        } catch (error) {
+          tableDiv.innerHTML = `<div class='custom-alert danger'>${error.message}</div>`;
+        }
+      }
+
+      displayManageLogin(users) {
+        const tableDiv = document.getElementById('manageLoginTable');
+        if (!users.length) {
+          tableDiv.innerHTML = `<div class='empty-state'><i class='fas fa-users'></i><h5>No Teachers or Students Found</h5></div>`;
+          return;
+        }
+        let html = `
+          <div class="table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>Role</th>
+                  <th>Password</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+        users.forEach(user => {
+          html += `
+            <tr id="user-row-${user._id}">
+              <td><span class="user-name">${user.fullName}</span><input type="text" class="form-control d-none" value="${user.fullName}" /></td>
+              <td><span class="user-email">${user.email}</span><input type="email" class="form-control d-none" value="${user.email}" /></td>
+              <td><span class="user-mobile">${user.mobile}</span><input type="text" class="form-control d-none" value="${user.mobile}" /></td>
+              <td>${user.adminType}</td>
+              <td><span class="user-password">******</span><input type="password" class="form-control d-none" placeholder="New Password (leave blank to keep)" /></td>
+              <td>
+                <button class="btn btn-sm btn-primary edit-btn"><i class="fas fa-edit"></i> Edit</button>
+                <button class="btn btn-sm btn-success save-btn d-none"><i class="fas fa-save"></i> Save</button>
+                <button class="btn btn-sm btn-secondary cancel-btn d-none"><i class="fas fa-times"></i> Cancel</button>
+              </td>
+            </tr>
+          `;
+        });
+        html += '</tbody></table></div>';
+        tableDiv.innerHTML = html;
+        // Add event listeners for edit/save/cancel
+        users.forEach(user => {
+          const row = document.getElementById(`user-row-${user._id}`);
+          const editBtn = row.querySelector('.edit-btn');
+          const saveBtn = row.querySelector('.save-btn');
+          const cancelBtn = row.querySelector('.cancel-btn');
+          const spans = row.querySelectorAll('span');
+          const inputs = row.querySelectorAll('input');
+          editBtn.addEventListener('click', () => {
+            spans.forEach(s => s.classList.add('d-none'));
+            inputs.forEach(i => i.classList.remove('d-none'));
+            editBtn.classList.add('d-none');
+            saveBtn.classList.remove('d-none');
+            cancelBtn.classList.remove('d-none');
+          });
+          cancelBtn.addEventListener('click', () => {
+            spans.forEach((s, idx) => { s.classList.remove('d-none'); if(inputs[idx]) inputs[idx].classList.add('d-none'); });
+            inputs[3].value = '';
+            editBtn.classList.remove('d-none');
+            saveBtn.classList.add('d-none');
+            cancelBtn.classList.add('d-none');
+          });
+          saveBtn.addEventListener('click', async () => {
+            const fullName = inputs[0].value.trim();
+            const email = inputs[1].value.trim();
+            const mobile = inputs[2].value.trim();
+            const password = inputs[3].value.trim();
+            saveBtn.disabled = true;
+            try {
+              const res = await fetch(`/api/admin/update/${user._id}`, {
+                method: 'PUT',
+                headers: {
+                  'Authorization': 'Bearer ' + this.token,
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fullName, email, mobile, password })
+              });
+              const data = await res.json();
+              if (res.ok) {
+                spans[0].textContent = fullName;
+                spans[1].textContent = email;
+                spans[2].textContent = mobile;
+                inputs[3].value = '';
+                document.getElementById('manageLoginMsg').innerHTML = `<div class='custom-alert success'>${data.message}</div>`;
+                cancelBtn.click();
+              } else {
+                document.getElementById('manageLoginMsg').innerHTML = `<div class='custom-alert danger'>${data.message || 'Update failed.'}</div>`;
+              }
+            } catch (err) {
+              document.getElementById('manageLoginMsg').innerHTML = `<div class='custom-alert danger'>Network error. Please try again.</div>`;
+            }
+            saveBtn.disabled = false;
+          });
+        });
+      }
+
       async testAuth() {
         if (!this.token) {
           alert('No authentication token found!');
@@ -1008,6 +1836,20 @@
         localStorage.removeItem('token');
         window.location.href = '/auth/login.html';
       }
+
+      setActiveSettingsTab(tab) {
+        // Highlight active submenu
+        document.querySelectorAll('#settingsSubmenu [data-settings-tab]').forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('data-settings-tab') === tab) link.classList.add('active');
+        });
+        // Show only the selected tab content
+        document.querySelectorAll('.settings-tab-pane').forEach(pane => {
+          pane.style.display = 'none';
+        });
+        const tabPane = document.getElementById(`${tab}Tab`);
+        if (tabPane) tabPane.style.display = 'block';
+      }
     }
 
     // Initialize dashboard when page loads
@@ -1016,7 +1858,558 @@
       dashboard = new AdminDashboard();
       // Initialize overlay
       document.getElementById('sidebarOverlay').classList.remove('active'); // Ensure it's not active on load
+
+      // Settings Panel Button Functionality
+      // Only one DOMContentLoaded for profile logic
+      (function() {
+        let originalProfile = {};
+        function setProfileEditable(editable) {
+          document.getElementById('profileName').readOnly = !editable;
+          document.getElementById('profileEmail').readOnly = !editable;
+          document.getElementById('profileMobile').readOnly = !editable;
+          document.getElementById('profilePhotoInput').disabled = !editable;
+          document.getElementById('editProfileBtn').classList.toggle('d-none', editable);
+          document.getElementById('saveProfileBtn').classList.toggle('d-none', !editable);
+          document.getElementById('cancelProfileBtn').classList.toggle('d-none', !editable);
+        }
+        function loadProfileData() {
+          const token = localStorage.getItem('token');
+          if (!token) return;
+          fetch('/api/admin/me', {
+            headers: { 'Authorization': 'Bearer ' + token }
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data && data.fullName) {
+              document.getElementById('profileName').value = data.fullName || '';
+              document.getElementById('profileEmail').value = data.email || '';
+              document.getElementById('profileMobile').value = data.mobile || '';
+              document.getElementById('profilePhotoPreview').src = data.photo ? `/uploads/${data.photo}` : '/uploads/default.png';
+              originalProfile = {
+                fullName: data.fullName || '',
+                email: data.email || '',
+                mobile: data.mobile || '',
+                photo: data.photo || ''
+              };
+              setProfileEditable(false);
+            }
+          });
+        }
+        document.getElementById('editProfileBtn').onclick = function() {
+          setProfileEditable(true);
+        };
+        document.getElementById('cancelProfileBtn').onclick = function() {
+          document.getElementById('profileName').value = originalProfile.fullName;
+          document.getElementById('profileEmail').value = originalProfile.email;
+          document.getElementById('profileMobile').value = originalProfile.mobile;
+          document.getElementById('profilePhotoPreview').src = originalProfile.photo ? `/uploads/${originalProfile.photo}` : '/uploads/default.png';
+          document.getElementById('profilePhotoInput').value = '';
+          setProfileEditable(false);
+          document.getElementById('profileMsg').innerHTML = '';
+        };
+        document.getElementById('saveProfileBtn').onclick = async function() {
+          const fullName = document.getElementById('profileName').value.trim();
+          const email = document.getElementById('profileEmail').value.trim();
+          const mobile = document.getElementById('profileMobile').value.trim();
+          const photoInput = document.getElementById('profilePhotoInput');
+          const token = localStorage.getItem('token');
+          let userId = null;
+          if (token) {
+            try {
+              const payload = JSON.parse(atob(token.split('.')[1]));
+              userId = payload.id;
+            } catch {}
+          }
+          if (!userId) {
+            document.getElementById('profileMsg').innerHTML = '<div class="alert alert-danger">User not authenticated.</div>';
+            return;
+          }
+          try {
+            const formData = new FormData();
+            formData.append('fullName', fullName);
+            formData.append('email', email);
+            formData.append('mobile', mobile);
+            if (photoInput.files && photoInput.files[0]) {
+              formData.append('photo', photoInput.files[0]);
+            }
+            const res = await fetch(`/api/admin/update/${userId}`, {
+              method: 'PUT',
+              headers: {
+                'Authorization': 'Bearer ' + token
+              },
+              body: formData
+            });
+            const data = await res.json();
+            if (res.ok) {
+              document.getElementById('profileMsg').innerHTML = '<div class="alert alert-success">' + data.message + '</div>';
+              window.alert('Profile data has been updated.');
+              if (data.user && data.user.photo) {
+                document.getElementById('profilePhotoPreview').src = `/uploads/${data.user.photo}`;
+                originalProfile.photo = data.user.photo;
+              }
+              originalProfile.fullName = fullName;
+              originalProfile.email = email;
+              originalProfile.mobile = mobile;
+              setProfileEditable(false);
+            } else {
+              document.getElementById('profileMsg').innerHTML = '<div class="alert alert-danger">' + (data.message || 'Failed to update profile.') + '</div>';
+            }
+          } catch (err) {
+            document.getElementById('profileMsg').innerHTML = '<div class="alert alert-danger">Network error. Please try again.</div>';
+          }
+        };
+        document.getElementById('profilePhotoInput').addEventListener('change', function() {
+          if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              document.getElementById('profilePhotoPreview').src = e.target.result;
+            };
+            reader.readAsDataURL(this.files[0]);
+          }
+        });
+        // Ensure profile loads on tab show
+        dashboard.setActiveSettingsTab = function(tab) {
+          document.querySelectorAll('#settingsSubmenu [data-settings-tab]').forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-settings-tab') === tab) link.classList.add('active');
+          });
+          document.querySelectorAll('.settings-tab-pane').forEach(pane => {
+            pane.style.display = 'none';
+          });
+          const tabPane = document.getElementById(`${tab}Tab`);
+          if (tabPane) tabPane.style.display = 'block';
+          if (tab === 'profile') loadProfileData();
+        };
+      })();
+
+      // Profile data loader
+      function loadProfileData() {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+        fetch('/api/admin/me', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.fullName) {
+            document.getElementById('profileName').value = data.fullName || '';
+            document.getElementById('profileEmail').value = data.email || '';
+            document.getElementById('profileMobile').value = data.mobile || '';
+            document.getElementById('profilePhotoPreview').src = data.photo ? `/uploads/${data.photo}` : '/uploads/default.png';
+          }
+        });
+      }
+
+      // Assign setActiveSettingsTab after dashboard is defined
+      dashboard.setActiveSettingsTab = function(tab) {
+        // Highlight active submenu
+        document.querySelectorAll('#settingsSubmenu [data-settings-tab]').forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('data-settings-tab') === tab) link.classList.add('active');
+        });
+        // Show only the selected tab content
+        document.querySelectorAll('.settings-tab-pane').forEach(pane => {
+          pane.style.display = 'none';
+        });
+        const tabPane = document.getElementById(`${tab}Tab`);
+        if (tabPane) tabPane.style.display = 'block';
+        // Load profile data if profile tab
+        if (tab === 'profile') loadProfileData();
+      };
+
+      // Theme (Dark Mode) toggle persistence
+      (function() {
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        // Apply theme on load
+        if (localStorage.getItem('theme') === 'dark') {
+          document.body.classList.add('dark-mode');
+          if (darkModeToggle) darkModeToggle.checked = true;
+        } else {
+          document.body.classList.remove('dark-mode');
+          if (darkModeToggle) darkModeToggle.checked = false;
+        }
+        // Toggle event
+        if (darkModeToggle) {
+          darkModeToggle.addEventListener('change', function() {
+            if (this.checked) {
+              document.body.classList.add('dark-mode');
+              localStorage.setItem('theme', 'dark');
+            } else {
+              document.body.classList.remove('dark-mode');
+              localStorage.setItem('theme', 'light');
+            }
+          });
+        }
+      })();
+
+      // Sidebar Collapse toggle persistence
+      (function() {
+        const sidebarCollapseToggle = document.getElementById('sidebarCollapseToggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.querySelector('.main-content');
+        // Apply collapse state on load
+        if (localStorage.getItem('sidebar') === 'collapsed') {
+          sidebar.classList.add('collapsed');
+          if (mainContent) mainContent.classList.add('sidebar-collapsed');
+          if (sidebarCollapseToggle) sidebarCollapseToggle.checked = true;
+        } else {
+          sidebar.classList.remove('collapsed');
+          if (mainContent) mainContent.classList.remove('sidebar-collapsed');
+          if (sidebarCollapseToggle) sidebarCollapseToggle.checked = false;
+        }
+        // Toggle event
+        if (sidebarCollapseToggle) {
+          sidebarCollapseToggle.addEventListener('change', function() {
+            if (this.checked) {
+              sidebar.classList.add('collapsed');
+              if (mainContent) mainContent.classList.add('sidebar-collapsed');
+              localStorage.setItem('sidebar', 'collapsed');
+            } else {
+              sidebar.classList.remove('collapsed');
+              if (mainContent) mainContent.classList.remove('sidebar-collapsed');
+              localStorage.setItem('sidebar', 'expanded');
+            }
+          });
+        }
+      })();
+
+      // Language Preference persistence
+      (function() {
+        const languageSelect = document.getElementById('languageSelect');
+        if (languageSelect) {
+          // On load
+          const lang = localStorage.getItem('language') || 'en';
+          applyTranslations(lang);
+
+          // On change
+          languageSelect.addEventListener('change', function() {
+            localStorage.setItem('language', this.value);
+            applyTranslations(this.value);
+          });
+        }
+      })();
     });
+
+    // 2FA Frontend Logic
+    (function() {
+      const enable2FA = document.getElementById('enable2FA');
+      const twoFAModal = new bootstrap.Modal(document.getElementById('twoFAModal'));
+      let qrImg = null;
+      if (enable2FA) {
+        enable2FA.disabled = false;
+        enable2FA.addEventListener('change', async function() {
+          if (this.checked) {
+            // Start 2FA setup
+            document.getElementById('twoFAMsg').innerHTML = '';
+            document.getElementById('twoFACodeInput').value = '';
+            document.getElementById('twoFAQrSection').innerHTML = '<div class="text-muted">Loading QR code...</div>';
+            twoFAModal.show();
+            // Fetch QR code from backend
+            const token = localStorage.getItem('token');
+            const res = await fetch('/api/admin/2fa/setup', {
+              method: 'POST',
+              headers: { 'Authorization': 'Bearer ' + token }
+            });
+            const data = await res.json();
+            if (res.ok && data.qr) {
+              document.getElementById('twoFAQrSection').innerHTML = `<img src='${data.qr}' alt='2FA QR' style='width:180px;height:180px;'>`;
+            } else {
+              document.getElementById('twoFAQrSection').innerHTML = '<div class="text-danger">Failed to load QR code.</div>';
+            }
+          } else {
+            // Disable 2FA
+            if (confirm('Are you sure you want to disable 2FA?')) {
+              const token = localStorage.getItem('token');
+              const res = await fetch('/api/admin/2fa/disable', {
+                method: 'POST',
+                headers: { 'Authorization': 'Bearer ' + token }
+              });
+              const data = await res.json();
+              if (res.ok) {
+                alert('2FA disabled.');
+              } else {
+                alert(data.message || 'Failed to disable 2FA.');
+                enable2FA.checked = true;
+              }
+            } else {
+              enable2FA.checked = true;
+            }
+          }
+        });
+        // Verify 2FA code
+        document.getElementById('verify2FABtn').onclick = async function() {
+          const code = document.getElementById('twoFACodeInput').value.trim();
+          if (!/^[0-9]{6}$/.test(code)) {
+            document.getElementById('twoFAMsg').innerHTML = '<div class="text-danger">Enter a valid 6-digit code.</div>';
+            return;
+          }
+          const token = localStorage.getItem('token');
+          const res = await fetch('/api/admin/2fa/verify', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer ' + token,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ token: code })
+          });
+          const data = await res.json();
+          if (res.ok) {
+            document.getElementById('twoFAMsg').innerHTML = '<div class="text-success">2FA enabled successfully!</div>';
+            setTimeout(() => { twoFAModal.hide(); }, 1000);
+          } else {
+            document.getElementById('twoFAMsg').innerHTML = `<div class="text-danger">${data.message || 'Invalid code.'}</div>`;
+          }
+        };
+      }
+    })();
+
+    // User Management Logic (Teachers/Students tabs, only approved)
+    (function() {
+      const usersTableContainer = document.getElementById('usersTableContainer');
+      const addUserBtn = document.getElementById('addUserBtn');
+      const exportUsersBtn = document.getElementById('exportUsersBtn');
+      const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+      const userTypeTabs = document.getElementById('userTypeTabs');
+      let users = [];
+      let selectedUserIds = new Set();
+      let userModal = new bootstrap.Modal(document.getElementById('userModal'));
+      let currentType = 'TEACHER';
+      // Fetch and render users
+      async function loadUsers() {
+        usersTableContainer.innerHTML = `<div class='empty-state'><i class='fas fa-spinner loading-spinner'></i><h5>Loading users...</h5></div>`;
+        const token = localStorage.getItem('token');
+        const res = await fetch(`/api/admin/users?role=${currentType}&status=active`, {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        users = await res.json();
+        renderUsersTable();
+      }
+      function renderUsersTable() {
+        if (!Array.isArray(users) || users.length === 0) {
+          usersTableContainer.innerHTML = `<div class='empty-state'><i class='fas fa-users'></i><h5>No users found.</h5></div>`;
+          return;
+        }
+        let html = `<table class='custom-table'><thead><tr>
+          <th><input type='checkbox' id='selectAllUsers'></th>
+          <th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+        users.forEach(user => {
+          const isActive = user.isApproved !== false && user.status !== 'inactive';
+          html += `<tr>
+            <td><input type='checkbox' class='userCheckbox' data-id='${user._id}' ${selectedUserIds.has(user._id) ? 'checked' : ''}></td>
+            <td>${user.fullName}</td>
+            <td>${user.email}</td>
+            <td>${user.adminType}</td>
+            <td><span class='badge ${isActive ? 'bg-success' : 'bg-secondary'}'>${isActive ? 'Active' : 'Inactive'}</span></td>
+            <td>
+              <button class='btn btn-sm btn-primary editUserBtn' data-id='${user._id}'><i class='fas fa-edit'></i></button>
+              <button class='btn btn-sm ${isActive ? 'btn-success' : 'btn-secondary'} statusUserBtn' data-id='${user._id}' data-status='${isActive ? 'active' : 'inactive'}' title='${isActive ? 'Deactivate' : 'Activate'}'>
+                <i class='fas fa-toggle-${isActive ? 'on' : 'off'}'></i>
+              </button>
+              <button class='btn btn-sm btn-danger deleteUserBtn' data-id='${user._id}'><i class='fas fa-trash'></i></button>
+            </td>
+          </tr>`;
+        });
+        html += '</tbody></table>';
+        usersTableContainer.innerHTML = html;
+        // Event listeners
+        document.getElementById('selectAllUsers').onchange = function() {
+          document.querySelectorAll('.userCheckbox').forEach(cb => {
+            cb.checked = this.checked;
+            if (this.checked) selectedUserIds.add(cb.dataset.id);
+            else selectedUserIds.delete(cb.dataset.id);
+          });
+          updateBulkDeleteBtn();
+        };
+        document.querySelectorAll('.userCheckbox').forEach(cb => {
+          cb.onchange = function() {
+            if (this.checked) selectedUserIds.add(this.dataset.id);
+            else selectedUserIds.delete(this.dataset.id);
+            updateBulkDeleteBtn();
+          };
+        });
+        document.querySelectorAll('.editUserBtn').forEach(btn => {
+          btn.onclick = () => openUserModal(btn.dataset.id);
+        });
+        document.querySelectorAll('.deleteUserBtn').forEach(btn => {
+          btn.onclick = () => deleteUser(btn.dataset.id);
+        });
+        // Status toggle event
+        document.querySelectorAll('.statusUserBtn').forEach(btn => {
+          btn.onclick = async function() {
+            const id = btn.dataset.id;
+            const user = users.find(u => u._id === id);
+            if (!user) return;
+            const token = localStorage.getItem('token');
+            const newStatus = !(user.isApproved !== false && user.status !== 'inactive');
+            await fetch(`/api/admin/users/${id}/status`, {
+              method: 'PATCH',
+              headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+              body: JSON.stringify({ isApproved: newStatus })
+            });
+            loadUsers();
+          };
+        });
+        updateBulkDeleteBtn();
+      }
+      function updateBulkDeleteBtn() {
+        bulkDeleteBtn.disabled = selectedUserIds.size === 0;
+      }
+      // Add User
+      addUserBtn.onclick = () => openUserModal();
+      // Export Users
+      exportUsersBtn.onclick = () => {
+        const token = localStorage.getItem('token');
+        let url = `/api/admin/users/export?token=${token}&role=${currentType}&status=active`;
+        if (selectedUserIds.size > 0) {
+          url += '&ids=' + Array.from(selectedUserIds).join(',');
+        }
+        window.open(url, '_blank');
+      };
+      // Bulk Delete
+      bulkDeleteBtn.onclick = async () => {
+        if (!confirm('Delete selected users?')) return;
+        const token = localStorage.getItem('token');
+        await fetch('/api/admin/users/bulk', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ids: Array.from(selectedUserIds), action: 'delete' })
+        });
+        selectedUserIds.clear();
+        loadUsers();
+      };
+      // Tab switching
+      userTypeTabs.querySelectorAll('.nav-link').forEach(tab => {
+        tab.onclick = function(e) {
+          e.preventDefault();
+          userTypeTabs.querySelectorAll('.nav-link').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          currentType = this.getAttribute('data-type');
+          selectedUserIds.clear();
+          loadUsers();
+        };
+      });
+      // Open Add/Edit Modal
+      function openUserModal(id) {
+        document.getElementById('userForm').reset();
+        document.getElementById('userIdInput').value = '';
+        document.getElementById('userPasswordHelp').style.display = 'block';
+        if (id) {
+          const user = users.find(u => u._id === id);
+          if (!user) return;
+          document.getElementById('userModalLabel').textContent = 'Edit User';
+          document.getElementById('userIdInput').value = user._id;
+          document.getElementById('userFullNameInput').value = user.fullName;
+          document.getElementById('userEmailInput').value = user.email;
+          document.getElementById('userMobileInput').value = user.mobile || '';
+          document.getElementById('userRoleInput').value = user.adminType;
+          document.getElementById('userStatusInput').value = 'active';
+          document.getElementById('userPasswordHelp').style.display = 'block';
+        } else {
+          document.getElementById('userModalLabel').textContent = 'Add User';
+          document.getElementById('userPasswordHelp').style.display = 'none';
+          document.getElementById('userRoleInput').value = currentType;
+          document.getElementById('userStatusInput').value = 'active';
+        }
+        userModal.show();
+      }
+      // Save User
+      document.getElementById('userForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const id = document.getElementById('userIdInput').value;
+        const fullName = document.getElementById('userFullNameInput').value.trim();
+        const email = document.getElementById('userEmailInput').value.trim();
+        const mobile = document.getElementById('userMobileInput').value.trim();
+        const adminType = document.getElementById('userRoleInput').value;
+        const isApproved = true;
+        const password = document.getElementById('userPasswordInput').value;
+        const token = localStorage.getItem('token');
+        const body = { fullName, email, mobile, adminType, isApproved };
+        if (password) body.password = password;
+        let res;
+        if (id) {
+          res = await fetch(`/api/admin/users/${id}`, {
+            method: 'PUT',
+            headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+        } else {
+          body.password = password || Math.random().toString(36).slice(-8);
+          res = await fetch('/api/admin/users', {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+        }
+        if (res.ok) {
+          userModal.hide();
+          loadUsers();
+        } else {
+          alert('Failed to save user.');
+        }
+      };
+      // Delete User
+      async function deleteUser(id) {
+        if (!confirm('Delete this user?')) return;
+        const token = localStorage.getItem('token');
+        await fetch(`/api/admin/users/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        loadUsers();
+      }
+      // Initial load
+      loadUsers();
+    })();
+
+    // Load pending requests
+    async function loadPendingRequests() {
+      const token = localStorage.getItem('token');
+      const res = await fetch('/api/admin/users?status=pending', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      const users = await res.json();
+      renderPendingRequestsTable(users);
+    }
+
+    function renderPendingRequestsTable(users) {
+      let html = '<table class="custom-table"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr></thead><tbody>';
+      users.forEach(user => {
+        html += `<tr>
+          <td>${user.fullName}</td>
+          <td>${user.email}</td>
+          <td>${user.adminType}</td>
+          <td>
+            <button class="btn btn-success btn-sm acceptBtn" data-id="${user._id}">Accept</button>
+            <button class="btn btn-danger btn-sm rejectBtn" data-id="${user._id}">Reject</button>
+          </td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      document.getElementById('pendingRequestsTable').innerHTML = html;
+
+      document.querySelectorAll('.acceptBtn').forEach(btn => {
+        btn.onclick = async function() {
+          const id = btn.dataset.id;
+          await fetch(`/api/admin/users/${id}/status`, {
+            method: 'PATCH',
+            headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ isApproved: true })
+          });
+          loadPendingRequests();
+        };
+      });
+      document.querySelectorAll('.rejectBtn').forEach(btn => {
+        btn.onclick = async function() {
+          const id = btn.dataset.id;
+          await fetch(`/api/admin/users/${id}/status`, {
+            method: 'PATCH',
+            headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ isApproved: false })
+          });
+          loadPendingRequests();
+        };
+      });
+    }
   </script>
 </body>
 </html> 

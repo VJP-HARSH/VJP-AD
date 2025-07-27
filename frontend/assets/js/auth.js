@@ -60,6 +60,30 @@ export async function registerStudent(form) {
 }
 
 /**
+ * Decode JWT token payload (without verifying signature).
+ * @param {string} token
+ * @returns {object|null}
+ */
+export function decodeJWT(token) {
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Check if current user is ADMIN or SUPER ADMIN.
+ * @returns {boolean}
+ */
+export function isAdminOrSuperAdmin() {
+  const token = localStorage.getItem('token');
+  if (!token) return false;
+  const payload = decodeJWT(token);
+  return payload && (payload.adminType === 'ADMIN' || payload.adminType === 'Super Admin');
+}
+
+/**
  * Login for any role. Handles role-based redirects.
  * @param {HTMLFormElement} form
  */
@@ -79,13 +103,14 @@ export async function loginAdmin(form) {
       localStorage.setItem('token', data.token);
       showMessage('loginMsg', 'Login successful! Redirecting...', 'success');
       setTimeout(() => {
-        if (data.admin && data.admin.adminType === 'Super Admin') {
+        const payload = decodeJWT(data.token);
+        if (payload && payload.adminType === 'Super Admin') {
           window.location.href = '/profile/superadmin.html';
-        } else if (data.admin && data.admin.adminType === 'ADMIN') {
+        } else if (payload && payload.adminType === 'ADMIN') {
           window.location.href = '/panel/admin.html';
-        } else if (data.admin && data.admin.adminType === 'TEACHER') {
+        } else if (payload && payload.adminType === 'TEACHER') {
           window.location.href = '/panel/teacher.html';
-        } else if (data.admin && data.admin.adminType === 'STUDENT') {
+        } else if (payload && payload.adminType === 'STUDENT') {
           window.location.href = '/panel/student.html';
         } else {
           window.location.href = '/profile/view.html';
@@ -103,4 +128,6 @@ export async function loginAdmin(form) {
 window.registerAdmin = registerAdmin;
 window.registerStudent = registerStudent;
 window.loginAdmin = loginAdmin;
-window.showMessage = showMessage; 
+window.showMessage = showMessage;
+window.decodeJWT = decodeJWT;
+window.isAdminOrSuperAdmin = isAdminOrSuperAdmin; 

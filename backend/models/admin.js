@@ -15,7 +15,9 @@ const adminSchema = new mongoose.Schema({
         enum: ['Super Admin', 'ADMIN', 'TEACHER', 'STUDENT'],
         required: true
     },
-    isApproved: { type: Boolean, default: false }
+    isApproved: { type: Boolean, default: false },
+    twoFactorEnabled: { type: Boolean, default: false },
+    twoFactorSecret: { type: String, default: '' }
 });
 
 module.exports = mongoose.model('Admin', adminSchema);

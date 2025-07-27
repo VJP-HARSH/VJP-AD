@@ -45,7 +45,24 @@ router.get('/teachers', auth, adminController.getAllTeachers);
 // Test authentication endpoint
 router.get('/test-auth', auth, adminController.testAuth);
 
-// Get all users (Super Admin only)
-router.get('/users', auth, adminController.getAllUsers);
+// User management routes
+router.get('/users', auth, adminController.getAllUsers); // supports search/filter
+router.post('/users', auth, adminController.addUser);
+router.put('/users/:id', auth, adminController.editUser);
+router.patch('/users/:id/status', auth, adminController.toggleUserStatus);
+router.delete('/users/:id', auth, adminController.deleteUser);
+router.post('/users/bulk', auth, adminController.bulkAction);
+router.get('/users/export', adminController.exportUsers);
+
+// Update user (teacher/student) details
+router.put('/update/:id', auth, upload.single('photo'), adminController.updateAdmin);
+
+// Add change password route
+router.post('/change-password', auth, adminController.changePassword);
+
+// 2FA routes
+router.post('/2fa/setup', auth, adminController.setup2FA);
+router.post('/2fa/verify', auth, adminController.verify2FA);
+router.post('/2fa/disable', auth, adminController.disable2FA);
 
 module.exports = router; 
