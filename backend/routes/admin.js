@@ -65,4 +65,10 @@ router.post('/2fa/setup', auth, adminController.setup2FA);
 router.post('/2fa/verify', auth, adminController.verify2FA);
 router.post('/2fa/disable', auth, adminController.disable2FA);
 
+// Photo upload for About Us staff
+router.post('/upload', upload.single('photo'), (req, res) => {
+  if (!req.file) return res.status(400).json({ message: 'No file uploaded.' });
+  res.json({ filename: req.file.filename });
+});
+
 module.exports = router; 

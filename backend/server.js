@@ -6,6 +6,7 @@ const connectDB = require('./config/db');
 const adminRoutes = require('./routes/admin');
 const contactRoutes = require('./routes/contact');
 const ensureSuperAdmin = require('./config/superAdmin');
+const aboutStaffRoutes = require('./routes/aboutStaff');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get('/api', (req, res) => {
 
 app.use('/api/admin', adminRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/about', aboutStaffRoutes);
 
 const PORT = process.env.PORT || 5000;
 

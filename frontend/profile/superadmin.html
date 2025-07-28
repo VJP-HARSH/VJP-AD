@@ -494,6 +494,12 @@
           My Profile
         </a>
       </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#" data-section="aboutus">
+          <i class="fas fa-users"></i>
+          About Us Staff
+        </a>
+      </div>
     </div>
   </nav>
 
@@ -652,9 +658,40 @@
           </div>
         </div>
       </div>
+
+      <!-- About Us Staff Section -->
+      <div id="aboutusSection" class="content-section">
+        <div class="section-header">
+          <h4><i class="fas fa-users me-2"></i>About Us Staff</h4>
+        </div>
+        <div class="section-body">
+          <form id="aboutUsStaffForm">
+            <div id="staffList"></div>
+            <button type="button" class="btn btn-success mt-3" id="addStaffBtn"><i class="fas fa-plus"></i> Add Staff</button>
+          </form>
+          <div class="mt-3 text-end">
+            <button type="button" class="btn btn-primary" id="saveAboutUsBtn">Save Changes</button>
+          </div>
+        </div>
+      </div>
+      <!-- 1. Below the About Us Staff form, add a preview section: -->
+      <div class="mt-5">
+        <h5 class="mb-3"><i class="fas fa-eye"></i> Live Preview</h5>
+        <div class="row">
+          <div class="col-md-6">
+            <h6 class="fw-bold">Teaching Staff</h6>
+            <div class="staff-grid" id="previewTeachingStaff"></div>
+          </div>
+          <div class="col-md-6">
+            <h6 class="fw-bold">Administrative Staff</h6>
+            <div class="admin-staff-grid" id="previewAdminStaff"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     class SuperAdminDashboard {
       constructor() {
@@ -747,7 +784,8 @@
         document.querySelectorAll('.nav-link').forEach(link => {
           link.classList.remove('active');
         });
-        document.querySelector(`[data-section="${section}"]`).classList.add('active');
+        const navLink = document.querySelector(`[data-section="${section}"]`);
+        if (navLink) navLink.classList.add('active');
 
         // Hide all sections
         document.querySelectorAll('.content-section').forEach(sectionEl => {
@@ -755,7 +793,8 @@
         });
 
         // Show selected section
-        document.getElementById(`${section}Section`).style.display = 'block';
+        const sectionDiv = document.getElementById(`${section}Section`);
+        if (sectionDiv) sectionDiv.style.display = 'block';
 
         // Load section-specific data
         switch(section) {
@@ -776,6 +815,9 @@
             break;
           case 'dashboard':
             this.loadDashboardStats();
+            break;
+          case 'aboutus':
+            this.loadAboutUsStaff();
             break;
         }
 
@@ -991,6 +1033,7 @@
                   <th>Gender</th>
                   <th>Address</th>
                   <th>Approved By</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -1010,6 +1053,11 @@
               <td>${teacher.gender || '-'}</td>
               <td>${teacher.address || '-'}</td>
               <td>${teacher.approvedBy || '-'}</td>
+              <td>
+                <button class="btn btn-primary btn-sm" onclick="superAdminDashboard.openEditTeacherModal('${teacher._id}')">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </td>
             </tr>
           `;
         });
@@ -1302,9 +1350,72 @@
         }
       }
 
+      openEditTeacherModal(id) {
+        const teacher = this.teachersData.find(t => t._id === id);
+        if (!teacher) return;
+        document.getElementById('editTeacherId').value = teacher._id;
+        document.getElementById('editTeacherName').value = teacher.fullName || '';
+        document.getElementById('editTeacherEmail').value = teacher.email || '';
+        document.getElementById('editTeacherMobile').value = teacher.mobile || '';
+        document.getElementById('editTeacherAddress').value = teacher.address || '';
+        document.getElementById('editTeacherDOB').value = teacher.dob ? new Date(teacher.dob).toISOString().split('T')[0] : '';
+        document.getElementById('editTeacherGender').value = teacher.gender || '';
+        const modal = new bootstrap.Modal(document.getElementById('editTeacherModal'));
+        modal.show();
+      }
+
       logout() {
         localStorage.removeItem('token');
         window.location.href = '/auth/login.html';
+      }
+
+      async loadAboutUsStaff() {
+        const staffListDiv = document.getElementById('staffList');
+        staffListDiv.innerHTML = '<div class="text-center"><i class="fas fa-spinner loading-spinner"></i> Loading...</div>';
+        try {
+          const res = await fetch('/api/about/staff');
+          const staff = await res.json();
+          renderStaffForm(staff);
+          this.bindSaveAboutUsBtn();
+        } catch (err) {
+          staffListDiv.innerHTML = '<div class="alert alert-danger">Failed to load staff.</div>';
+        }
+      }
+
+      bindSaveAboutUsBtn() {
+        const saveBtn = document.getElementById('saveAboutUsBtn');
+        if (!saveBtn) {
+          console.warn('Save About Us button not found in DOM.');
+          return;
+        }
+        saveBtn.onclick = async () => {
+          const token = localStorage.getItem('token');
+          const staffListDiv = document.getElementById('staffList');
+          const staff = Array.from(staffListDiv.children).map(card => ({
+            role: card.querySelector('.staff-role').value,
+            name: card.querySelector('.staff-name').value,
+            position: card.querySelector('.staff-position').value,
+            contact: card.querySelector('.staff-contact').value,
+            photo: card.querySelector('.staff-photo').value,
+            description: card.querySelector('.staff-description').value
+          })).filter(m => m.name && m.position && m.role && m.contact && m.description);
+          try {
+            const res = await fetch('/api/about/staff', {
+              method: 'POST',
+              headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+              body: JSON.stringify({ staff })
+            });
+            if (res.ok) {
+              showToast('About Us staff updated successfully!', 'success');
+              await superAdminDashboard.loadAboutUsStaff();
+            } else {
+              const data = await res.json();
+              showToast(data.message || 'Failed to update staff.', 'danger');
+            }
+          } catch (err) {
+            showToast('Error updating staff.', 'danger');
+          }
+        };
       }
     }
 
@@ -1314,7 +1425,304 @@
       superAdminDashboard = new SuperAdminDashboard();
       // Initialize overlay
       document.getElementById('sidebarOverlay').classList.remove('active');
+
+      // Edit About Us button
+      // document.getElementById('editAboutUsBtn').onclick = async function(e) {
+      //   e.preventDefault();
+      //   const staffListDiv = document.getElementById('staffList');
+      //   staffListDiv.innerHTML = '<div class="text-center"><i class="fas fa-spinner loading-spinner"></i> Loading...</div>';
+      //   try {
+      //     const res = await fetch('/api/about/staff');
+      //     const staff = await res.json();
+      //     renderStaffForm(staff);
+      //   } catch (err) {
+      //     staffListDiv.innerHTML = '<div class="alert alert-danger">Failed to load staff.</div>';
+      //   }
+      //   const modal = new bootstrap.Modal(document.getElementById('editAboutUsModal'));
+      //   modal.show();
+      // };
     });
+
+    document.getElementById('saveTeacherBtn').onclick = async function() {
+      const id = document.getElementById('editTeacherId').value;
+      const fullName = document.getElementById('editTeacherName').value;
+      const email = document.getElementById('editTeacherEmail').value;
+      const mobile = document.getElementById('editTeacherMobile').value;
+      const address = document.getElementById('editTeacherAddress').value;
+      const dob = document.getElementById('editTeacherDOB').value;
+      const gender = document.getElementById('editTeacherGender').value;
+      const token = localStorage.getItem('token');
+      try {
+        const res = await fetch(`/api/admin/update/${id}`, {
+          method: 'PUT',
+          headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fullName, email, mobile, address, dob, gender })
+        });
+        if (res.ok) {
+          alert('Teacher updated successfully!');
+          const modal = bootstrap.Modal.getInstance(document.getElementById('editTeacherModal'));
+          modal.hide();
+          superAdminDashboard.loadTeachers();
+        } else {
+          const data = await res.json();
+          alert(data.message || 'Failed to update teacher.');
+        }
+      } catch (err) {
+        alert('Error updating teacher.');
+      }
+    };
+
+    // Staff form rendering and logic
+    function renderStaffForm(staff) {
+      const staffListDiv = document.getElementById('staffList');
+      staffListDiv.innerHTML = '';
+      (staff || []).forEach((member, idx) => {
+        staffListDiv.appendChild(createStaffFields(member, idx));
+      });
+      if (!staff || staff.length === 0) {
+        staffListDiv.appendChild(createStaffFields({}, 0));
+      }
+      // Re-bind Add Staff button event
+      const addBtn = document.getElementById('addStaffBtn');
+      if (addBtn) {
+        addBtn.onclick = function() {
+          staffListDiv.appendChild(createStaffFields({}, staffListDiv.children.length));
+          updateStaffPreview();
+        };
+      }
+      // Re-bind Save Changes button event
+      const saveBtn = document.getElementById('saveAboutUsBtn');
+      if (!saveBtn) {
+        console.warn('Save About Us button not found in DOM.');
+      } else {
+        saveBtn.onclick = async function() {
+          const token = localStorage.getItem('token');
+          const staff = Array.from(staffListDiv.children).map(card => ({
+            role: card.querySelector('.staff-role').value,
+            name: card.querySelector('.staff-name').value,
+            position: card.querySelector('.staff-position').value,
+            contact: card.querySelector('.staff-contact').value,
+            photo: card.querySelector('.staff-photo').value,
+            description: card.querySelector('.staff-description').value
+          })).filter(m => m.name && m.position && m.role && m.contact && m.description);
+          try {
+            const res = await fetch('/api/about/staff', {
+              method: 'POST',
+              headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+              body: JSON.stringify({ staff })
+            });
+            if (res.ok) {
+              showToast('About Us staff updated successfully!', 'success');
+              await superAdminDashboard.loadAboutUsStaff();
+            } else {
+              const data = await res.json();
+              showToast(data.message || 'Failed to update staff.', 'danger');
+            }
+          } catch (err) {
+            showToast('Error updating staff.', 'danger');
+          }
+        };
+      }
+      updateStaffPreview(); // Call updateStaffPreview after rendering the form
+    }
+    function createStaffFields(member, idx) {
+      const div = document.createElement('div');
+      div.className = 'card mb-4 shadow-sm';
+      const photoUrl = member.photo ? `/uploads/${member.photo}` : '';
+      div.innerHTML = `
+        <div class="card-header bg-light d-flex align-items-center justify-content-between">
+          <span class="fw-semibold"><i class="fas fa-user me-2"></i>Staff Member ${idx + 1}</span>
+          <button type="button" class="btn btn-outline-danger btn-sm remove-staff-btn" title="Remove"><i class="fas fa-trash"></i></button>
+        </div>
+        <div class="card-body">
+          <div class="row g-3 align-items-end">
+            <div class="col-md-2">
+              <label class="form-label">Role</label>
+              <select class="form-select staff-role" required>
+                <option value="Teacher" ${member.role === 'Teacher' ? 'selected' : ''}>Teacher</option>
+                <option value="Admin" ${member.role === 'Admin' ? 'selected' : ''}>Admin</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-control staff-name" value="${member.name || ''}" required>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Position</label>
+              <input type="text" class="form-control staff-position" value="${member.position || ''}" required>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Contact</label>
+              <input type="text" class="form-control staff-contact" value="${member.contact || ''}" required>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Photo</label>
+              <input type="file" accept="image/*" class="form-control staff-photo-file mb-1">
+              <input type="hidden" class="staff-photo" value="${member.photo || ''}">
+              <img src="${photoUrl}" class="img-thumbnail mt-1 staff-photo-preview" style="max-width:60px;max-height:60px;${photoUrl ? '' : 'display:none;'}">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Description</label>
+              <input type="text" class="form-control staff-description" value="${member.description || ''}" required>
+            </div>
+          </div>
+        </div>
+      `;
+      // Remove button logic
+      div.querySelector('.remove-staff-btn').onclick = function() {
+        if (confirm('Remove this staff member?')) div.remove();
+      };
+      // Photo file upload logic
+      const fileInput = div.querySelector('.staff-photo-file');
+      const hiddenInput = div.querySelector('.staff-photo');
+      const previewImg = div.querySelector('.staff-photo-preview');
+      fileInput.onchange = async function() {
+        if (fileInput.files && fileInput.files[0]) {
+          const formData = new FormData();
+          formData.append('photo', fileInput.files[0]);
+          try {
+            const res = await fetch('/api/admin/upload', {
+              method: 'POST',
+              body: formData
+            });
+            const data = await res.json();
+            if (data.filename) {
+              hiddenInput.value = data.filename;
+              previewImg.src = '/uploads/' + data.filename;
+              previewImg.style.display = '';
+              showToast('Photo uploaded successfully!', 'success');
+            } else {
+              showToast('Photo upload failed.', 'danger');
+            }
+          } catch (err) {
+            showToast('Photo upload error.', 'danger');
+          }
+        }
+      };
+      return div;
+    }
+    // Add a toast for feedback
+    function showToast(message, type = 'success') {
+      let toast = document.getElementById('customToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'customToast';
+        toast.style.position = 'fixed';
+        toast.style.top = '20px';
+        toast.style.right = '20px';
+        toast.style.zIndex = 9999;
+        toast.innerHTML = `<div class="alert alert-${type} shadow">${message}</div>`;
+        document.body.appendChild(toast);
+      } else {
+        toast.innerHTML = `<div class="alert alert-${type} shadow">${message}</div>`;
+      }
+      setTimeout(() => { if (toast) toast.remove(); }, 2000);
+    }
+    // Remove any global or duplicate event handler for addStaffBtn.
+
+    // 2. After every form change (add, remove, edit, photo upload), update the preview.
+    // 3. Add a function updateStaffPreview() that reads the form and renders the preview cards (reuse the same card HTML as index.html dynamic rendering).
+    // 4. Call updateStaffPreview() after renderStaffForm, after addStaffBtn, after remove, and after photo upload.
+    // 5. Make sure the preview is responsive and matches the public site style.
+    function updateStaffPreview() {
+      const previewTeachingStaff = document.getElementById('previewTeachingStaff');
+      const previewAdminStaff = document.getElementById('previewAdminStaff');
+      const staffListDiv = document.getElementById('staffList');
+
+      previewTeachingStaff.innerHTML = '';
+      previewAdminStaff.innerHTML = '';
+
+      Array.from(staffListDiv.children).forEach((card, idx) => {
+        const role = card.querySelector('.staff-role').value;
+        const name = card.querySelector('.staff-name').value;
+        const position = card.querySelector('.staff-position').value;
+        const contact = card.querySelector('.staff-contact').value;
+        const photo = card.querySelector('.staff-photo').value;
+        const description = card.querySelector('.staff-description').value;
+        const previewCard = createPreviewCard(name, position, contact, photo, description, idx, card, staffListDiv);
+        if (role === 'Teacher') {
+          previewTeachingStaff.appendChild(previewCard);
+        } else if (role === 'Admin') {
+          previewAdminStaff.appendChild(previewCard);
+        }
+      });
+    }
+
+    function createPreviewCard(name, position, contact, photo, description, idx, formCard, staffListDiv) {
+      const card = document.createElement('div');
+      card.className = 'card mb-3 shadow-sm';
+      card.innerHTML = `
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-3 text-center">
+              <img src="${photo ? `/uploads/${photo}` : '/uploads/default.png'}" alt="${name}" class="img-fluid rounded-circle" style="width: 60px; height: 60px; object-fit: cover;">
+            </div>
+            <div class="col-md-9">
+              <h6 class="fw-semibold mb-1">${name}</h6>
+              <p class="text-muted small mb-1"><i class="fas fa-briefcase me-1"></i>${position}</p>
+              <p class="text-muted small"><i class="fas fa-phone me-1"></i>${contact || 'N/A'}</p>
+              <p class="text-muted small"><i class="fas fa-info-circle me-1"></i>${description || 'No description available.'}</p>
+              <button class="btn btn-outline-primary btn-sm mt-2" type="button">Edit</button>
+            </div>
+          </div>
+        </div>
+      `;
+      // Edit button logic
+      card.querySelector('button').onclick = function() {
+        renderEditablePreviewCard(card, name, position, contact, photo, description, idx, formCard, staffListDiv);
+      };
+      return card;
+    }
+
+    function renderEditablePreviewCard(card, name, position, contact, photo, description, idx, formCard, staffListDiv) {
+      card.innerHTML = `
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-3 text-center">
+              <img src="${photo ? `/uploads/${photo}` : '/uploads/default.png'}" alt="${name}" class="img-fluid rounded-circle mb-2" style="width: 60px; height: 60px; object-fit: cover;">
+              <input type="file" accept="image/*" class="form-control form-control-sm preview-photo-input">
+            </div>
+            <div class="col-md-9">
+              <input type="text" class="form-control mb-2 preview-name" value="${name}" required>
+              <input type="text" class="form-control mb-2 preview-position" value="${position}" required>
+              <input type="text" class="form-control mb-2 preview-contact" value="${contact}" required>
+              <input type="text" class="form-control mb-2 preview-description" value="${description}" required>
+              <button class="btn btn-success btn-sm me-2" type="button">Save</button>
+              <button class="btn btn-secondary btn-sm" type="button">Cancel</button>
+            </div>
+          </div>
+        </div>
+      `;
+      // Save button logic
+      card.querySelector('.btn-success').onclick = async function() {
+        // Update the main form fields
+        formCard.querySelector('.staff-name').value = card.querySelector('.preview-name').value;
+        formCard.querySelector('.staff-position').value = card.querySelector('.preview-position').value;
+        formCard.querySelector('.staff-contact').value = card.querySelector('.preview-contact').value;
+        formCard.querySelector('.staff-description').value = card.querySelector('.preview-description').value;
+        // If photo changed, upload and update
+        const fileInput = card.querySelector('.preview-photo-input');
+        if (fileInput.files && fileInput.files[0]) {
+          const formData = new FormData();
+          formData.append('photo', fileInput.files[0]);
+          try {
+            const res = await fetch('/api/admin/upload', {
+              method: 'POST',
+              body: formData
+            });
+            const data = await res.json();
+            if (data.filename) {
+              formCard.querySelector('.staff-photo').value = data.filename;
+            }
+          } catch (err) {}
+        }
+        updateStaffPreview();
+      };
+      // Cancel button logic
+      card.querySelector('.btn-secondary').onclick = function() {
+        updateStaffPreview();
+      };
+    }
   </script>
 </body>
 </html> 
