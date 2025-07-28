@@ -128,6 +128,6 @@ export async function loginAdmin(form) {
 window.registerAdmin = registerAdmin;
 window.registerStudent = registerStudent;
 window.loginAdmin = loginAdmin;
-window.showMessage = showMessage;
+window.showMessage = showMessage; 
 window.decodeJWT = decodeJWT;
 window.isAdminOrSuperAdmin = isAdminOrSuperAdmin; 

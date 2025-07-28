@@ -5,20 +5,83 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VIRTI JAIN PATHSHALA | Home</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    body { background: #f8fafc; }
+    body { 
+      background: #f8fafc; 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    /* Hero Section */
     .hero {
-      padding: 4rem 0 3rem 0;
+      padding: 3rem 0 2rem 0;
       background: linear-gradient(90deg, #7f53ac 0%, #f953c6 100%);
       color: #fff;
-      border-radius: 0 0 2rem 2rem;
+      border-radius: 0 0 1.5rem 1.5rem;
       box-shadow: 0 4px 24px #7f53ac22;
       text-align: center;
     }
-    .hero h1 { font-weight: bold; letter-spacing: 1px; }
-    .hero p { font-size: 1.25rem; }
-    .main-actions { margin-top: 2.5rem; }
-    .main-actions .btn { min-width: 180px; margin-bottom: 1rem; font-weight: 500; border-radius: 10px; font-size: 1.15rem; }
+    
+    @media (min-width: 768px) {
+      .hero {
+        padding: 4rem 0 3rem 0;
+        border-radius: 0 0 2rem 2rem;
+      }
+    }
+    
+    .hero h1 { 
+      font-weight: bold; 
+      letter-spacing: 1px; 
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    @media (min-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+    }
+    
+    .hero p { 
+      font-size: 1rem; 
+      margin-bottom: 1.5rem;
+    }
+    
+    @media (min-width: 768px) {
+      .hero p {
+        font-size: 1.25rem;
+      }
+    }
+    
+    /* Main Actions */
+    .main-actions { 
+      margin-top: 2rem; 
+    }
+    
+    @media (min-width: 768px) {
+      .main-actions {
+        margin-top: 2.5rem;
+      }
+    }
+    
+    .main-actions .btn { 
+      width: 100%;
+      margin-bottom: 1rem; 
+      font-weight: 500; 
+      border-radius: 10px; 
+      font-size: 1rem;
+      padding: 0.75rem 1.5rem;
+    }
+    
+    @media (min-width: 768px) {
+      .main-actions .btn {
+        width: auto;
+        min-width: 180px;
+        font-size: 1.15rem;
+        margin-right: 1rem;
+      }
+    }
+    
     .main-actions .btn-login {
       background: #6c47a6;
       color: #fff;
@@ -47,22 +110,1467 @@
       background: #d900a9;
       color: #fff;
     }
-    .card-cta { max-width: 420px; margin: 2rem auto 0 auto; box-shadow: 0 0 24px #e3e6f0; border-radius: 1rem; }
-    .navbar { background: linear-gradient(90deg, #7f53ac 0%, #f953c6 100%) !important; }
-    .navbar .navbar-brand { font-weight: bold; }
+    
+    /* CTA Card */
+    .card-cta { 
+      max-width: 100%; 
+      margin: 1.5rem auto 0 auto; 
+      box-shadow: 0 0 24px #e3e6f0; 
+      border-radius: 1rem; 
+    }
+    
+    @media (min-width: 768px) {
+      .card-cta {
+        max-width: 420px;
+        margin: 2rem auto 0 auto;
+      }
+    }
+    
+    /* Navbar */
+    .navbar { 
+      background: linear-gradient(90deg, #7f53ac 0%, #f953c6 100%) !important; 
+      padding: 1rem 0;
+    }
+    
+    .navbar .navbar-brand { 
+      font-weight: bold; 
+      font-size: 1.2rem;
+    }
+    
+    @media (min-width: 768px) {
+      .navbar .navbar-brand {
+        font-size: 1.5rem;
+      }
+    }
+    
+    .navbar-nav {
+      margin-top: 1rem;
+    }
+    
+    @media (min-width: 768px) {
+      .navbar-nav {
+        margin-top: 0;
+      }
+    }
+    
+    .navbar-nav .nav-link {
+      padding: 0.5rem 1rem;
+      margin: 0.25rem 0;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    @media (min-width: 768px) {
+      .navbar-nav .nav-link {
+        padding: 0.5rem 1rem;
+        margin: 0 0.25rem;
+      }
+    }
+    
+    .navbar-nav .nav-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffd700 !important;
+    }
+    
+    /* Page Sections */
+    .page-section {
+      padding: 2rem 0;
+      display: none;
+    }
+    
+    @media (min-width: 768px) {
+      .page-section {
+        padding: 4rem 0;
+      }
+    }
+    
+    .page-section.active {
+      display: block;
+    }
+    
+    /* About Us - Professional Design */
+    .about-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .about-header-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .about-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .about-title i {
+      color: #667eea;
+      font-size: 2.2rem;
+    }
+
+    .about-subtitle {
+      font-size: 1.3rem;
+      color: #7f8c8d;
+      margin: 0;
+      font-weight: 400;
+    }
+
+    /* Mission & Vision Section */
+    .mission-vision-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .mission-card,
+    .vision-card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .mission-card:hover,
+    .vision-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .mission-card {
+      border-left: 5px solid #667eea;
+    }
+
+    .vision-card {
+      border-left: 5px solid #27ae60;
+    }
+
+    .mission-header,
+    .vision-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .mission-header i {
+      color: #667eea;
+      font-size: 1.8rem;
+    }
+
+    .vision-header i {
+      color: #27ae60;
+      font-size: 1.8rem;
+    }
+
+    .mission-header h3,
+    .vision-header h3 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin: 0;
+    }
+
+    .mission-card p,
+    .vision-card p {
+      font-size: 1.1rem;
+      color: #34495e;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* Values Section */
+    .values-section {
+      margin-bottom: 60px;
+    }
+
+    .values-title {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 40px;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .value-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .value-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .value-icon {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 20px;
+    }
+
+    .value-card h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+
+    .value-card p {
+      font-size: 1rem;
+      color: #7f8c8d;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Features Section */
+    .features-section {
+      margin-bottom: 60px;
+    }
+
+    .features-title {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 40px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-icon {
+      background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+      color: white;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 25px;
+    }
+
+    .feature-card h4 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+
+    .feature-card p {
+      font-size: 1.1rem;
+      color: #7f8c8d;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Staff Section */
+    .staff-section,
+    .admin-staff-section {
+      margin-bottom: 60px;
+    }
+
+    .staff-title,
+    .admin-staff-title {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 40px;
+    }
+
+    .staff-grid,
+    .admin-staff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .staff-card,
+    .admin-staff-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .staff-card:hover,
+    .admin-staff-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .staff-photo,
+    .admin-staff-photo {
+      height: 200px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .admin-staff-photo {
+      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    }
+
+    .staff-photo-placeholder,
+    .admin-staff-photo-placeholder {
+      color: white;
+      font-size: 4rem;
+      opacity: 0.8;
+    }
+
+    .staff-info,
+    .admin-staff-info {
+      padding: 25px;
+    }
+
+    .staff-name,
+    .admin-staff-name {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 8px;
+    }
+
+    .staff-position,
+    .admin-staff-position {
+      font-size: 1.1rem;
+      color: #667eea;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .admin-staff-position {
+      color: #e74c3c;
+    }
+
+    .staff-description,
+    .admin-staff-description {
+      font-size: 1rem;
+      color: #7f8c8d;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .staff-contact,
+    .admin-staff-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .staff-contact span,
+    .admin-staff-contact span {
+      font-size: 0.9rem;
+      color: #95a5a6;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .staff-contact i,
+    .admin-staff-contact i {
+      color: #667eea;
+      font-size: 0.8rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .about-title {
+        font-size: 2.2rem;
+      }
+
+      .about-subtitle {
+        font-size: 1.1rem;
+      }
+
+      .mission-vision-section {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .mission-card,
+      .vision-card {
+        padding: 20px;
+      }
+
+      .values-grid,
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .staff-grid,
+      .admin-staff-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .staff-info,
+      .admin-staff-info {
+        padding: 20px;
+      }
+
+      .staff-photo,
+      .admin-staff-photo {
+        height: 150px;
+      }
+
+      .staff-photo-placeholder,
+      .admin-staff-photo-placeholder {
+        font-size: 3rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-title {
+        font-size: 1.8rem;
+      }
+
+      .values-title,
+      .features-title,
+      .staff-title,
+      .admin-staff-title {
+        font-size: 1.8rem;
+      }
+
+      .value-card,
+      .feature-card {
+        padding: 20px;
+      }
+
+      .value-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+      }
+
+      .feature-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 1.8rem;
+      }
+    }
+    
+    /* Contact Us - Professional Design */
+    .contact-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .contact-header-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .contact-title i {
+      color: #667eea;
+      font-size: 2rem;
+    }
+
+    .contact-subtitle {
+      font-size: 1.2rem;
+      color: #7f8c8d;
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .contact-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .contact-info-section,
+    .contact-form-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .info-card {
+      border-left: 5px solid #667eea;
+    }
+
+    .form-card {
+      border-left: 5px solid #27ae60;
+    }
+
+    .contact-card-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 25px 30px;
+      text-align: center;
+    }
+
+    .form-card .contact-card-header {
+      background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+    }
+
+    .contact-card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .contact-card-title i {
+      font-size: 1.3rem;
+    }
+
+    .contact-card-body {
+      padding: 30px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 25px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-item:hover {
+      background: #e3f2fd;
+      transform: translateX(5px);
+    }
+
+    .contact-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact-icon {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .contact-details {
+      flex: 1;
+    }
+
+    .contact-label {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 8px;
+    }
+
+    .contact-value {
+      font-size: 1rem;
+      color: #34495e;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Form Styles */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin: 0;
+    }
+
+    .input-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      color: #667eea;
+      font-size: 1.1rem;
+      z-index: 2;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 15px 15px 15px 50px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: white;
+      color: #2c3e50;
+    }
+
+    .form-textarea {
+      padding-left: 50px;
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: #95a5a6;
+      font-style: italic;
+    }
+
+    .form-actions {
+      margin-top: 10px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+      background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    }
+
+    .submit-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .submit-btn i {
+      font-size: 1rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .contact-title {
+        font-size: 2rem;
+      }
+
+      .contact-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .contact-card-body {
+        padding: 20px;
+      }
+
+      .contact-item {
+        padding: 15px;
+        gap: 15px;
+      }
+
+      .contact-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+
+      .form-input,
+      .form-textarea {
+        padding: 12px 12px 12px 45px;
+        font-size: 0.95rem;
+      }
+
+      .input-icon {
+        left: 12px;
+        font-size: 1rem;
+      }
+
+      .submit-btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .contact-title {
+        font-size: 1.8rem;
+      }
+
+      .contact-subtitle {
+        font-size: 1rem;
+      }
+
+      .contact-card-header {
+        padding: 20px;
+      }
+
+      .contact-card-title {
+        font-size: 1.3rem;
+      }
+
+      .contact-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+      }
+
+      .contact-icon {
+        align-self: center;
+      }
+    }
+    
+    /* Tap List - Professional Design */
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@300;400;500;600;700&display=swap');
+    
+    /* Header Section */
+    .tap-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 20px;
+      padding: 40px 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+      text-align: center;
+      color: white;
+    }
+
+    .tap-header-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .tap-greeting {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .tap-icon {
+      font-size: 2rem;
+      animation: pulse 2s infinite;
+    }
+
+    .tap-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .tap-institution {
+      font-size: 2rem;
+      font-weight: 600;
+      margin: 20px 0;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .tap-divider {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+      margin: 20px auto;
+      width: 60%;
+    }
+
+    .tap-date {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    /* Schedule Today Section */
+    .schedule-today {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .schedule-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e0e0e0;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .schedule-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .today-card {
+      border-left: 5px solid #3498db;
+    }
+
+    .tomorrow-card {
+      border-left: 5px solid #f39c12;
+    }
+
+    .schedule-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #2c3e50;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .schedule-title i {
+      color: #3498db;
+    }
+
+    .tomorrow-card .schedule-title i {
+      color: #f39c12;
+    }
+
+    .schedule-items {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .schedule-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+      border-radius: 10px;
+      background: #f8f9fa;
+      border-left: 4px solid;
+    }
+
+    .ekasana-item {
+      border-left-color: #e74c3c;
+    }
+
+    .biasana-item {
+      border-left-color: #27ae60;
+    }
+
+    .schedule-label {
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 1rem;
+    }
+
+    .schedule-name {
+      font-weight: 500;
+      color: #34495e;
+      font-size: 1rem;
+    }
+
+    /* Main Schedule Container */
+    .schedule-container {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .schedule-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .schedule-table-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .schedule-table-title i {
+      color: #667eea;
+    }
+
+    /* Table Styles */
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.1rem;
+      background: white;
+    }
+
+    .schedule-table th {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 18px 15px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.2rem;
+      border: none;
+    }
+
+    .schedule-table th.date-header {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+    }
+
+    .schedule-table th.ekasana-header {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+    }
+
+    .schedule-table th.biasana-header {
+      background: linear-gradient(135deg, #27ae60, #2ecc71);
+    }
+
+    .schedule-table td {
+      padding: 15px;
+      border: 1px solid #e0e0e0;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .schedule-table tbody tr:nth-child(even) {
+      background: #f8f9fa;
+    }
+
+    .schedule-table tbody tr:nth-child(odd) {
+      background: white;
+    }
+
+    .schedule-table tbody tr:hover {
+      background: #e3f2fd;
+      transform: scale(1.01);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .schedule-table td:first-child {
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      font-size: 1.1rem;
+      width: 80px;
+    }
+
+    .schedule-table td:nth-child(2) {
+      text-align: left;
+      padding-left: 20px;
+      min-width: 280px;
+      border-left: 4px solid #e74c3c;
+    }
+
+    .schedule-table td:nth-child(3) {
+      text-align: left;
+      padding-left: 20px;
+      min-width: 280px;
+      border-left: 4px solid #27ae60;
+    }
+
+    .empty-slot {
+      color: #95a5a6;
+      font-style: italic;
+      background: #f8f9fa;
+    }
+
+    /* Statistics Container */
+    .stats-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e0e0e0;
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .ekasana-stat {
+      border-left: 5px solid #e74c3c;
+    }
+
+    .biasana-stat {
+      border-left: 5px solid #27ae60;
+    }
+
+    .stat-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .stat-header i {
+      font-size: 1.5rem;
+      color: #667eea;
+    }
+
+    .ekasana-stat .stat-header i {
+      color: #e74c3c;
+    }
+
+    .biasana-stat .stat-header i {
+      color: #27ae60;
+    }
+
+    .stat-header h4 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin: 0;
+    }
+
+    .stat-content {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .stat-item {
+      text-align: center;
+      flex: 1;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      display: block;
+      color: #2c3e50;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #7f8c8d;
+      font-weight: 500;
+    }
+
+    /* Action Buttons */
+    .action-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .print-btn {
+      background: linear-gradient(135deg, #8e44ad, #9b59b6);
+    }
+
+    .highlight-btn {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+    }
+
+    .export-btn {
+      background: linear-gradient(135deg, #f39c12, #e67e22);
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .highlight-empty {
+      background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%) !important;
+      border: 2px solid #e74c3c !important;
+      animation: pulse 2s infinite;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .tap-title {
+        font-size: 2rem;
+      }
+
+      .tap-institution {
+        font-size: 1.6rem;
+      }
+
+      .schedule-today {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-container {
+        grid-template-columns: 1fr;
+      }
+
+      .action-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .action-btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+
+      .schedule-table {
+        font-size: 0.9rem;
+      }
+
+      .schedule-table th,
+      .schedule-table td {
+        padding: 10px 8px;
+      }
+
+      .schedule-table td:nth-child(2),
+      .schedule-table td:nth-child(3) {
+        min-width: 200px;
+        padding-left: 10px;
+      }
+    }
+
+    @media print {
+      .action-container {
+        display: none !important;
+      }
+
+      .stats-container {
+        display: none !important;
+      }
+
+      .schedule-today {
+        display: none !important;
+      }
+    }
+    
+
+    
+    /* Navigation */
+    .nav-link {
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      color: #ffd700 !important;
+    }
+    
+    .nav-link.active {
+      color: #ffd700 !important;
+      font-weight: bold;
+    }
+    
+    /* Back to Home Button */
+    .back-home {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 1000;
+      background: linear-gradient(90deg, #7f53ac 0%, #f953c6 100%);
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    
+    @media (min-width: 768px) {
+      .back-home {
+        top: 20px;
+        right: 20px;
+        font-size: 1rem;
+      }
+    }
+    
+    /* Section Headers */
+    .page-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    
+    @media (min-width: 768px) {
+      .page-section h2 {
+        font-size: 2.2rem;
+      }
+    }
+    
+    /* Form Responsiveness */
+    .form-control {
+      font-size: 1rem;
+      padding: 0.75rem;
+    }
+    
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Button Responsiveness */
+    .btn {
+      font-size: 1rem;
+      padding: 0.75rem 1.5rem;
+    }
+    
+    @media (min-width: 768px) {
+      .btn {
+        font-size: 1.1rem;
+      }
+    }
+    
+    /* Container Padding */
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    @media (min-width: 768px) {
+      .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+    }
+    
+    /* Mobile Menu Toggle */
+    .navbar-toggler {
+      border: none;
+      padding: 0.25rem 0.5rem;
+    }
+    
+    .navbar-toggler:focus {
+      box-shadow: none;
+    }
+    
+    /* Disabled nav links */
+    .nav-link.disabled {
+      opacity: 0.7;
+      cursor: default;
+    }
+    
+    /* Responsive text sizes */
+    @media (max-width: 575px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      .hero p {
+        font-size: 0.95rem;
+      }
+      .page-section h2 {
+        font-size: 1.6rem;
+      }
+      .about-section h4 {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* Admin Staff Phone Link - Professional Look */
+    .admin-staff-contact a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.08rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s, box-shadow 0.2s;
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: #f1f5ff;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.06);
+    }
+    .admin-staff-contact a:hover, .admin-staff-contact a:focus {
+      color: #fff;
+      background: linear-gradient(90deg, #2563eb 0%, #7f53ac 100%);
+      box-shadow: 0 4px 16px rgba(37,99,235,0.13);
+      text-decoration: none;
+    }
+    .admin-staff-contact a i {
+      color: #2563eb;
+      font-size: 1.15rem;
+      transition: color 0.2s;
+    }
+    .admin-staff-contact a:hover i, .admin-staff-contact a:focus i {
+      color: #fff;
+    }
+
+    /* Staff (Teacher) Phone Link - Professional Look */
+    .staff-contact a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.08rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s, box-shadow 0.2s;
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: #f1f5ff;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.06);
+    }
+    .staff-contact a:hover, .staff-contact a:focus {
+      color: #fff;
+      background: linear-gradient(90deg, #2563eb 0%, #7f53ac 100%);
+      box-shadow: 0 4px 16px rgba(37,99,235,0.13);
+      text-decoration: none;
+    }
+    .staff-contact a i {
+      color: #2563eb;
+      font-size: 1.15rem;
+      transition: color 0.2s;
+    }
+    .staff-contact a:hover i, .staff-contact a:focus i {
+      color: #fff;
+    }
   </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-      <a class="navbar-brand" href="/index.html">VIRTI JAIN PATHSHALA</a>
-      <div class="collapse navbar-collapse">
+      <a class="navbar-brand" href="#" onclick="showHome()">VIRTI JAIN PATHSHALA</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto" id="navLinks">
           <!-- Links will be injected by JS -->
         </ul>
       </div>
     </div>
   </nav>
+
+  <!-- Home Section -->
+  <section id="homeSection" class="page-section active">
   <section class="hero">
     <div class="container">
       <h1 class="mb-3">Welcome to VIRTI JAIN PATHSHALA</h1>
@@ -76,11 +1584,792 @@
     <h5 class="mb-3">Need help?</h5>
     <p class="mb-2">Contact your institute admin for support or account approval.</p>
   </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section id="aboutSection" class="page-section">
+    <div class="container">
+      <!-- About Header -->
+      <div class="about-header">
+        <div class="about-header-content">
+          <h2 class="about-title">
+            <i class="fas fa-info-circle"></i>
+            About Us
+          </h2>
+          <p class="about-subtitle">Learn more about our institution and our dedicated team</p>
+        </div>
+      </div>
+
+      <!-- Mission & Vision -->
+      <div class="mission-vision-section">
+        <div class="mission-card">
+          <div class="mission-header">
+            <i class="fas fa-bullseye"></i>
+            <h3>Our Mission</h3>
+          </div>
+          <p>VIRTI JAIN PATHSHALA is dedicated to providing quality education and fostering spiritual growth through Jain principles. We strive to create an environment where students can excel academically while developing strong moral values.</p>
+        </div>
+        
+        <div class="vision-card">
+          <div class="vision-header">
+            <i class="fas fa-eye"></i>
+            <h3>Our Vision</h3>
+          </div>
+          <p>To become a leading educational institution that combines modern technology with traditional Jain values, preparing students for success in both worldly and spiritual pursuits.</p>
+        </div>
+      </div>
+
+      <!-- Our Values -->
+      <div class="values-section">
+        <h3 class="values-title">Our Core Values</h3>
+        <div class="values-grid">
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-dove"></i>
+            </div>
+            <h4>Ahimsa (Non-violence)</h4>
+            <p>Promoting peace and harmony in all aspects of life</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-balance-scale"></i>
+            </div>
+            <h4>Satya (Truth)</h4>
+            <p>Encouraging honesty and integrity in all dealings</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-hand-holding-heart"></i>
+            </div>
+            <h4>Asteya (Non-stealing)</h4>
+            <p>Teaching respect for others' property and rights</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-user-shield"></i>
+            </div>
+            <h4>Brahmacharya (Celibacy)</h4>
+            <p>Fostering self-discipline and self-control</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <h4>Aparigraha (Non-possession)</h4>
+            <p>Promoting simplicity and contentment</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Features -->
+      <div class="features-section">
+        <h3 class="features-title">Why Choose Us</h3>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h4>Quality Education</h4>
+            <p>Comprehensive curriculum designed for holistic development</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h4>Spiritual Growth</h4>
+            <p>Integration of Jain principles in daily learning</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h4>Community</h4>
+            <p>Building strong relationships and support networks</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teaching Staff -->
+      <div class="staff-section">
+        <h3 class="staff-title">Our Teaching Staff</h3>
+        <div class="staff-grid">
+          <div class="staff-card">
+            <div class="staff-photo">
+              <div class="staff-photo-placeholder">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+            </div>
+            <div class="staff-info">
+              <h4 class="staff-name">શ્રી ભવિનભાઈ શાહ</h4>
+              <p class="staff-position">Senior Teacher</p>
+              <p class="staff-description">Experienced educator with expertise in multiple subjects. Committed to fostering academic excellence and student development.</p>
+              <div class="staff-contact">
+                <a href="tel:+919099094491"><i class="fas fa-phone"></i> +91 90990 94491</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-photo">
+              <div class="staff-photo-placeholder">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+            </div>
+            <div class="staff-info">
+              <h4 class="staff-name">શ્રીમતી જ્યોત્સ્નાબેન કોઠારી</h4>
+              <p class="staff-position">Teacher</p>
+              <p class="staff-description">Dedicated teacher with passion for education. Specializes in creating engaging learning environments for students.</p>
+              <div class="staff-contact">
+                <a href="tel:+919408781402"><i class="fas fa-phone"></i> +91 94087 81402</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-photo">
+              <div class="staff-photo-placeholder">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+            </div>
+            <div class="staff-info">
+              <h4 class="staff-name">શ્રી કલ્પિતભાઈ અજમેરા</h4>
+              <p class="staff-position">Teacher</p>
+              <p class="staff-description">Innovative educator focused on modern teaching methodologies. Committed to student success and academic growth.</p>
+              <div class="staff-contact">
+                <a href="tel:+919638099053"><i class="fas fa-phone"></i> +91 96380 99053</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-photo">
+              <div class="staff-photo-placeholder">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+            </div>
+            <div class="staff-info">
+              <h4 class="staff-name">શ્રીમતી અલ્પાબેન ધરોડ</h4>
+              <p class="staff-position">Teacher</p>
+              <p class="staff-description">Experienced teacher with strong foundation in educational principles. Dedicated to nurturing student potential.</p>
+              <div class="staff-contact">
+                <a href="tel:+917043318185"><i class="fas fa-phone"></i> +91 70433 18185</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-photo">
+              <div class="staff-photo-placeholder">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+            </div>
+            <div class="staff-info">
+              <h4 class="staff-name">શ્રીમતી બિનાબેન શાહ</h4>
+              <p class="staff-position">Teacher</p>
+              <p class="staff-description">Passionate educator committed to academic excellence. Specializes in creating supportive learning environments.</p>
+              <div class="staff-contact">
+                <a href="tel:+918200144487"><i class="fas fa-phone"></i> +91 82001 44487</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-photo">
+              <div class="staff-photo-placeholder">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+            </div>
+            <div class="staff-info">
+              <h4 class="staff-name">શ્રીમતી વર્ષાબેન કોઠારી</h4>
+              <p class="staff-position">Teacher</p>
+              <p class="staff-description">Dedicated teacher with expertise in multiple subjects. Committed to fostering student growth and development.</p>
+              <div class="staff-contact">
+                <a href="tel:+919904518482"><i class="fas fa-phone"></i> +91 99045 18482</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-photo">
+              <div class="staff-photo-placeholder">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+            </div>
+            <div class="staff-info">
+              <h4 class="staff-name">શ્રી જયદીપભાઈ કોઠારી</h4>
+              <p class="staff-position">Teacher</p>
+              <p class="staff-description">Experienced educator with strong academic background. Focuses on innovative teaching methods and student engagement.</p>
+              <div class="staff-contact">
+                <a href="tel:+918980807148"><i class="fas fa-phone"></i> +91 89808 07148</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-photo">
+              <div class="staff-photo-placeholder">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+            </div>
+            <div class="staff-info">
+              <h4 class="staff-name">શ્રીમતી હેમાલીબેન સેઠ</h4>
+              <p class="staff-position">Teacher</p>
+              <p class="staff-description">Committed educator with passion for teaching. Specializes in creating inclusive and supportive classroom environments.</p>
+              <div class="staff-contact">
+                <a href="tel:+919601199005"><i class="fas fa-phone"></i> +91 96011 99005</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-photo">
+              <div class="staff-photo-placeholder">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+            </div>
+            <div class="staff-info">
+              <h4 class="staff-name">શ્રીમતી સેતલબેન પટેલ</h4>
+              <p class="staff-position">Teacher</p>
+              <p class="staff-description">Dedicated teacher with strong commitment to student success. Focuses on holistic development and academic excellence.</p>
+              <div class="staff-contact">
+                <a href="tel:+919824561893"><i class="fas fa-phone"></i> +91 98245 61893</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-photo">
+              <div class="staff-photo-placeholder">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+            </div>
+            <div class="staff-info">
+              <h4 class="staff-name">શ્રીમતી સેજલબેન શાહ</h4>
+              <p class="staff-position">Teacher</p>
+              <p class="staff-description">Passionate educator committed to academic excellence. Specializes in creating engaging and effective learning experiences.</p>
+              <div class="staff-contact">
+                <a href="tel:+919428352206"><i class="fas fa-phone"></i> +91 94283 52206</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-photo">
+              <div class="staff-photo-placeholder">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+            </div>
+            <div class="staff-info">
+              <h4 class="staff-name">શ્રીમતી રેખાબેન શાહ</h4>
+              <p class="staff-position">Teacher</p>
+              <p class="staff-description">Experienced teacher with dedication to student development. Committed to fostering a positive learning environment.</p>
+              <div class="staff-contact">
+                <a href="tel:+919484441383"><i class="fas fa-phone"></i> +91 94844 41383</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Administrative Staff -->
+      <div class="admin-staff-section">
+        <h3 class="admin-staff-title">Administrative Staff</h3>
+        <div class="admin-staff-grid">
+          <div class="admin-staff-card">
+            <div class="admin-staff-photo">
+              <div class="admin-staff-photo-placeholder">
+                <i class="fas fa-user-cog"></i>
+              </div>
+            </div>
+            <div class="admin-staff-info">
+              <h4 class="admin-staff-name">શ્રી કૌશલ શાહ</h4>
+              <p class="admin-staff-position">Administrative Head</p>
+              <p class="admin-staff-description">Leads the administrative team with expertise in institutional management and strategic planning.</p>
+              <div class="admin-staff-contact">
+                <a href="tel:+919876543210"><i class="fas fa-phone"></i> +91 98765 43210</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-staff-card">
+            <div class="admin-staff-photo">
+              <div class="admin-staff-photo-placeholder">
+                <i class="fas fa-user-cog"></i>
+              </div>
+            </div>
+            <div class="admin-staff-info">
+              <h4 class="admin-staff-name">શ્રી સૌરભ શાહ</h4>
+              <p class="admin-staff-position">Deputy Administrative Head</p>
+              <p class="admin-staff-description">Assists in administrative operations and ensures smooth institutional coordination.</p>
+              <div class="admin-staff-contact">
+                <a href="tel:+919876543211"><i class="fas fa-phone"></i> +91 98765 43211</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-staff-card">
+            <div class="admin-staff-photo">
+              <div class="admin-staff-photo-placeholder">
+                <i class="fas fa-user-cog"></i>
+              </div>
+            </div>
+            <div class="admin-staff-info">
+              <h4 class="admin-staff-name">શ્રીમતી ઉષાબેન પરીખ</h4>
+              <p class="admin-staff-position">Office Coordinator</p>
+              <p class="admin-staff-description">Manages day-to-day office operations and ensures efficient administrative workflow.</p>
+              <div class="admin-staff-contact">
+                <a href="tel:+919876543212"><i class="fas fa-phone"></i> +91 98765 43212</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-staff-card">
+            <div class="admin-staff-photo">
+              <div class="admin-staff-photo-placeholder">
+                <i class="fas fa-user-cog"></i>
+              </div>
+            </div>
+            <div class="admin-staff-info">
+              <h4 class="admin-staff-name">શ્રી શ્રેણિકભાઈ શાહ</h4>
+              <p class="admin-staff-position">Administrative Coordinator</p>
+              <p class="admin-staff-description">Coordinates administrative tasks and supports institutional operations.</p>
+              <div class="admin-staff-contact">
+                <a href="tel:+919876543213"><i class="fas fa-phone"></i> +91 98765 43213</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-staff-card">
+            <div class="admin-staff-photo">
+              <div class="admin-staff-photo-placeholder">
+                <i class="fas fa-user-cog"></i>
+              </div>
+            </div>
+            <div class="admin-staff-info">
+              <h4 class="admin-staff-name">શ્રીમતી જિનાલબેન શાહ</h4>
+              <p class="admin-staff-position">Administrative Assistant</p>
+              <p class="admin-staff-description">Provides administrative support and maintains institutional records.</p>
+              <div class="admin-staff-contact">
+                <a href="tel:+919876543214"><i class="fas fa-phone"></i> +91 98765 43214</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-staff-card">
+            <div class="admin-staff-photo">
+              <div class="admin-staff-photo-placeholder">
+                <i class="fas fa-user-cog"></i>
+              </div>
+            </div>
+            <div class="admin-staff-info">
+              <h4 class="admin-staff-name">શ્રીમતી બિજલબેન શાહ</h4>
+              <p class="admin-staff-position">Administrative Assistant</p>
+              <p class="admin-staff-description">Assists in administrative tasks and supports institutional operations.</p>
+              <div class="admin-staff-contact">
+                <a href="tel:+919876543215"><i class="fas fa-phone"></i> +91 98765 43215</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-staff-card">
+            <div class="admin-staff-photo">
+              <div class="admin-staff-photo-placeholder">
+                <i class="fas fa-user-cog"></i>
+              </div>
+            </div>
+            <div class="admin-staff-info">
+              <h4 class="admin-staff-name">શ્રી અંકિતભાઈ અજમેરા</h4>
+              <p class="admin-staff-position">Administrative Assistant</p>
+              <p class="admin-staff-description">Provides administrative support and assists in institutional coordination.</p>
+              <div class="admin-staff-contact">
+                <a href="tel:+919876543216"><i class="fas fa-phone"></i> +91 98765 43216</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-staff-card">
+            <div class="admin-staff-photo">
+              <div class="admin-staff-photo-placeholder">
+                <i class="fas fa-user-cog"></i>
+              </div>
+            </div>
+            <div class="admin-staff-info">
+              <h4 class="admin-staff-name">શ્રી હર્ષભાઈ કોઠારી</h4>
+              <p class="admin-staff-position">IT Coordinator</p>
+              <p class="admin-staff-description">Manages digital infrastructure, online learning platforms, and provides technical support for the institution.</p>
+              <div class="admin-staff-contact">
+                <a href="tel:+919876543217"><i class="fas fa-phone"></i> +91 98765 43217</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-staff-card">
+            <div class="admin-staff-photo">
+              <div class="admin-staff-photo-placeholder">
+                <i class="fas fa-user-cog"></i>
+              </div>
+            </div>
+            <div class="admin-staff-info">
+              <h4 class="admin-staff-name">શ્રી પિયુષભાઈ શાહ</h4>
+              <p class="admin-staff-position">Administrative Coordinator</p>
+              <p class="admin-staff-description">Coordinates administrative operations and supports institutional management.</p>
+              <div class="admin-staff-contact">
+                <a href="tel:+919876543218"><i class="fas fa-phone"></i> +91 98765 43218</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-staff-card">
+            <div class="admin-staff-photo">
+              <div class="admin-staff-photo-placeholder">
+                <i class="fas fa-user-cog"></i>
+              </div>
+            </div>
+            <div class="admin-staff-info">
+              <h4 class="admin-staff-name">શ્રીમતી મલ્તિબેન શાહ</h4>
+              <p class="admin-staff-position">Administrative Assistant</p>
+              <p class="admin-staff-description">Provides administrative support and maintains institutional records.</p>
+              <div class="admin-staff-contact">
+                <a href="tel:+919876543219"><i class="fas fa-phone"></i> +91 98765 43219</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-staff-card">
+            <div class="admin-staff-photo">
+              <div class="admin-staff-photo-placeholder">
+                <i class="fas fa-user-cog"></i>
+              </div>
+            </div>
+            <div class="admin-staff-info">
+              <h4 class="admin-staff-name">શ્રીમતી હિરાલબેન જસવાણી</h4>
+              <p class="admin-staff-position">Administrative Assistant</p>
+              <p class="admin-staff-description">Assists in administrative tasks and supports institutional operations.</p>
+              <div class="admin-staff-contact">
+                <a href="tel:+919876543220"><i class="fas fa-phone"></i> +91 98765 43220</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section id="contactSection" class="page-section">
+    <div class="container">
+      <!-- Contact Header -->
+      <div class="contact-header">
+        <div class="contact-header-content">
+          <h2 class="contact-title">
+            <i class="fas fa-envelope"></i>
+            Contact Us
+          </h2>
+          <p class="contact-subtitle">Get in touch with us for any inquiries or support</p>
+        </div>
+      </div>
+
+      <div class="contact-content">
+        <!-- Contact Information -->
+        <div class="contact-info-section">
+          <div class="contact-card info-card">
+            <div class="contact-card-header">
+              <h3 class="contact-card-title">
+                <i class="fas fa-info-circle"></i>
+                Contact Information
+              </h3>
+            </div>
+            <div class="contact-card-body">
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="contact-details">
+                  <h4 class="contact-label">Address</h4>
+                  <p class="contact-value">83/A શ્રીકુંજ શોપિંગ સેન્ટર, પંચદેવ મંદિર નજીક,<br>મુરલીધર ડેરી, ઘાટલોડિયા, અહેમદાબાદ, ગુજરાત - 380061</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="fas fa-phone"></i>
+                </div>
+                <div class="contact-details">
+                  <h4 class="contact-label">Phone</h4>
+                  <p class="contact-value">મોબાઇલ: 9725247990</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div class="contact-details">
+                  <h4 class="contact-label">Email</h4>
+                  <p class="contact-value">virtijainpathshala@gmail.com</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="contact-details">
+                  <h4 class="contact-label">Office Hours</h4>
+                  <p class="contact-value">Monday - Sunday: Morning 8:00 AM to 12:00 PM<br>Evening 4:00 PM to 6:00 PM</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form-section">
+          <div class="contact-card form-card">
+            <div class="contact-card-header">
+              <h3 class="contact-card-title">
+                <i class="fas fa-paper-plane"></i>
+                Send us a Message
+              </h3>
+            </div>
+            <div class="contact-card-body">
+              <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                  <label for="name" class="form-label">Full Name</label>
+                  <div class="input-group">
+                    <span class="input-icon">
+                      <i class="fas fa-user"></i>
+                    </span>
+                    <input type="text" class="form-input" id="name" placeholder="Enter your full name" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="email" class="form-label">Email Address</label>
+                  <div class="input-group">
+                    <span class="input-icon">
+                      <i class="fas fa-envelope"></i>
+                    </span>
+                    <input type="email" class="form-input" id="email" placeholder="Enter your email address" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="subject" class="form-label">Subject</label>
+                  <div class="input-group">
+                    <span class="input-icon">
+                      <i class="fas fa-tag"></i>
+                    </span>
+                    <input type="text" class="form-input" id="subject" placeholder="Enter message subject" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="message" class="form-label">Message</label>
+                  <div class="input-group">
+                    <span class="input-icon">
+                      <i class="fas fa-comment"></i>
+                    </span>
+                    <textarea class="form-textarea" id="message" rows="5" placeholder="Type your message here..." required></textarea>
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Send Message</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Tap List Section -->
+  <section id="tapListSection" class="page-section">
+    <div class="container">
+      <!-- Header Section -->
+      <div class="tap-header">
+        <div class="tap-header-content">
+          <div class="tap-greeting">
+            <span class="tap-icon">🌹</span>
+            <h1 class="tap-title">જય જિનેન્દ્ર</h1>
+            <span class="tap-icon">🌹</span>
+          </div>
+          <h2 class="tap-institution">વિરતી જૈન પાઠશાળા</h2>
+          <div class="tap-divider"></div>
+          <p class="tap-date" id="tap-date-info"></p>
+        </div>
+      </div>
+
+      <!-- Today's Schedule -->
+      <div class="schedule-today">
+        <div class="schedule-card today-card">
+          <h3 class="schedule-title">
+            <i class="fas fa-calendar-day"></i>
+            આજના એકાસણા અને બિયાસણા
+          </h3>
+          <div class="schedule-items">
+            <div class="schedule-item ekasana-item">
+              <span class="schedule-label">એકાસણા:</span>
+              <span class="schedule-name" id="today-ekasana">નામ બાકી છે</span>
+            </div>
+            <div class="schedule-item biasana-item">
+              <span class="schedule-label">બિયાસણા:</span>
+              <span class="schedule-name" id="today-biasana">નામ બાકી છે</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="schedule-card tomorrow-card">
+          <h3 class="schedule-title">
+            <i class="fas fa-calendar-plus"></i>
+            આવતીકાલના એકાસણા અને બિયાસણા
+          </h3>
+          <div class="schedule-items">
+            <div class="schedule-item ekasana-item">
+              <span class="schedule-label">એકાસણા:</span>
+              <span class="schedule-name" id="tomorrow-ekasana">નામ બાકી છે</span>
+            </div>
+            <div class="schedule-item biasana-item">
+              <span class="schedule-label">બિયાસણા:</span>
+              <span class="schedule-name" id="tomorrow-biasana">નામ બાકી છે</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Schedule Table -->
+      <div class="schedule-container">
+        <div class="schedule-header">
+          <h3 class="schedule-table-title">
+            <i class="fas fa-list-alt"></i>
+            એકાસણા અને બિયાસણા ની યાદી - બાળકોના નામ
+          </h3>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="schedule-table" id="schedule-table">
+            <thead>
+              <tr>
+                <th class="date-header">તારીખ</th>
+                <th class="ekasana-header">એકાસણા - બાળકનું નામ</th>
+                <th class="biasana-header">બિયાસણા - બાળકનું નામ</th>
+              </tr>
+            </thead>
+            <tbody id="schedule-table-body">
+              <!-- Table rows will be populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="stats-container">
+          <div class="stat-card ekasana-stat">
+            <div class="stat-header">
+              <i class="fas fa-chart-pie"></i>
+              <h4>એકાસણા આંકડા</h4>
+            </div>
+            <div class="stat-content">
+              <div class="stat-item">
+                <span class="stat-number" id="ekasana-total">31</span>
+                <span class="stat-label">કુલ દિવસો</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number" id="ekasana-filled">0</span>
+                <span class="stat-label">ભરેલા</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number" id="ekasana-remaining">31</span>
+                <span class="stat-label">બાકી</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card biasana-stat">
+            <div class="stat-header">
+              <i class="fas fa-chart-bar"></i>
+              <h4>બિયાસણા આંકડા</h4>
+            </div>
+            <div class="stat-content">
+              <div class="stat-item">
+                <span class="stat-number" id="biasana-total">31</span>
+                <span class="stat-label">કુલ દિવસો</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number" id="biasana-filled">0</span>
+                <span class="stat-label">ભરેલા</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number" id="biasana-remaining">31</span>
+                <span class="stat-label">બાકી</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-container">
+          <button class="action-btn print-btn" onclick="printSchedule()">
+            <i class="fas fa-print"></i>
+            <span>યાદી પ્રિન્ટ કરો</span>
+          </button>
+          <button class="action-btn highlight-btn" onclick="highlightEmptySlots()">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>બાકી નામ બતાવો</span>
+          </button>
+          <button class="action-btn export-btn" onclick="exportScheduleToCSV()">
+            <i class="fas fa-download"></i>
+            <span>CSV Export</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Back to Home Button -->
+  <button class="btn back-home" id="backHomeBtn" style="display: none;" onclick="showHome()">
+    <i class="fas fa-home me-2"></i>Back to Home
+  </button>
+
   <script>
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.page-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      // Show selected section
+      document.getElementById(sectionId).classList.add('active');
+      
+      // Update navigation
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      // Show/hide back button
+      const backBtn = document.getElementById('backHomeBtn');
+      if (sectionId === 'homeSection') {
+        backBtn.style.display = 'none';
+      } else {
+        backBtn.style.display = 'block';
+      }
+    }
+
+    function showHome() {
+      showSection('homeSection');
+    }
+
     function renderNavAndActions() {
       const token = localStorage.getItem('token');
       const navLinks = document.getElementById('navLinks');
       const mainActions = document.getElementById('mainActions');
+      
       if (token) {
         let adminType = null;
         let fullName = '';
@@ -89,6 +2378,7 @@
           adminType = payload.adminType;
           fullName = payload.fullName || '';
         } catch (e) {}
+        
         let dashboardLink = '';
         if (adminType === 'Super Admin') {
           dashboardLink = '<a href="/profile/superadmin.html" class="btn btn-warning btn-lg me-2">Super Admin Panel</a>';
@@ -99,11 +2389,16 @@
         } else if (adminType === 'STUDENT') {
           dashboardLink = '<a href="/panel/student.html" class="btn btn-student btn-lg me-2">Student Panel</a>';
         }
+        
         navLinks.innerHTML = `
           <li class="nav-item"><span class="nav-link disabled">${fullName ? fullName : adminType}</span></li>
           <li class="nav-item"><a class="nav-link" href="/profile/view.html">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('aboutSection')">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('contactSection')">Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('tapListSection')">Tap List</a></li>
           <li class="nav-item"><a class="nav-link" href="#" id="logoutBtn">Logout</a></li>
         `;
+        
         mainActions.innerHTML = `
           ${dashboardLink}
           <a href="/profile/view.html" class="btn btn-outline-secondary btn-lg me-2">View Profile</a>
@@ -114,13 +2409,18 @@
           <li class="nav-item"><a class="nav-link" href="/auth/login.html">Login</a></li>
           <li class="nav-item"><a class="nav-link" href="/auth/register.html">Register</a></li>
           <li class="nav-item"><a class="nav-link" href="/auth/register-student.html">Student Registration</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('aboutSection')">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('contactSection')">Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('tapListSection')">Tap List</a></li>
         `;
+        
         mainActions.innerHTML = `
           <a href="/auth/login.html" class="btn btn-login btn-lg me-2">Login</a>
           <a href="/auth/register.html" class="btn btn-register btn-lg me-2">Register (Admin/Teacher)</a>
           <a href="/auth/register-student.html" class="btn btn-student btn-lg">Student Registration</a>
         `;
       }
+      
       // Logout functionality
       document.querySelectorAll('#logoutBtn, #logoutBtn2').forEach(btn => {
         btn && btn.addEventListener('click', function(e) {
@@ -130,7 +2430,323 @@
         });
       });
     }
+
+    // Contact form submission
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+      
+      try {
+        const response = await fetch('/api/contact/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, email, subject, message })
+        });
+        
+        if (response.ok) {
+          alert(`Thank you for your message, ${name}! We'll get back to you soon at ${email}.`);
+          this.reset();
+        } else {
+          const error = await response.json();
+          alert('Failed to send message: ' + error.message);
+        }
+      } catch (error) {
+        alert('Failed to send message. Please try again.');
+      }
+    });
+
     renderNavAndActions();
+
+    // Tap List - Ekasana Biyasana JavaScript
+    // એકાસણા ની યાદી ડેટા
+    const ekasanaData = {
+      1: "આંગી વોરા",
+      2: "પ્રાંશી ખંધાર",
+      3: "લબ્ધી વોરા",
+      4: "દર્શી કોઠારી",
+      5: "રીયા સૌરભભાઈ શાહ",
+      6: "રુદ્રા સૌરભભાઈ શાહ",
+      7: "ધ્રુવી ખંધાર",
+      8: "દિયા ખંધાર",
+      9: "દેવ હેમંતભાઈ કોઠારી ",
+      10: "મોશ્વા ગોપાણી",
+      11: "દર્શ સૌરીનભાઈ શાહ",
+      12: "પ્રિયાંક એમ શાહ",
+      13: "હેત્વી સંઘવી",
+      14: "હિયા સંઘવી",
+      15: "આંગી વોરા",
+      16: "લબ્ધી વોરા",
+      17: "નિસર્ગ શાહ",
+      18: "રેનીલ એન શાહ",
+      19: "માનવ એસ કોઠારી",
+      20: "ધૈર્ય ગોસલીયા",
+      21: "પાર્શ્વ ઈ શેઠ",
+      22: "હાર્દિકા કોઠારી",
+      23: "ક્રિશા કૌશલભાઈ શાહ",
+      24: "દેવ કોઠારી",
+      25: "મન ખંધાર",
+      26: "યશવી સલોત",
+      27: "જૈવલ એસ શાહ",
+      28: "દિયા ખંધાર",
+      29: "ધ્રુવી ખંધાર",
+      30: "રિયા એચ શાહ",
+      31: "હિયાંશી જસવાણી"
+    };
+
+    // બિયાસણા ની યાદી ડેટા
+    const biasanaData = {
+      1: "મોક્ષા સચીનભાઈ મુણોત",
+      2: "વીરાંશ ખંધાર",
+      3: "જીવિકા મંથનભાઈ શાહ",
+      4: "ધન્વી શાહ",
+      5: "માન્ય દોશી",
+      6: "ધન્વી શાહ ",
+      7: "ફેની શાહ ",
+      8: "રુદ્રા એસ શાહ",
+      9: "હિયાંશી શ્રેણિકભાઈ શાહ",
+      10: "ક્રિયાંશ ખંધાર",
+      11: "યશવી ડી દોશી",
+      12: "અમન ગોપાણી",
+      13: "લક્ષીતા જૈન / ગર્વિતા જૈન",
+      14: "આરવ કોઠારી",
+      15: "વિવાન સી સંઘવી",
+      16: "સમ્યક વસાણી",
+      17: "આંગી વોરા",
+      18: "લબ્ધી વોરા",
+      19: "ક્રિશ આકાશભાઈ ઠાકોર",
+      20: "લબ્ધી વોરા",
+      21: "મન ખંધાર",
+      22: "માનવ સચીનભાઈ કોઠારી",
+      23: "આંગી વોરા",
+      24: "રિયા એસ શાહ",
+      25: "ધૈર્ય ગોસલીયા",
+      26: "પાર્શ્વ ઈ શેઠ",
+      27: "વિહાના સંઘવી",
+      28: "પ્રિયાંક શાહ",
+      29: "નવ્યા એચ શાહ",
+      30: "હિયાંશી વી જસવાણી",
+      31: "દર્શ એસ શાહ"
+    };
+
+    // Helper to convert English numbers to Gujarati
+    function toGujaratiNumber(num) {
+      const gujaratiDigits = ['૦','૧','૨','૩','૪','૫','૬','૭','૮','૯'];
+      return num.toString().split('').map(d => gujaratiDigits[parseInt(d, 10)] || d).join('');
+    }
+
+    // Helper to get Gujarati month name
+    function getGujaratiMonth(monthIndex) {
+      const months = [
+        'જાન્યુઆરી', 'ફેબ્રુઆરી', 'માર્ચ', 'એપ્રિલ', 'મે', 'જૂન',
+        'જુલાઈ', 'ઑગસ્ટ', 'સપ્ટેમ્બર', 'ઑક્ટોબર', 'નવેમ્બર', 'ડિસેમ્બર'
+      ];
+      return months[monthIndex];
+    }
+
+    // Set today's date in Gujarati
+    function setGujaratiDate() {
+      const today = new Date();
+      const day = toGujaratiNumber(today.getDate());
+      const month = getGujaratiMonth(today.getMonth());
+      const year = toGujaratiNumber(today.getFullYear());
+      const dateInfoElement = document.getElementById('tap-date-info');
+      if (dateInfoElement) {
+        dateInfoElement.textContent = `આજની તારીખ: ${day} ${month}, ${year}`;
+      }
+    }
+
+    // Create schedule table
+    function createScheduleTable() {
+      const tableBody = document.getElementById('schedule-table-body');
+      if (!tableBody) return;
+      
+      let html = '';
+
+      for (let i = 1; i <= 31; i++) {
+        const ekasanaName = ekasanaData[i];
+        const biasanaName = biasanaData[i];
+
+        const ekasanaEmpty = !ekasanaName || ekasanaName.trim() === '';
+        const biasanaEmpty = !biasanaName || biasanaName.trim() === '';
+
+        const ekasanaDisplay = ekasanaEmpty ? 'નામ બાકી છે' : ekasanaName;
+        const biasanaDisplay = biasanaEmpty ? 'નામ બાકી છે' : biasanaName;
+
+        const ekasanaClass = ekasanaEmpty ? 'empty-slot' : '';
+        const biasanaClass = biasanaEmpty ? 'empty-slot' : '';
+
+        html += `
+          <tr data-date="${i}">
+            <td>${i}</td>
+            <td class="${ekasanaClass}">${ekasanaDisplay}</td>
+            <td class="${biasanaClass}">${biasanaDisplay}</td>
+          </tr>
+        `;
+      }
+
+      tableBody.innerHTML = html;
+    }
+
+    // Highlight empty slots
+    function highlightEmptySlots() {
+      // Remove previous highlights
+      document.querySelectorAll('.highlight-empty').forEach(el => {
+        el.classList.remove('highlight-empty');
+      });
+
+      // Highlight empty cells
+      const emptyCells = document.querySelectorAll('.empty-slot');
+      emptyCells.forEach(cell => {
+        cell.classList.add('highlight-empty');
+      });
+
+      // Count empty slots
+      const ekasanaEmpty = [];
+      const biasanaEmpty = [];
+
+      for (let i = 1; i <= 31; i++) {
+        if (!ekasanaData[i] || ekasanaData[i].trim() === '') {
+          ekasanaEmpty.push(i);
+        }
+        if (!biasanaData[i] || biasanaData[i].trim() === '') {
+          biasanaEmpty.push(i);
+        }
+      }
+
+      let message = '';
+      if (ekasanaEmpty.length > 0) {
+        message += `એકાસણા બાકી તારીખો: ${ekasanaEmpty.join(', ')}\n`;
+      }
+      if (biasanaEmpty.length > 0) {
+        message += `બિયાસણા બાકી તારીખો: ${biasanaEmpty.join(', ')}\n`;
+      }
+
+      message += `\nએકાસણા: ${ekasanaEmpty.length} બાકી\nબિયાસણા: ${biasanaEmpty.length} બાકી`;
+
+      alert(message);
+    }
+
+    // Print schedule
+    function printSchedule() {
+      window.print();
+    }
+
+    // Export schedule to CSV
+    function exportScheduleToCSV() {
+      let csvContent = "તારીખ,એકાસણા - બાળકનું નામ,બિયાસણા - બાળકનું નામ\n";
+
+      for (let i = 1; i <= 31; i++) {
+        const ekasanaName = ekasanaData[i];
+        const biasanaName = biasanaData[i];
+
+        const ekasanaDisplay = (!ekasanaName || ekasanaName.trim() === '') ? 'નામ બાકી છે' : ekasanaName;
+        const biasanaDisplay = (!biasanaName || biasanaName.trim() === '') ? 'નામ બાકી છે' : biasanaName;
+
+        csvContent += `${i},"${ekasanaDisplay}","${biasanaDisplay}"\n`;
+      }
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'ekasana_biasana_schedule.csv');
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // આંકડા કાઢવાનું function
+    function calculateStats() {
+      let ekasanaFilled = 0;
+      let biasanaFilled = 0;
+
+      for (let i = 1; i <= 31; i++) {
+        if (ekasanaData[i] && ekasanaData[i].trim() !== '') {
+          ekasanaFilled++;
+        }
+        if (biasanaData[i] && biasanaData[i].trim() !== '') {
+          biasanaFilled++;
+        }
+      }
+
+      // એકાસણા stats
+      const ekasanaFilledElement = document.getElementById('ekasana-filled');
+      const ekasanaRemainingElement = document.getElementById('ekasana-remaining');
+      if (ekasanaFilledElement) ekasanaFilledElement.textContent = ekasanaFilled;
+      if (ekasanaRemainingElement) ekasanaRemainingElement.textContent = 31 - ekasanaFilled;
+
+      // બિયાસણા stats
+      const biasanaFilledElement = document.getElementById('biasana-filled');
+      const biasanaRemainingElement = document.getElementById('biasana-remaining');
+      if (biasanaFilledElement) biasanaFilledElement.textContent = biasanaFilled;
+      if (biasanaRemainingElement) biasanaRemainingElement.textContent = 31 - biasanaFilled;
+    }
+
+    // Show today's and tomorrow's names based on date
+    function showTodaysNames() {
+      const today = new Date();
+      const todayDay = today.getDate(); // Get current day of the month
+      const tomorrow = new Date(today);
+      tomorrow.setDate(today.getDate() + 1); // Get tomorrow's date
+      const tomorrowDay = tomorrow.getDate(); // Get tomorrow's day of the month
+
+      // આજના નામ
+      const todayEkasana = ekasanaData[todayDay] || 'નામ બાકી છે';
+      const todayBiasana = biasanaData[todayDay] || 'નામ બાકી છે';
+      
+      const todayEkasanaElement = document.getElementById('today-ekasana');
+      const todayBiasanaElement = document.getElementById('today-biasana');
+      if (todayEkasanaElement) todayEkasanaElement.textContent = `એકાસણા: ${todayEkasana}`;
+      if (todayBiasanaElement) todayBiasanaElement.textContent = `બિયાસણા: ${todayBiasana}`;
+      
+      // આવતીકાલના નામ
+      const tomorrowEkasanaElement = document.getElementById('tomorrow-ekasana');
+      const tomorrowBiasanaElement = document.getElementById('tomorrow-biasana');
+      
+      if (tomorrowDay <= 31) {
+        const tomorrowEkasana = ekasanaData[tomorrowDay] || 'નામ બાકી છે';
+        const tomorrowBiasana = biasanaData[tomorrowDay] || 'નામ બાકી છે';
+        if (tomorrowEkasanaElement) tomorrowEkasanaElement.textContent = `એકાસણા: ${tomorrowEkasana}`;
+        if (tomorrowBiasanaElement) tomorrowBiasanaElement.textContent = `બિયાસણા: ${tomorrowBiasana}`;
+      } else {
+        if (tomorrowEkasanaElement) tomorrowEkasanaElement.textContent = 'એકાસણા: મહિનો પૂરો';
+        if (tomorrowBiasanaElement) tomorrowBiasanaElement.textContent = 'બિયાસણા: મહિનો પૂરો';
+      }
+    }
+
+    // Initialize Tap List when the section is shown
+    function initializeTapList() {
+      setGujaratiDate();
+      createScheduleTable();
+      calculateStats();
+      showTodaysNames();
+    }
+
+    // Add event listener for when Tap List section is shown
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if we're on the Tap List section
+      const tapListSection = document.getElementById('tapListSection');
+      if (tapListSection && tapListSection.classList.contains('active')) {
+        initializeTapList();
+      }
+    });
+
+    // Override showSection to initialize Tap List when needed
+    const originalShowSection = showSection;
+    showSection = function(sectionId) {
+      originalShowSection(sectionId);
+      if (sectionId === 'tapListSection') {
+        setTimeout(initializeTapList, 100); // Small delay to ensure DOM is ready
+      }
+    };
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

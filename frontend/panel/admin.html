@@ -625,6 +625,12 @@
           <span data-i18n="requested_users">Requested Users</span>
         </a>
       </div>
+      <div class="nav-item">
+        <a class="nav-link" href="#" data-section="contactUs">
+          <i class="fas fa-envelope"></i>
+          <span data-i18n="contact_us">Contact Us</span>
+        </a>
+      </div>
     </div>
   </nav>
 
@@ -1021,7 +1027,77 @@
           <div class="empty-state">
               <i class="fas fa-spinner loading-spinner"></i>
               <h5>Loading requested users...</h5>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- Contact Us Section -->
+      <div id="contactUsSection" class="content-section" style="display: none;">
+        <div class="section-header">
+          <h4><i class="fas fa-envelope me-2"></i>
+            <span data-i18n="contact_us">Contact Us</span>
+          </h4>
+          <div>
+            <button class="btn btn-outline-primary btn-sm me-2" id="refreshContactBtn">
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <button class="btn btn-outline-success btn-sm" id="exportContactBtn">
+              <i class="fas fa-file-export"></i> Export
+            </button>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" class="form-control" id="contactSearchInput" placeholder="Search by name, email, or subject...">
+              </div>
             </div>
+            <div class="col-md-3">
+              <select class="form-select" id="contactStatusFilter">
+                <option value="">All Status</option>
+                <option value="new">New</option>
+                <option value="read">Read</option>
+                <option value="replied">Replied</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <select class="form-select" id="contactDateFilter">
+                <option value="">All Time</option>
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+              </select>
+    </div>
+  </div>
+
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead class="table-dark">
+                <tr>
+                  <th><input type="checkbox" id="selectAllContacts"></th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Subject</th>
+                  <th>Message</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="contactTableBody">
+                <tr>
+                  <td colspan="8" class="text-center">
+                    <div class="empty-state">
+                      <i class="fas fa-spinner loading-spinner"></i>
+                      <h5>Loading contact messages...</h5>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -1047,6 +1123,76 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-success" id="verify2FABtn">Verify & Enable</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reply Modal -->
+  <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="replyModalLabel">Reply to Message</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6 class="text-muted mb-3">Original Message</h6>
+              <div class="card bg-light">
+                <div class="card-body">
+                  <div class="mb-2">
+                    <strong>From:</strong> <span id="originalSender"></span>
+                  </div>
+                  <div class="mb-2">
+                    <strong>Subject:</strong> <span id="originalSubject"></span>
+                  </div>
+                  <div class="mb-2">
+                    <strong>Date:</strong> <span id="originalDate"></span>
+                  </div>
+                  <div class="mb-2">
+                    <strong>Message:</strong>
+                  </div>
+                  <div class="border-start border-3 border-primary ps-3">
+                    <p id="originalMessage" class="mb-0"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <h6 class="text-muted mb-3">Your Reply</h6>
+              <form id="replyForm">
+                <div class="mb-3">
+                  <label for="replyTo" class="form-label">To:</label>
+                  <input type="email" class="form-control" id="replyTo" readonly>
+                </div>
+                <div class="mb-3">
+                  <label for="replySubject" class="form-label">Subject:</label>
+                  <input type="text" class="form-control" id="replySubject" required>
+                </div>
+                <div class="mb-3">
+                  <label for="replyMessage" class="form-label">Message:</label>
+                  <textarea class="form-control" id="replyMessage" rows="8" required placeholder="Type your reply here..."></textarea>
+                </div>
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="markAsReplied" checked>
+                    <label class="form-check-label" for="markAsReplied">
+                      Mark message as replied
+                    </label>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div id="replyMsg" class="mt-3"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="sendReplyBtn">
+            <i class="fas fa-paper-plane me-2"></i>Send Reply
+          </button>
         </div>
       </div>
     </div>
@@ -1356,6 +1502,13 @@
           dashboard.switchSection('requestedUsers');
           loadPendingRequests();
         });
+
+        // Contact Us section click
+        document.querySelector('[data-section="contactUs"]').addEventListener('click', function(e) {
+          e.preventDefault();
+          dashboard.switchSection('contactUs');
+          loadContactMessages();
+        });
       }
 
       switchSection(section) {
@@ -1395,6 +1548,9 @@
             break;
           case 'requestedUsers':
             loadPendingRequests();
+            break;
+          case 'contactUs':
+            loadContactMessages();
             break;
         }
 
@@ -2447,6 +2603,320 @@
           loadPendingRequests();
         };
       });
+    }
+
+    // Load contact messages
+    async function loadContactMessages() {
+      const token = localStorage.getItem('token');
+      try {
+        const response = await fetch('/api/contact', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        
+        if (response.ok) {
+          const contacts = await response.json();
+          renderContactTable(contacts);
+          setupContactEventListeners();
+        } else {
+          throw new Error('Failed to fetch contacts');
+        }
+      } catch (error) {
+        console.error('Error loading contact messages:', error);
+        document.getElementById('contactTableBody').innerHTML = `
+          <tr><td colspan="8" class="text-center text-danger">
+            <i class="fas fa-exclamation-triangle"></i> Error loading contact messages
+          </td></tr>
+        `;
+      }
+    }
+
+    function renderContactTable(messages) {
+      const tbody = document.getElementById('contactTableBody');
+      if (!messages || messages.length === 0) {
+        tbody.innerHTML = `
+          <tr><td colspan="8" class="text-center">
+            <div class="empty-state">
+              <i class="fas fa-inbox"></i>
+              <h5>No contact messages found</h5>
+              <p>No messages have been received yet.</p>
+            </div>
+          </td></tr>
+        `;
+        return;
+      }
+
+      let html = '';
+      messages.forEach(message => {
+        const date = new Date(message.date).toLocaleDateString();
+        const statusBadge = getStatusBadge(message.status);
+        const truncatedMessage = message.message.length > 50 ? 
+          message.message.substring(0, 50) + '...' : message.message;
+        
+        html += `
+          <tr>
+            <td><input type="checkbox" class="contact-checkbox" value="${message._id}"></td>
+            <td><strong>${message.name}</strong></td>
+            <td>${message.email}</td>
+            <td>${message.subject}</td>
+            <td>
+              <span title="${message.message}">${truncatedMessage}</span>
+              <button class="btn btn-sm btn-outline-info ms-2" onclick="viewFullMessage('${message._id}')">
+                <i class="fas fa-eye"></i>
+              </button>
+            </td>
+            <td>${date}</td>
+            <td>${statusBadge}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary" onclick="markAsRead('${message._id}')">
+                <i class="fas fa-check"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-success" onclick="replyToMessage('${message._id}')">
+                <i class="fas fa-reply"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="deleteMessage('${message._id}')">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+    }
+
+    function getStatusBadge(status) {
+      const badges = {
+        'new': '<span class="badge bg-danger">New</span>',
+        'read': '<span class="badge bg-warning">Read</span>',
+        'replied': '<span class="badge bg-success">Replied</span>'
+      };
+      return badges[status] || '<span class="badge bg-secondary">Unknown</span>';
+    }
+
+    function setupContactEventListeners() {
+      // Select all checkbox
+      document.getElementById('selectAllContacts').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.contact-checkbox');
+        checkboxes.forEach(cb => cb.checked = this.checked);
+      });
+
+      // Search functionality
+      document.getElementById('contactSearchInput').addEventListener('input', function() {
+        loadContactMessagesWithFilters();
+      });
+
+      // Status filter
+      document.getElementById('contactStatusFilter').addEventListener('change', function() {
+        loadContactMessagesWithFilters();
+      });
+
+      // Date filter
+      document.getElementById('contactDateFilter').addEventListener('change', function() {
+        loadContactMessagesWithFilters();
+      });
+
+      // Refresh button
+      document.getElementById('refreshContactBtn').addEventListener('click', function() {
+        loadContactMessages();
+      });
+
+      // Export button
+      document.getElementById('exportContactBtn').addEventListener('click', function() {
+        exportContactMessages();
+      });
+
+      // Send reply button
+      document.getElementById('sendReplyBtn').addEventListener('click', function() {
+        sendReply();
+      });
+    }
+
+    // Contact message actions
+    async function viewFullMessage(messageId) {
+      const token = localStorage.getItem('token');
+      try {
+        const response = await fetch(`/api/contact/${messageId}`, {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        
+        if (response.ok) {
+          const message = await response.json();
+          alert(`From: ${message.name} (${message.email})\nSubject: ${message.subject}\n\nMessage:\n${message.message}`);
+        } else {
+          alert('Failed to load message details.');
+        }
+      } catch (error) {
+        alert('Error loading message details.');
+      }
+    }
+
+    async function markAsRead(messageId) {
+      const token = localStorage.getItem('token');
+      try {
+        const response = await fetch(`/api/contact/${messageId}/status`, {
+          method: 'PATCH',
+          headers: { 
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ status: 'read' })
+        });
+        
+        if (response.ok) {
+          alert('Message marked as read!');
+          loadContactMessages(); // Reload to show updated status
+        } else {
+          alert('Failed to update message status.');
+        }
+      } catch (error) {
+        alert('Error updating message status.');
+      }
+    }
+
+    async function replyToMessage(messageId) {
+      const token = localStorage.getItem('token');
+      try {
+        const response = await fetch(`/api/contact/${messageId}`, {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        
+        if (response.ok) {
+          const message = await response.json();
+          
+          // Populate the reply modal with original message data
+          document.getElementById('originalSender').textContent = message.name;
+          document.getElementById('originalSubject').textContent = message.subject;
+          document.getElementById('originalDate').textContent = new Date(message.date).toLocaleString();
+          document.getElementById('originalMessage').textContent = message.message;
+          
+          // Set reply form fields
+          document.getElementById('replyTo').value = message.email;
+          document.getElementById('replySubject').value = `Re: ${message.subject}`;
+          document.getElementById('replyMessage').value = '';
+          
+          // Store the message ID for sending reply
+          document.getElementById('replyModal').setAttribute('data-message-id', messageId);
+          
+          // Show the modal
+          const replyModal = new bootstrap.Modal(document.getElementById('replyModal'));
+          replyModal.show();
+        } else {
+          alert('Failed to load message details.');
+        }
+      } catch (error) {
+        alert('Error loading message details.');
+      }
+    }
+
+    async function deleteMessage(messageId) {
+      if (confirm('Are you sure you want to delete this message?')) {
+        const token = localStorage.getItem('token');
+        try {
+          const response = await fetch(`/api/contact/${messageId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': 'Bearer ' + token }
+          });
+          
+          if (response.ok) {
+            alert('Message deleted!');
+            loadContactMessages(); // Reload to show updated list
+          } else {
+            alert('Failed to delete message.');
+          }
+        } catch (error) {
+          alert('Error deleting message.');
+        }
+      }
+    }
+
+    async function exportContactMessages() {
+      const token = localStorage.getItem('token');
+      try {
+        window.open(`/api/contact/export/csv?token=${token}`, '_blank');
+      } catch (error) {
+        alert('Error exporting messages.');
+      }
+    }
+
+    async function sendReply() {
+      const token = localStorage.getItem('token');
+      const messageId = document.getElementById('replyModal').getAttribute('data-message-id');
+      const replyTo = document.getElementById('replyTo').value;
+      const replySubject = document.getElementById('replySubject').value;
+      const replyMessage = document.getElementById('replyMessage').value;
+      const markAsReplied = document.getElementById('markAsReplied').checked;
+
+      if (!replySubject || !replyMessage) {
+        showReplyMessage('Please fill in all required fields.', 'danger');
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/contact/${messageId}/reply`, {
+          method: 'POST',
+          headers: { 
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            to: replyTo,
+            subject: replySubject,
+            message: replyMessage,
+            markAsReplied: markAsReplied
+          })
+        });
+
+        if (response.ok) {
+          showReplyMessage('Reply sent successfully!', 'success');
+          setTimeout(() => {
+            const replyModal = bootstrap.Modal.getInstance(document.getElementById('replyModal'));
+            replyModal.hide();
+            loadContactMessages(); // Reload to show updated status
+          }, 1500);
+        } else {
+          const error = await response.json();
+          showReplyMessage('Failed to send reply: ' + error.message, 'danger');
+        }
+      } catch (error) {
+        showReplyMessage('Error sending reply. Please try again.', 'danger');
+      }
+    }
+
+    function showReplyMessage(message, type) {
+      const msgDiv = document.getElementById('replyMsg');
+      msgDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+    }
+
+    // Load contact messages with filters
+    async function loadContactMessagesWithFilters() {
+      const token = localStorage.getItem('token');
+      const search = document.getElementById('contactSearchInput').value;
+      const status = document.getElementById('contactStatusFilter').value;
+      const dateFilter = document.getElementById('contactDateFilter').value;
+      
+      try {
+        let url = '/api/contact?';
+        if (search) url += `search=${encodeURIComponent(search)}&`;
+        if (status) url += `status=${encodeURIComponent(status)}&`;
+        if (dateFilter) url += `dateFilter=${encodeURIComponent(dateFilter)}&`;
+        
+        const response = await fetch(url, {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        
+        if (response.ok) {
+          const contacts = await response.json();
+          renderContactTable(contacts);
+        } else {
+          throw new Error('Failed to fetch contacts');
+        }
+      } catch (error) {
+        console.error('Error loading contact messages:', error);
+        document.getElementById('contactTableBody').innerHTML = `
+          <tr><td colspan="8" class="text-center text-danger">
+            <i class="fas fa-exclamation-triangle"></i> Error loading contact messages
+          </td></tr>
+        `;
+      }
     }
   </script>
 </body>

@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const connectDB = require('./config/db');
 const adminRoutes = require('./routes/admin');
+const contactRoutes = require('./routes/contact');
 const ensureSuperAdmin = require('./config/superAdmin');
 
 const app = express();
@@ -20,6 +21,7 @@ app.get('/api', (req, res) => {
 });
 
 app.use('/api/admin', adminRoutes);
+app.use('/api/contact', contactRoutes);
 
 const PORT = process.env.PORT || 5000;
 
